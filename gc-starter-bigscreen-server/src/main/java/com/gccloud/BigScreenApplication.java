@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @date 2023/3/13 10:55
  */
 @EnableSwagger2
-@SpringBootApplication(scanBasePackages={"com.gccloud"})
+@SpringBootApplication(scanBasePackages = {"com.gccloud"})
 @MapperScan(value = {"com.gccloud.**.dao"})
 public class BigScreenApplication {
 
@@ -24,10 +24,11 @@ public class BigScreenApplication {
 
     /**
      * 分页插件
+     *
      * @return
      */
     @Bean
-    public PaginationInterceptor paginationInterceptor(){
+    public PaginationInterceptor paginationInterceptor() {
         return new PaginationInterceptor();
     }
 }

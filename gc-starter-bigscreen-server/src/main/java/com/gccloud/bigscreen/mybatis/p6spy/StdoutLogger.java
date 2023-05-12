@@ -1,4 +1,4 @@
-package com.gccloud.starter.common.mybatis.p6spy;
+package com.gccloud.bigscreen.mybatis.p6spy;
 
 import lombok.extern.slf4j.Slf4j;
 

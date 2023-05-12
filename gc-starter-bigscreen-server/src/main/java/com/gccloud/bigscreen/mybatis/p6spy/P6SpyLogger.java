@@ -1,4 +1,4 @@
-package com.gccloud.starter.common.mybatis.p6spy;
+package com.gccloud.bigscreen.mybatis.p6spy;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
