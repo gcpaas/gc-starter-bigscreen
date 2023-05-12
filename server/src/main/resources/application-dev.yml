@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.p6spy.engine.spy.P6SpyDriver
+    url: jdbc:p6spy:mysql://127.0.0.1:3306/big-screen?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&nullCatalogMeansCurrent=true
+    username: root
+    password: pwd
+  resources:
+    static-locations: classpath:/static/,classpath:/META-INF/resources/,classpath:/META-INF/resources/webjars/,file:${gc.starter.file.basePath}
+  #静态资源配置
+  mvc:
+    throw-exception-if-no-handler-found: true
+    # 静态资源访问接口前缀
+    static-path-pattern: /static/**
+    view:
+      prefix: classpath:/static/
+      suffix: .html
+gc:
+  starter:
+    file:
+      # 本地的一个存储文件的绝对路径，需要有写入权限
+      basePath: /root/big-screen
+      # 本地启动服务的地址
+      urlPrefix: http://127.0.0.1:${server.port}/${server.servlet.context-path}/static/

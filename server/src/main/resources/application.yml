@@ -1,0 +1,21 @@
+#工程访问配置
+server:
+  port: 8066
+  servlet:
+    context-path: /bigScreen
+
+#spring环境配置
+spring:
+  profiles:
+    # 运行环境 dev,根据active动态加载application-active.yml配置文件
+    active: dev
+    include: base
+  # 配置参考 https://blog.csdn.net/qq_43842093/article/details/121866953
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    deserialization:
+      # 当实体中没有属性的setter方法时是否抛出异常
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+      # 字符串转允许List，否则导致 @RequestBody List<T> list 类型无法解析
+      ACCEPT_SINGLE_VALUE_AS_ARRAY: true
