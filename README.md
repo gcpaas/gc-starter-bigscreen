@@ -6,7 +6,7 @@
 
 #### 2 修改配置文件
 
-修改server模块resource目录下的 application-dev.yml 中的数据库连接信息即可，其他信息可以不用修改
+修改src/main/resource目录下的 application-dev.yml 中的数据库连接信息即可
 
 ```yaml
 spring:
@@ -20,7 +20,7 @@ spring:
 
 #### 3 运行启动类
 
-运行server模块下的BigScreenApplication类中的main方法
+运行src/main/java/com/gccloud/BigScreenApplication类中的main方法
 
 
 
@@ -28,8 +28,8 @@ spring:
 
 ```xml
 <dependency>
-	<groupId>com.gccloud</groupId>
-	<artifactId>gc-starter-bigscreen</artifactId>
+    <groupId>com.gccloud</groupId>
+    <artifactId>gc-starter-bigscreen</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 </dependency>
 ```
