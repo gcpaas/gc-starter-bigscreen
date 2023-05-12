@@ -30,7 +30,7 @@ spring:
 <dependency>
 	<groupId>com.gccloud</groupId>
 	<artifactId>gc-starter-bigscreen</artifactId>
-    <artifactId>0.0.1-SNAPSHOT</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 </dependency>
 ```
 
