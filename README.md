@@ -1,12 +1,26 @@
-### 如何运行
 
-#### 1 初始化SQL
 
-执行doc/init.sql即可
+## 📚简介
 
-#### 2 修改配置文件
+🔥基于G2Plot、Echarts的大屏设计器，具备设计、预览能力，支持MySQL、Oracle、PostgreSQL、Groovy等数据集接入
 
-修改src/main/resource目录下的 application-dev.yml 中的数据库连接信息即可
+-------------------------------------------------------------------------------
+
+## 📝文档
+
+[📘中文文档](https://www.yuque.com/chuinixiongkou/bigscreen/index)
+
+-------------------------------------------------------------------------------
+
+## 🛠️快速使用
+
+#### 初始化SQL
+
+执行 doc/init.sql
+
+#### 修改配置文件
+
+修改 src/main/resource 目录下的 application-dev.yml 中的数据库连接信息
 
 ```yaml
 spring:
@@ -18,19 +32,23 @@ spring:
     password: 密码
 ```
 
-#### 3 运行启动类
+#### 运行启动类
 
-运行src/main/java/com/gccloud/BigScreenApplication类中的main方法
+运行 src/main/java/com/gccloud/BigScreenApplication 类中的main方法
 
+-------------------------------------------------------------------------------
 
+## 📦安装
 
-### MAVEN
+### 🍊Maven
+
+在项目的pom.xml的dependencies中加入以下内容:
 
 ```xml
 <dependency>
-    <groupId>com.gccloud</groupId>
-    <artifactId>gc-starter-bigscreen</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+	<groupId>com.gccloud.starter.lowcode</groupId>
+	<artifactId>big-screen</artifactId>
+	<packaging>pom</packaging>
 </dependency>
 ```
 
