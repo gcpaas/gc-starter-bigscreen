@@ -46,9 +46,9 @@ spring:
 
 ```xml
 <dependency>
-	<groupId>com.gccloud.starter.lowcode</groupId>
-	<artifactId>big-screen</artifactId>
-	<packaging>pom</packaging>
+    <groupId>com.gccloud</groupId>
+    <artifactId>gc-starter-bigscreen</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 </dependency>
 ```
 
