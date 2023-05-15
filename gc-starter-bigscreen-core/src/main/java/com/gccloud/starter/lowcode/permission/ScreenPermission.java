@@ -7,10 +7,11 @@ import java.lang.annotation.*;
  * @version 1.0
  * @date 2023/5/15 10:51
  */
-@Documented
-@Inherited
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LoginRequired {
+public @interface ScreenPermission {
+
     boolean required() default true;
+
+    String[] permissions() default {};
 }

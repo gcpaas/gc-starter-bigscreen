@@ -41,6 +41,10 @@
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
         <!--   swagger相关依赖  -->
         <dependency>
             <groupId>io.swagger</groupId>

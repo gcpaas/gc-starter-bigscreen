@@ -1,5 +1,6 @@
 package com.gccloud.starter.lowcode.permission;
 
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -9,27 +10,15 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface ITokenService {
 
-
     /**
-     * 从请求中获取token
+     * 校验权限
      * @param request
+     * @param permission
      * @return
      */
-    String getToken(HttpServletRequest request);
+    boolean verifyPermission(HttpServletRequest request, String... permission);
 
-    /**
-     * 从token中获取用户名
-     * @param token
-     * @return
-     */
-    String getUsername(String token);
 
-    /**
-     * 校验token
-     * @param token
-     * @return
-     */
-    Boolean verifyToken(String token);
 
 
 }

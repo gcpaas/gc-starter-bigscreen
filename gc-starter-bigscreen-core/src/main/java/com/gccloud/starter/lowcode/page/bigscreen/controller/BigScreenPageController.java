@@ -13,6 +13,8 @@ import com.gccloud.starter.lowcode.page.bigscreen.dto.BigScreenPageDTO;
 import com.gccloud.starter.lowcode.page.bigscreen.service.IBigScreenPageService;
 import com.gccloud.starter.lowcode.page.bigscreen.vo.StaticFileVO;
 import com.gccloud.starter.lowcode.page.entity.PageEntity;
+import com.gccloud.starter.lowcode.permission.ScreenPermission;
+import com.gccloud.starter.lowcode.permission.Permission;
 import com.gccloud.starter.lowcode.webjars.Webjars;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.Api;
@@ -41,6 +43,7 @@ public class BigScreenPageController {
     @Resource
     private GlobalConfig globalConfig;
 
+    @ScreenPermission(permissions = {Permission.Screen.VIEW})
     @GetMapping("/info/code/{code}")
     @ApiOperation(value = "大屏页详情", position = 10, produces = MediaType.APPLICATION_JSON_VALUE)
     public MixinsResp<BigScreenPageDTO> info(@PathVariable("code") String code) {
@@ -52,6 +55,7 @@ public class BigScreenPageController {
         return resp;
     }
 
+    @ScreenPermission(permissions = {Permission.Screen.EDIT})
     @PostMapping("/add")
     @ApiOperation(value = "从空白新增大屏页", position = 20, produces = MediaType.APPLICATION_JSON_VALUE)
     public R<String> add(@RequestBody BigScreenPageDTO bigScreenPageDTO) {
@@ -63,6 +67,7 @@ public class BigScreenPageController {
         return R.success(bigScreenPageDTO.getCode());
     }
 
+    @ScreenPermission(permissions = {Permission.Screen.EDIT})
     @PostMapping("/add/template")
     @ApiOperation(value = "从模板新增大屏页", position = 20, produces = MediaType.APPLICATION_JSON_VALUE)
     public R<String> addByTemplate(@RequestBody BigScreenPageDTO bigScreenPageDTO) {
@@ -73,6 +78,7 @@ public class BigScreenPageController {
         return R.success(code);
     }
 
+    @ScreenPermission(permissions = {Permission.Screen.TEMPLATE_VIEW})
     @PostMapping("/get/template")
     @ApiOperation(value = "根据模板获取配置", position = 20, produces = MediaType.APPLICATION_JSON_VALUE)
     public MixinsResp<BigScreenPageDTO> getByTemplate(@RequestBody BigScreenPageDTO bigScreenPageDTO) {
@@ -82,6 +88,7 @@ public class BigScreenPageController {
         return resp;
     }
 
+    @ScreenPermission(permissions = {Permission.Screen.EDIT})
     @PostMapping("/update")
     @ApiOperation(value = "修改大屏页", position = 30, produces = MediaType.APPLICATION_JSON_VALUE)
     public R<String> update(@RequestBody BigScreenPageDTO bigScreenPageDTO) {
@@ -93,6 +100,7 @@ public class BigScreenPageController {
         return R.success(bigScreenPageDTO.getCode());
     }
 
+    @ScreenPermission(permissions = {Permission.Screen.DELETE})
     @PostMapping("/delete/{code}")
     @ApiOperation(value = "删除大屏页", position = 40, produces = MediaType.APPLICATION_JSON_VALUE)
     public R<Void> delete(@PathVariable String code) {
@@ -104,6 +112,7 @@ public class BigScreenPageController {
         return R.success();
     }
 
+    @ScreenPermission(permissions = {Permission.Screen.EDIT})
     @PostMapping("/copy/{code}")
     @ApiOperation(value = "复制大屏页", position = 50, produces = MediaType.APPLICATION_JSON_VALUE)
     public R<String> copy(@PathVariable String code) {
@@ -115,6 +124,7 @@ public class BigScreenPageController {
         return R.success(newCode);
     }
 
+    @ScreenPermission
     @GetMapping("/bg/list")
     @ApiOperation(value = "背景图片列表", position = 60, produces = MediaType.APPLICATION_JSON_VALUE)
     public R<List<StaticFileVO>> getBgList() {
@@ -130,6 +140,7 @@ public class BigScreenPageController {
         return R.success(bgList);
     }
 
+    @ScreenPermission
     @GetMapping("/map/list/{level}")
     @ApiOperation(value = "地图数据列表", position = 60, produces = MediaType.APPLICATION_JSON_VALUE)
     public R<List<StaticFileVO>> getMapJsonList(@PathVariable("level") String level) {

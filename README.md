@@ -20,7 +20,7 @@
 
 #### 修改配置文件
 
-修改 src/main/resource 目录下的 application-dev.yml 中的数据库连接信息
+修改 gc-starter-bigscreen-server 模块 src/main/resource 目录下的 application-dev.yml 中的数据库连接信息
 
 ```yaml
 spring:
@@ -34,7 +34,7 @@ spring:
 
 #### 运行启动类
 
-运行 src/main/java/com/gccloud/BigScreenApplication 类中的main方法
+运行 gc-starter-bigscreen-server 模块 src/main/java/com/gccloud/BigScreenApplication 类中的main方法
 
 -------------------------------------------------------------------------------
 

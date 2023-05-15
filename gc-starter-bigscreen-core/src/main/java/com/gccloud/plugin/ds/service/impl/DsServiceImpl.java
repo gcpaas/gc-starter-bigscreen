@@ -58,11 +58,9 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
     @Override
     public DataSetInfoVo getDataSetDetails(String id) {
         DataSetInfoVo dataSetInfoVo = new DataSetInfoVo();
-
         DatasetEntity datasetEntity = datasetService.getById(id);
-
         if (null == datasetEntity) {
-            throw new GlobalException("数据集不存在");
+           return null;
         }
         dataSetInfoVo.setId(id);
         dataSetInfoVo.setName(datasetEntity.getName());

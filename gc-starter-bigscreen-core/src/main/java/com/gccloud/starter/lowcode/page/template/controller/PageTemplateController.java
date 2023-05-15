@@ -13,6 +13,8 @@ import com.gccloud.starter.lowcode.page.template.dto.PageTemplateSearchDTO;
 import com.gccloud.starter.lowcode.page.template.entity.PageTemplateEntity;
 import com.gccloud.starter.lowcode.page.template.service.IPageTemplateService;
 import com.gccloud.starter.lowcode.page.template.vo.PageTemplateVO;
+import com.gccloud.starter.lowcode.permission.ScreenPermission;
+import com.gccloud.starter.lowcode.permission.Permission;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -45,6 +47,7 @@ public class PageTemplateController extends SuperController {
      * @param searchDTO
      * @return
      */
+    @ScreenPermission(permissions = {Permission.Screen.TEMPLATE_VIEW})
     @GetMapping("/page")
     @ApiOperation(value = "分页查询", position = 10, notes = "分页查询列表", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({@ApiImplicitParam(name = "current", value = "页码", paramType = "query", required = true, dataType = "int"), @ApiImplicitParam(name = "size", value = "每页条数", paramType = "query", required = true, dataType = "int"), @ApiImplicitParam(name = "searchKey", value = "查询条件", paramType = "query", dataType = "string")})
@@ -65,6 +68,7 @@ public class PageTemplateController extends SuperController {
      * @param searchDTO
      * @return
      */
+    @ScreenPermission(permissions = {Permission.Screen.TEMPLATE_VIEW})
     @GetMapping("/list")
     @ApiOperation(value = "列表查询", position = 10, notes = "查询列表", produces = MediaType.APPLICATION_JSON_VALUE)
     public R<List<PageTemplateVO>> getList(@ApiParam(name = "查询", value = "传入查询的业务条件", required = true) PageTemplateSearchDTO searchDTO) {
@@ -84,6 +88,7 @@ public class PageTemplateController extends SuperController {
      * @param id
      * @return
      */
+    @ScreenPermission(permissions = {Permission.Screen.TEMPLATE_VIEW})
     @GetMapping("/info/{id}")
     @ApiOperation(value = "详情", position = 20, notes = "获取详情", produces = MediaType.APPLICATION_JSON_VALUE)
     public R<PageTemplateVO> getById(@ApiParam(name = "id", value = "传入String格式", required = true) @PathVariable("id") String id) {
@@ -98,6 +103,7 @@ public class PageTemplateController extends SuperController {
      * @param pageTemplateDTO
      * @return
      */
+    @ScreenPermission(permissions = {Permission.Screen.TEMPLATE_EDIT})
     @PostMapping("/add")
     @ApiOperation(value = "新增", position = 30, notes = "新增数据", produces = MediaType.APPLICATION_JSON_VALUE)
     public R<String> add(@ApiParam(name = "新增对象", value = "传入json格式", required = true) @RequestBody PageTemplateDTO pageTemplateDTO) {
@@ -113,6 +119,7 @@ public class PageTemplateController extends SuperController {
      * @param pageTemplateDTO
      * @return
      */
+    @ScreenPermission(permissions = {Permission.Screen.TEMPLATE_EDIT})
     @PostMapping("/update")
     @ApiOperation(value = "更新", position = 40, notes = "更新数据", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public R<Void> update(@ApiParam(name = "更新对象", value = "传入json格式", required = true) @RequestBody PageTemplateDTO pageTemplateDTO) {
@@ -129,6 +136,7 @@ public class PageTemplateController extends SuperController {
      * @param idList
      * @return
      */
+    @ScreenPermission(permissions = {Permission.Screen.TEMPLATE_DELETE})
     @PostMapping("/delete")
     @ApiOperation(value = "删除", position = 50, notes = "删除", produces = MediaType.APPLICATION_JSON_VALUE)
     public R<Void> deleteById(@ApiParam(name = "id列表", value = "传入id列表", required = true) @RequestBody List<String> idList) {
