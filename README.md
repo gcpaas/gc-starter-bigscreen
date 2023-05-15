@@ -51,4 +51,8 @@ spring:
     <version>0.0.1-SNAPSHOT</version>
 </dependency>
 ```
+### 📥下载jar
 
+点击以下链接，下载`gc-starter-bigscree.jar`即可：
+
+- [Maven中央库](https://repo1.maven.org/maven2/com/gccloud/gc-starter-bigscreen/0.0.1-SNAPSHOT/)
