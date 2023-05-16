@@ -9,7 +9,7 @@
     <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/gcpaas/gc-starter-bigscreen?style=social">
 	<img alt="GitHub forks" src="https://img.shields.io/github/forks/gcpaas/gc-starter-bigscreen?style=social">
 	<img alt="GitHub license" src="https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg">
-  	<img alt="Version" src="https://img.shields.io/badge/version-1.0.0-success.svg">
+    <img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.gccloud/gc-starter-bigscreen-core">
 	<img alt="Company" src="https://img.shields.io/badge/Author-科大国创云网科技有限公司-blue.svg">
   	<img alt="QQ" src="https://img.shields.io/badge/QQ-322302395-blue.svg">
 </p>
