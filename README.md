@@ -16,13 +16,13 @@
 
 -------------------------------------------------------------------------------
 
-## 📝文档
+## 📝 文档
 
 [📘中文文档](https://www.yuque.com/chuinixiongkou/bigscreen/index)
 
 -------------------------------------------------------------------------------
 
-## 📦如何使用
+## 📦 如何使用
 
 下面介绍如何在SpringBoot项目中集成大屏
 
@@ -54,7 +54,6 @@ mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
   # xml中别名文件扫描，多个通过分号隔开
   type-handlers-package: com.gccloud
-	
 spring:
   resources:
     static-locations: classpath:/static/,classpath:/META-INF/resources/,classpath:/META-INF/resources/webjars/,file:${gc.starter.file.basePath}
@@ -84,6 +83,12 @@ gc:
 
 
 ## 源码启动
+xxx
 
+## 联系我们
+<img alt="Email" src="https://img.shields.io/badge/Email-tech@ustcinfo.com-blue.svg">
+<img alt="QQ群" src="https://img.shields.io/badge/QQ群-322302395-blue.svg">
 
+## License
 
+Apache License 2.0
