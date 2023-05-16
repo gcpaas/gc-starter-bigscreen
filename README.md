@@ -1,8 +1,18 @@
-
-
 ## 📚简介
+<p align="center">
+	<img alt="logo" width="50" src="./doc/logo.png">
+</p>
 
-🔥基于G2Plot、Echarts的大屏设计器，具备设计、预览能力，支持MySQL、Oracle、PostgreSQL、Groovy等数据集接入
+🔥基于SpringBoot、MyBatisPlus、ElementUI、G2Plot、Echarts等技术栈的大屏设计器，具备大屏目录管理、大屏设计、大屏预览能力，支持MySQL、Oracle、PostgreSQL、JSON等数据集接入，对于复杂数据处理还可以使用Groovy脚本数据集，使用简单，完全免费，代码开源。
+
+<p align="center">
+    <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/gcpaas/gc-starter-bigscreen?style=social">
+	<img alt="GitHub forks" src="https://img.shields.io/github/forks/gcpaas/gc-starter-bigscreen?style=social">
+	<img alt="GitHub license" src="https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg">
+  	<img alt="Version" src="https://img.shields.io/badge/version-1.0.0-success.svg">
+	<img alt="Company" src="https://img.shields.io/badge/Author-科大国创云网科技有限公司-blue.svg">
+  	<img alt="QQ" src="https://img.shields.io/badge/QQ-322302395-blue.svg">
+</p>
 
 -------------------------------------------------------------------------------
 
@@ -12,47 +22,68 @@
 
 -------------------------------------------------------------------------------
 
-## 🛠️快速使用
+## 📦如何使用
 
-#### 初始化SQL
+下面介绍如何在SpringBoot项目中集成大屏
 
-执行 doc/init.sql
+### 引入依赖
 
-#### 修改配置文件
-
-修改 gc-starter-bigscreen-server 模块 src/main/resource 目录下的 application-dev.yml 中的数据库连接信息
-
-```yaml
-spring:
-  datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    driverClassName: com.p6spy.engine.spy.P6SpyDriver
-    url: jdbc:p6spy:mysql://localhost:3306/database?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false
-    username: 用户名
-    password: 密码
-```
-
-#### 运行启动类
-
-运行 gc-starter-bigscreen-server 模块 src/main/java/com/gccloud/BigScreenApplication 类中的main方法
-
--------------------------------------------------------------------------------
-
-## 📦安装
-
-### 🍊Maven
-
-在项目的pom.xml的dependencies中加入以下内容:
+在项目的`pom.xml`文件`<dependencies>`标签中加入以下内容:
 
 ```xml
 <dependency>
     <groupId>com.gccloud</groupId>
-    <artifactId>gc-starter-bigscreen</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>gc-starter-bigscreen-core</artifactId>
+    <version>最新版本号</version>
 </dependency>
 ```
-### 📥下载jar
 
-点击以下链接，下载`gc-starter-bigscree.jar`即可：
+点击<a href="https://mvnrepository.com/artifact/com.gccloud/gc-starter-bigscreen-core">查询最新版本号</a>
 
-- [Maven中央库](https://repo1.maven.org/maven2/com/gccloud/gc-starter-bigscreen/0.0.1-SNAPSHOT/)
+### 初始化SQL
+
+执行 doc/init.sql 文件
+
+### 修改配置文件
+
+修改`application-${spring.profiles.active}.yml`配置信息，其中 `${spring.profiles.active}`配置在`application.yml`文件中定义
+
+```yaml
+mybatis-plus:
+  # mybatis plus xml配置文件扫描，多个通过分号隔开
+  mapper-locations: classpath*:mapper/**/*.xml
+  # xml中别名文件扫描，多个通过分号隔开
+  type-handlers-package: com.gccloud
+	
+spring:
+  resources:
+    static-locations: classpath:/static/,classpath:/META-INF/resources/,classpath:/META-INF/resources/webjars/,file:${gc.starter.file.basePath}
+  # 静态资源配置
+  mvc:
+    throw-exception-if-no-handler-found: true
+    # 静态资源访问接口前缀
+    static-path-pattern: /static/**
+    view:
+      prefix: classpath:/static/
+      suffix: .html
+gc:
+  starter:
+    file:
+      # 一个存储文件的绝对路径，需要有写入权限
+      basePath: /root/big-screen
+      # 启动服务的访问地址
+      urlPrefix: http://127.0.0.1:${server.port}/${server.servlet.context-path}/static/
+```
+
+以上配置根据项目实际情况进行合并
+
+## 演示DEMO
+
+<a href="http://gcpaas.gccloud.com/bigScreen"> http://gcpaas.gccloud.com/bigScreen </a>
+
+
+
+## 源码启动
+
+
+
