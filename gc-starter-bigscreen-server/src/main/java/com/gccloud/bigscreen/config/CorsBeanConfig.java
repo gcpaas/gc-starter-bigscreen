@@ -1,10 +1,6 @@
 package com.gccloud.bigscreen.config;
 
-import com.gccloud.bigscreen.core.config.GlobalConfig;
 import lombok.extern.slf4j.Slf4j;
-
-import javax.annotation.Resource;
-
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistration;
