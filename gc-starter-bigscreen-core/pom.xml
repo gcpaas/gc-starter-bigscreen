@@ -201,12 +201,12 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.12</version>
+            <version>${postgresql.version}</version>
         </dependency>
         <dependency>
             <groupId>com.clickhouse</groupId>
             <artifactId>clickhouse-jdbc</artifactId>
-            <version>0.3.2</version>
+            <version>${clickhouse.version}</version>
         </dependency>
     </dependencies>
 </project>
