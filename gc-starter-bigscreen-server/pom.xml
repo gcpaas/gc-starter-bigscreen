@@ -30,6 +30,13 @@
         <finalName>bigScreen</finalName>
         <plugins>
             <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <configuration>
+                    <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <!--下面的代码可以将依赖的第三方jar包通过maven插件打入工程的lib中-->
@@ -70,4 +77,6 @@
             </plugin>
         </plugins>
     </build>
+
+
 </project>

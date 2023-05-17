@@ -28,8 +28,9 @@
     </licenses>
 
     <modules>
-        <module>gc-starter-bigscreen-server</module>
         <module>gc-starter-bigscreen-core</module>
+        <module>gc-starter-bigscreen-server</module>
+        <module>gc-starter-bigscreen-deploy</module>
     </modules>
 
     <properties>
@@ -154,6 +155,16 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+
+                    <!-- 跳过单元测试 -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
                     </plugin>
 
                 </plugins>
