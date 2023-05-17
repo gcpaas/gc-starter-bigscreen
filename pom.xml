@@ -30,6 +30,8 @@
     <modules>
         <module>gc-starter-bigscreen-core</module>
         <module>gc-starter-bigscreen-server</module>
+        <!-- 由于nexus中央仓库的跳过策略，如果在最后一个打包的模块中使用了skipNexusStagingDeployMojo 标签来跳过发布模块，会导致整个工程的maven deploy动作都被忽略 -->
+        <!-- 而 gc-starter-bigscreen-server 模块中用到了该标签，所以新建 gc-starter-bigscreen-deploy 放到最后，用于使maven deploy能够正常执行-->
         <module>gc-starter-bigscreen-deploy</module>
     </modules>
 
