@@ -60,4 +60,21 @@ public interface BigScreenConst {
         }
     }
 
+    /**
+     * 扫描包路径
+     */
+    interface ScanPackage {
+
+        /**
+         * 基础包路径
+         */
+        String COMPONENT = "com.gccloud.bigscreen.core";
+
+        /**
+         * dao路径
+         */
+        String DAO =  "com.gccloud.bigscreen.core.**.dao";
+
+    }
+
 }

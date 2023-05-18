@@ -1,7 +1,7 @@
 package com.gccloud.bigscreen.core.module.dataset.dao;
 
 import com.gccloud.bigscreen.core.module.dataset.entity.DatasetProcessEntity;
-import com.gccloud.bigscreen.core.dao.BaseDao;
+import com.gccloud.bigscreen.core.dao.BigScreenBaseDao;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,6 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @Date 2021/9/8 14:21
  */
 @Mapper
-public interface DatasetProcessDao extends BaseDao<DatasetProcessEntity> {
+public interface DatasetProcessDao extends BigScreenBaseDao<DatasetProcessEntity> {
 
 }

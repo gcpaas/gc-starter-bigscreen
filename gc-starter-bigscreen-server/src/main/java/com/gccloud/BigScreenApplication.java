@@ -1,6 +1,7 @@
 package com.gccloud;
 
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.gccloud.bigscreen.core.constant.BigScreenConst;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,8 +14,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @date 2023/3/13 10:55
  */
 @EnableSwagger2
-@SpringBootApplication(scanBasePackages = {"com.gccloud"})
-@MapperScan(value = {"com.gccloud.**.dao"})
+@SpringBootApplication(scanBasePackages = {BigScreenConst.ScanPackage.COMPONENT})
+@MapperScan(value = {BigScreenConst.ScanPackage.DAO})
 public class BigScreenApplication {
 
     public static void main(String[] args) {

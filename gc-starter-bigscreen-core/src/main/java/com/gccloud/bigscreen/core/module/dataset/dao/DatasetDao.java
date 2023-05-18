@@ -2,7 +2,7 @@ package com.gccloud.bigscreen.core.module.dataset.dao;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gccloud.bigscreen.core.module.dataset.entity.DatasetEntity;
-import com.gccloud.bigscreen.core.dao.BaseDao;
+import com.gccloud.bigscreen.core.dao.BigScreenBaseDao;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,7 +14,7 @@ import java.util.Set;
  * @date 2022-11-14-11:41
  */
 @Mapper
-public interface DatasetDao extends BaseDao<DatasetEntity> {
+public interface DatasetDao extends BigScreenBaseDao<DatasetEntity> {
 
     /**
      * 获取数据集分页列表

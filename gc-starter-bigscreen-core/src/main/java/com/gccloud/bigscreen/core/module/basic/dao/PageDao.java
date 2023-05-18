@@ -1,6 +1,6 @@
 package com.gccloud.bigscreen.core.module.basic.dao;
 
-import com.gccloud.bigscreen.core.dao.BaseDao;
+import com.gccloud.bigscreen.core.dao.BigScreenBaseDao;
 import com.gccloud.bigscreen.core.module.basic.entity.PageEntity;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,6 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @Version 1.0.0
  */
 @Mapper
-public interface PageDao extends BaseDao<PageEntity> {
+public interface PageDao extends BigScreenBaseDao<PageEntity> {
 
 }

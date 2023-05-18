@@ -1,7 +1,7 @@
 package com.gccloud.bigscreen.core.module.dataset.dao;
 
 import com.gccloud.bigscreen.core.module.dataset.entity.OriginalTable;
-import com.gccloud.bigscreen.core.dao.BaseDao;
+import com.gccloud.bigscreen.core.dao.BigScreenBaseDao;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,6 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2021/9/7 15:03
  */
 @Mapper
-public interface OriginalTableDao extends BaseDao<OriginalTable> {
+public interface OriginalTableDao extends BigScreenBaseDao<OriginalTable> {
 
 }

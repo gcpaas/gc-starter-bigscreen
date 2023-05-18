@@ -9,6 +9,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @Date 2020-06-16 11:09
  * @Version 1.0
  */
-public interface BaseDao<T> extends BaseMapper<T> {
+public interface BigScreenBaseDao<T> extends BaseMapper<T> {
 
 }

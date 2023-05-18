@@ -76,6 +76,13 @@ gc:
 
 以上配置根据项目实际情况进行合并
 
+### 启动类配置扫描包路径
+
+```java
+@SpringBootApplication(scanBasePackages = {BigScreenConst.ScanPackage.COMPONENT})
+@MapperScan(value = {BigScreenConst.ScanPackage.DAO})
+```
+
 ## 演示DEMO
 
 <a href="http://gcpaas.gccloud.com/bigScreen"> http://gcpaas.gccloud.com/bigScreen </a>

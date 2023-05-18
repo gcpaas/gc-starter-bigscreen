@@ -1,7 +1,7 @@
 package com.gccloud.bigscreen.core.module.dataset.dao;
 
 import com.gccloud.bigscreen.core.module.dataset.entity.DatasourceConfig;
-import com.gccloud.bigscreen.core.dao.BaseDao;
+import com.gccloud.bigscreen.core.dao.BigScreenBaseDao;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,6 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2021/9/6 14:58
  */
 @Mapper
-public interface DatasourceConfigDao extends BaseDao<DatasourceConfig> {
+public interface DatasourceConfigDao extends BigScreenBaseDao<DatasourceConfig> {
 
 }

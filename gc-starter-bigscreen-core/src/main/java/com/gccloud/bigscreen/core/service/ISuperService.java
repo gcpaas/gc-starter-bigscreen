@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.gccloud.bigscreen.core.exception.GlobalException;
 import com.gccloud.bigscreen.core.dto.SearchDTO;
-import com.gccloud.bigscreen.core.dao.BaseDao;
+import com.gccloud.bigscreen.core.dao.BigScreenBaseDao;
 import com.gccloud.bigscreen.core.vo.PageVO;
 import com.gccloud.bigscreen.core.utils.QueryWrapperUtils;
 import com.google.common.collect.Maps;
@@ -38,8 +38,8 @@ public interface ISuperService<T> extends IService<T> {
      *
      * @return
      */
-    default BaseDao<T> getBaseDao() {
-        return (BaseDao<T>) getBaseMapper();
+    default BigScreenBaseDao<T> getBaseDao() {
+        return (BigScreenBaseDao<T>) getBaseMapper();
     }
 
     /**
