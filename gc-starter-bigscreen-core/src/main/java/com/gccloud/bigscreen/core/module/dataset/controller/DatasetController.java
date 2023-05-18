@@ -22,7 +22,7 @@ import javax.annotation.Resource;
  */
 @Api(tags = "主数据集")
 @RestController
-@RequestMapping("/dataset")
+@RequestMapping("/bigScreen/dataset")
 public class DatasetController {
 
     @Resource

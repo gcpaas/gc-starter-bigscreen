@@ -1,7 +1,7 @@
 package com.gccloud.bigscreen.core.module.file.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
-import com.gccloud.bigscreen.core.config.GlobalConfig;
+import com.gccloud.bigscreen.core.config.BigScreenConfig;
 import com.gccloud.bigscreen.core.config.bean.FileConfig;
 import com.gccloud.bigscreen.core.module.file.entity.BigScreenFileEntity;
 import com.gccloud.bigscreen.core.exception.GlobalException;
@@ -34,7 +34,7 @@ import java.net.URLEncoder;
 public class BigScreenLocalFileServiceImpl implements IBigScreenOssService {
 
     @Resource
-    private GlobalConfig globalConfig;
+    private BigScreenConfig bigScreenConfig;
     @Resource
     private IBigScreenFileService sysFileService;
 
@@ -43,7 +43,7 @@ public class BigScreenLocalFileServiceImpl implements IBigScreenOssService {
         String originalFilename = file.getOriginalFilename();
         // 提取文件后缀名
         String extension = FilenameUtils.getExtension(originalFilename);
-        FileConfig fileConfig = globalConfig.getFile();
+        FileConfig fileConfig = bigScreenConfig.getFile();
         if (!fileConfig.getAllowedFileExtensionName().contains(extension)) {
             log.error("不支持 {} 文件类型",extension);
             throw new GlobalException("不支持的文件类型");
@@ -52,7 +52,7 @@ public class BigScreenLocalFileServiceImpl implements IBigScreenOssService {
         String id = IdWorker.getIdStr();
         String newFileName = id + "." + extension;
         // 上传文件保存到的路径，根据实际情况修改，也可能是从配置文件获取到的文件存储路径
-        String basePath = globalConfig.getFile().getBasePath();
+        String basePath = bigScreenConfig.getFile().getBasePath();
         String destPath = basePath + File.separator + newFileName;
         long size = file.getSize();
         try {
@@ -69,7 +69,7 @@ public class BigScreenLocalFileServiceImpl implements IBigScreenOssService {
         fileEntity.setPath(basePath);
         fileEntity.setSize(size);
         fileEntity.setExtension(extension);
-        String urlPrefix = globalConfig.getFile().getUrlPrefix();
+        String urlPrefix = bigScreenConfig.getFile().getUrlPrefix();
         fileEntity.setUrl(urlPrefix + "/" + newFileName);
         return fileEntity;
     }

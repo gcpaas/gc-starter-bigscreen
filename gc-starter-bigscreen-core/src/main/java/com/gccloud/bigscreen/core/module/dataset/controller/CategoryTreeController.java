@@ -21,7 +21,7 @@ import java.util.List;
 @ScreenPermission(permissions = {Permission.DataSet.CATEGORY})
 @Api(tags = "种类树")
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/bigScreen/category")
 public class CategoryTreeController extends SuperController {
 
     @Resource

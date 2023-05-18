@@ -22,7 +22,7 @@ import java.util.List;
  * @since 2021/9/6 11:10
  */
 @RestController
-@RequestMapping("/datasource")
+@RequestMapping("/bigScreen/datasource")
 @Api(tags = "数据源管理")
 public class DataSourceController extends SuperController {
 

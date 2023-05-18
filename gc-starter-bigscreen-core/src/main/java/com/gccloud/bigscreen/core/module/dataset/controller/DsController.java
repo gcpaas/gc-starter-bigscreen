@@ -22,7 +22,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @Api(tags = "数据管理公共接口")
-@RequestMapping("/ds")
+@RequestMapping("/bigScreen/ds")
 public class DsController extends SuperController {
 
     @Resource

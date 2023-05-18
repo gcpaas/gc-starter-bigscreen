@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "gc.starter")
 @Data
-public class GlobalConfig {
+public class BigScreenConfig {
 
     /**
      * 文件存储配置

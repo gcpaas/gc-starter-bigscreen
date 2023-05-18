@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  */
 @Api(tags = "自助数据集")
 @RestController
-@RequestMapping("/datasetProcess")
+@RequestMapping("/bigScreen/datasetProcess")
 public class DatasetProcessController {
 
     @Resource

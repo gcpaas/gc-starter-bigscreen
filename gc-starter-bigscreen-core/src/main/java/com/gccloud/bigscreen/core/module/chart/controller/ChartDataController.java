@@ -31,7 +31,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/chart/data")
+@RequestMapping("/bigScreen/chart/data")
 @Api(tags = "图表组件数据获取")
 public class ChartDataController {
 

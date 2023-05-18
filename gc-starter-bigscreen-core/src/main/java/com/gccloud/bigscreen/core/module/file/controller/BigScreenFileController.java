@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @RestController
 @RequestMapping("/bigScreen/file")
-@ConditionalOnProperty(prefix = "gc.starter.component", name = "SysFileController", havingValue = "SysFileController", matchIfMissing = true)
 @Api(tags = "文件管理")
 @ApiSort(value = 100)
 public class BigScreenFileController extends SuperController {

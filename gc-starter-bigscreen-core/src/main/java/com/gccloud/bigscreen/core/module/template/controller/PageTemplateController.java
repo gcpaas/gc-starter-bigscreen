@@ -1,6 +1,6 @@
 package com.gccloud.bigscreen.core.module.template.controller;
 
-import com.gccloud.bigscreen.core.config.GlobalConfig;
+import com.gccloud.bigscreen.core.config.BigScreenConfig;
 import com.gccloud.bigscreen.core.module.template.dto.PageTemplateDTO;
 import com.gccloud.bigscreen.core.module.template.dto.PageTemplateSearchDTO;
 import com.gccloud.bigscreen.core.module.template.entity.PageTemplateEntity;
@@ -29,7 +29,7 @@ import java.util.List;
  * @date 2023/3/20 16:38
  */
 @RestController
-@RequestMapping("/page/template")
+@RequestMapping("//bigScreen/template")
 @Api(tags = "页面模板")
 @ApiSort(value = 10)
 @Slf4j
@@ -39,7 +39,7 @@ public class PageTemplateController extends SuperController {
     private IPageTemplateService pageTemplateService;
 
     @Resource
-    private GlobalConfig globalConfig;
+    private BigScreenConfig bigScreenConfig;
 
     /**
      * 分页条件查询
@@ -56,7 +56,7 @@ public class PageTemplateController extends SuperController {
         PageVO<PageTemplateVO> pageVO = BeanConvertUtils.convertPage(page, PageTemplateVO.class, (source, target) -> {
             // 如果缩略图的不是http开头的，那么就拼接上当前服务后端地址
             if (target.getThumbnail() != null && !target.getThumbnail().startsWith("http")) {
-                target.setThumbnail(globalConfig.getFile().getUrlPrefix() + target.getThumbnail());
+                target.setThumbnail(bigScreenConfig.getFile().getUrlPrefix() + target.getThumbnail());
             }
         });
         return success(pageVO);
@@ -76,7 +76,7 @@ public class PageTemplateController extends SuperController {
         List<PageTemplateVO> voList = BeanConvertUtils.convert(list, PageTemplateVO.class, (source, target) -> {
             // 如果缩略图的不是http开头的，那么就拼接上当前服务后端地址
             if (target.getThumbnail() != null && !target.getThumbnail().startsWith("http")) {
-                target.setThumbnail(globalConfig.getFile().getUrlPrefix() + target.getThumbnail());
+                target.setThumbnail(bigScreenConfig.getFile().getUrlPrefix() + target.getThumbnail());
             }
         });
         return success(voList);

@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/bigScreen/category")
 @Api(tags = "页面目录")
 public class CategoryController extends SuperController {
 

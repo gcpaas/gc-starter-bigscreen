@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Api(tags = "原始表")
 @RestController
-@RequestMapping("/original")
+@RequestMapping("/bigScreen/original")
 public class OriginalTableController extends SuperController {
     @Resource
     private OriginalTableService originalTableService;

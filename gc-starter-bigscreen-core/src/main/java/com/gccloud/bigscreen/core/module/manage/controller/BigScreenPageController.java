@@ -1,6 +1,6 @@
 package com.gccloud.bigscreen.core.module.manage.controller;
 
-import com.gccloud.bigscreen.core.config.GlobalConfig;
+import com.gccloud.bigscreen.core.config.BigScreenConfig;
 import com.gccloud.bigscreen.core.constant.BigScreenConst;
 import com.gccloud.bigscreen.core.exception.GlobalException;
 import com.gccloud.bigscreen.core.module.manage.dto.BigScreenPageDTO;
@@ -41,7 +41,7 @@ public class BigScreenPageController {
     @Resource
     private IBigScreenPageService bigScreenPageService;
     @Resource
-    private GlobalConfig globalConfig;
+    private BigScreenConfig bigScreenConfig;
 
     @ScreenPermission(permissions = {Permission.Screen.VIEW})
     @GetMapping("/info/code/{code}")
@@ -130,7 +130,7 @@ public class BigScreenPageController {
     public R<List<StaticFileVO>> getBgList() {
         List<String> staticFileList = Webjars.BIG_SCREEN_BG;
         List<StaticFileVO> bgList = Lists.newArrayList();
-        String urlPrefix = globalConfig.getFile().getUrlPrefix() + "bigScreenBg/";
+        String urlPrefix = bigScreenConfig.getFile().getUrlPrefix() + "bigScreenBg/";
         for (String fileName : staticFileList) {
             StaticFileVO fileVO = new StaticFileVO();
             fileVO.setUrl(urlPrefix + fileName);
