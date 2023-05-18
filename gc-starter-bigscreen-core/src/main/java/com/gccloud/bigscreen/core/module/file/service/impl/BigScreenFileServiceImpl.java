@@ -22,7 +22,7 @@ import java.util.Map;
  */
 @Service
 @Slf4j
-@ConditionalOnProperty(prefix = "gc.starter.component", name = "ISysFileService", havingValue = "SysFileServiceImpl", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "gc.starter.component", name = "ISysFileService", havingValue = "BigScreenFileServiceImpl", matchIfMissing = true)
 public class BigScreenFileServiceImpl extends ServiceImpl<BigScreenFileDao, BigScreenFileEntity> implements IBigScreenFileService {
 
     @Override

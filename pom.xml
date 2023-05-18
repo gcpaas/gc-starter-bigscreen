@@ -12,7 +12,7 @@
 
     <groupId>com.gccloud</groupId>
     <artifactId>gc-starter-bigscreen</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1.2023051802.Alpha</version>
 
     <packaging>pom</packaging>
     <description>基于G2Plot、Echarts的大屏设计服务端，具备设计、预览能力，支持MySQL、Oracle、PostgreSQL、Groovy等数据集接入
@@ -48,10 +48,15 @@
         <mybatis.version>3.5.6</mybatis.version>
         <mybatis-spring.version>2.0.6</mybatis-spring.version>
         <commons-lang3.version>3.10</commons-lang3.version>
+        <commons-collections4.version>4.1</commons-collections4.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
+        <hanlp.version>portable-1.7.8</hanlp.version>
         <hutool.version>5.3.1</hutool.version>
         <jackson.core.version>2.13.3</jackson.core.version>
         <json.version>20220320</json.version>
         <druid.version>1.1.23</druid.version>
+        <p6spy.version>3.9.0</p6spy.version>
+        <ojdbc8.version>12.2.0.1</ojdbc8.version>
         <mysql.version>5.1.49</mysql.version>
         <postgresql.version>42.3.3</postgresql.version>
         <clickhouse.version>0.4.6</clickhouse.version>
@@ -74,38 +79,38 @@
     <profiles>
         <profile>
             <!--注意,此id必须与setting.xml中指定的一致-->
-            <id>ossrh</id>
-<!--            <id>release</id>-->
+<!--            <id>ossrh</id>-->
+            <id>release</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <build>
                 <plugins>
                     <!--发布到中央SNAPSHOT仓库插件-->
-                    <plugin>
-                        <groupId>org.sonatype.plugins</groupId>
-                        <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.7</version>
-                        <extensions>true</extensions>
-                        <configuration>
-                            <serverId>ossrh</serverId>
-                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                        </configuration>
-                    </plugin>
-
-                    <!--发布到中央RELEASE仓库插件 -->
 <!--                    <plugin>-->
-<!--                        <groupId>org.apache.maven.plugins</groupId>-->
-<!--                        <artifactId>maven-release-plugin</artifactId>-->
-<!--                        <version>2.5.3</version>-->
+<!--                        <groupId>org.sonatype.plugins</groupId>-->
+<!--                        <artifactId>nexus-staging-maven-plugin</artifactId>-->
+<!--                        <version>1.6.7</version>-->
+<!--                        <extensions>true</extensions>-->
 <!--                        <configuration>-->
-<!--                            <autoVersionSubmodules>true</autoVersionSubmodules>-->
-<!--                            <useReleaseProfile>false</useReleaseProfile>-->
-<!--                            <releaseProfiles>release</releaseProfiles>-->
-<!--                            <goals>deploy</goals>-->
+<!--                            <serverId>ossrh</serverId>-->
+<!--                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>-->
+<!--                            <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
 <!--                        </configuration>-->
 <!--                    </plugin>-->
+
+                    <!--发布到中央RELEASE仓库插件 -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-release-plugin</artifactId>
+                        <version>2.5.3</version>
+                        <configuration>
+                            <autoVersionSubmodules>true</autoVersionSubmodules>
+                            <useReleaseProfile>false</useReleaseProfile>
+                            <releaseProfiles>release</releaseProfiles>
+                            <goals>deploy</goals>
+                        </configuration>
+                    </plugin>
 
                     <!--生成源码插件-->
                     <plugin>

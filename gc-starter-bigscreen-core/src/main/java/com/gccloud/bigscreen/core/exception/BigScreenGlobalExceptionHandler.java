@@ -21,13 +21,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestControllerAdvice
 @Slf4j
-@ConditionalOnProperty(prefix = "gc.starter.component", name = "GlobalExceptionHandler", havingValue = "GlobalExceptionHandler", matchIfMissing = true)
-public class GlobalExceptionHandler {
+@ConditionalOnProperty(prefix = "gc.starter.component", name = "GlobalExceptionHandler", havingValue = "BigScreenGlobalExceptionHandler", matchIfMissing = true)
+public class BigScreenGlobalExceptionHandler {
 
     @PostConstruct
     public void init() {
         log.info(BigScreenConst.Console.LINE);
-        log.info("初始化默认全局异常处理");
+        log.info("初始化默认全局异常处理，如果和项目中的全局异常处理冲突，可以在配置文件中配置gc.starter.component.BigScreenGlobalExceptionHandler=false禁用该全局异常处理");
         log.info(BigScreenConst.Console.LINE);
     }
 

@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.gccloud</groupId>
         <artifactId>gc-starter-bigscreen</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.1.2023051802.Alpha</version>
     </parent>
 
     <artifactId>gc-starter-bigscreen-server</artifactId>
@@ -15,6 +15,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
     <dependencies>
@@ -34,6 +35,14 @@
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <configuration>
                     <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <!--发布包的时候，该包不发布-->
+                    <skip>true</skip>
                 </configuration>
             </plugin>
             <plugin>
