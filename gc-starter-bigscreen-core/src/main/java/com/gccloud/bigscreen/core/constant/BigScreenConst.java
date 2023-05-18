@@ -68,12 +68,12 @@ public interface BigScreenConst {
         /**
          * 基础包路径
          */
-        String COMPONENT = "com.gccloud.bigscreen.core";
+        String COMPONENT = "com.gccloud.bigscreen";
 
         /**
          * dao路径
          */
-        String DAO =  "com.gccloud.bigscreen.core.**.dao";
+        String DAO = "com.gccloud.bigscreen.core.**.dao";
 
     }
 

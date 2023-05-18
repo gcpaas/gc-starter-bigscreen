@@ -52,6 +52,7 @@
         <commons-collections.version>3.2.2</commons-collections.version>
         <hanlp.version>portable-1.7.8</hanlp.version>
         <hutool.version>5.3.1</hutool.version>
+        <guava.version>20.0</guava.version>
         <jackson.core.version>2.13.3</jackson.core.version>
         <json.version>20220320</json.version>
         <druid.version>1.1.23</druid.version>
