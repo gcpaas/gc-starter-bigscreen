@@ -60,7 +60,7 @@
         <ojdbc8.version>12.2.0.1</ojdbc8.version>
         <mysql.version>5.1.49</mysql.version>
         <postgresql.version>42.3.3</postgresql.version>
-        <clickhouse.version>0.4.6</clickhouse.version>
+        <clickhouse.version>0.3.2</clickhouse.version>
         <commons-io.version>2.2</commons-io.version>
     </properties>
 
