@@ -138,113 +138,111 @@ public class OriginalTableServiceImpl extends ServiceImpl<OriginalTableDao, Orig
             }
         }
         DatasourceConfig datasourceConfig = datasourceConfigService.getById(sourceId);
-        //TODO
+        if (datasourceConfig == null) {
+            log.error("当前数据源不存在，数据源ID为：{}，原始表名称为：{}", origin.getSourceId(), origin.getTableName());
+            throw new GlobalException("当前数据源不存在");
+        }
         if (("Hive").equalsIgnoreCase(datasourceConfig.getSourceType())) {
             datasourceConfig.setUsername(null);
             datasourceConfig.setPassword(null);
         }
-        if (null != datasourceConfig) {
-            String countSql;
-            if (ReportConstant.DataRepeat.NOT_REPEAT.equals(repeatStatus)) {
-                countSql = "SELECT COUNT(1)AS count FROM \"" + tableName + "\"";
-                distinctFLag = "";
-            } else {
-                if (ReportDbType.ORACLE.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
-                    countSql = "SELECT COUNT(1)AS count FROM ( SELECT DISTINCT * FROM \"" + tableName + "\") ";
-                } else {
-                    countSql = "SELECT COUNT(1)AS count FROM ( SELECT DISTINCT * FROM \"" + tableName + "\")as " + tableName;
-                }
-                distinctFLag = " DISTINCT ";
-            }
-
-            log.info("当前数据集数据数据{}", repeatStatus.equals(ReportConstant.DataRepeat.DEFAULT) ? "已做去重处理" : "未做去重处理");
-            log.info("表结构详情count 语句构建完毕， {}", countSql);
-
-            Map<String, List<Map<String, Object>>> countValue = DBUtils.getClickHouseValue(countSql, new ArrayList<>(), datasourceConfig);
-            //Oracle数据库没有小写的count字段
-            Integer totalCount;
-            if (ReportDbType.ORACLE.getUpInfo().equals(datasourceConfig.getSourceType())) {
-                totalCount = Integer.valueOf(String.valueOf(countValue.get("dataPreview").get(0).get("COUNT")));
-            } else {
-                totalCount = Integer.valueOf(String.valueOf(countValue.get("dataPreview").get(0).get("count")));
-            }
-
-            Integer pageSize = origin.getSize();
-            Integer pageIndex = origin.getCurrent();
-            Integer prefix = (pageIndex - 1) * pageSize;
-
-            String sql;
-
-            // 是否有自选字段
-            if (StringUtils.isEmpty(fieldInfo)) {
-                sql = "SELECT " + distinctFLag + "* FROM \"" + tableName + "\"";
-            } else {
-                sql = "SELECT " + distinctFLag + fieldInfo + " FROM \"" + tableName + "\"";
-            }
-
-            // 根据不同数据源进行分页查询
-            if (ReportDbType.MYSQL.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType()) || ReportDbType.CLICKHOUSE.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
-                sql += " LIMIT " + prefix + "," + pageSize;
-            }
-            if (ReportDbType.TELEPG.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
-                sql += " LIMIT " + pageSize + " offset " + prefix;
-            }
+        String countSql;
+        if (ReportConstant.DataRepeat.NOT_REPEAT.equals(repeatStatus)) {
+            countSql = "SELECT COUNT(1) AS count FROM " + tableName;
+            distinctFLag = "";
+        } else {
             if (ReportDbType.ORACLE.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
-                sql = "SELECT * FROM ( SELECT TMP.*, ROWNUM ROW_ID FROM ( " + sql + " ) TMP WHERE ROWNUM <=" + (pageIndex * pageSize > totalCount ? totalCount : (pageIndex * pageSize)) + ") WHERE ROW_ID > " + prefix;
+                countSql = "SELECT COUNT(1) AS count FROM ( SELECT DISTINCT * FROM " + tableName + ") ";
+            } else {
+                countSql = "SELECT COUNT(1) AS count FROM ( SELECT DISTINCT * FROM " + tableName + ")as " + tableName;
             }
+            distinctFLag = " DISTINCT ";
+        }
 
-            log.info("表结构详情sql 构建完毕，{}", sql);
+        log.info("当前数据集数据数据{}", repeatStatus.equals(ReportConstant.DataRepeat.DEFAULT) ? "已做去重处理" : "未做去重处理");
+        log.info("表结构详情count 语句构建完毕， {}", countSql);
 
-            List<DatasetParamDto> datasetParams = new ArrayList<>();
-            Map<String, List<Map<String, Object>>> clickHouseValue = DBUtils.getClickHouseValue(sql, datasetParams, datasourceConfig);
+        Map<String, List<Map<String, Object>>> countValue = DBUtils.getClickHouseValue(countSql, new ArrayList<>(), datasourceConfig);
+        //Oracle数据库没有小写的count字段
+        Integer totalCount;
+        if (ReportDbType.ORACLE.getUpInfo().equals(datasourceConfig.getSourceType())) {
+            totalCount = Integer.valueOf(String.valueOf(countValue.get("dataPreview").get(0).get("COUNT")));
+        } else {
+            totalCount = Integer.valueOf(String.valueOf(countValue.get("dataPreview").get(0).get("count")));
+        }
 
-            Map<String, Object> valueMap = new HashMap<>();
-            clickHouseValue.forEach(valueMap::put);
+        Integer pageSize = origin.getSize();
+        Integer pageIndex = origin.getCurrent();
+        Integer prefix = (pageIndex - 1) * pageSize;
 
-            valueMap.put("totalCount", totalCount);
-            valueMap.put("typeName", typeName);
+        String sql;
 
-            List<Map<String, Object>> structurePreview = (List<Map<String, Object>>) valueMap.get("structurePreview");
+        // 是否有自选字段
+        if (StringUtils.isEmpty(fieldInfo)) {
+            sql = "SELECT " + distinctFLag + "* FROM " + tableName + "";
+        } else {
+            sql = "SELECT " + distinctFLag + fieldInfo + " FROM " + tableName;
+        }
+
+        // 根据不同数据源进行分页查询
+        if (ReportDbType.MYSQL.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType()) || ReportDbType.CLICKHOUSE.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
+            sql += " LIMIT " + prefix + "," + pageSize;
+        }
+        if (ReportDbType.TELEPG.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
+            sql += " LIMIT " + pageSize + " offset " + prefix;
+        }
+        if (ReportDbType.ORACLE.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
+            sql = "SELECT * FROM ( SELECT TMP.*, ROWNUM ROW_ID FROM ( " + sql + " ) TMP WHERE ROWNUM <=" + (pageIndex * pageSize > totalCount ? totalCount : (pageIndex * pageSize)) + ") WHERE ROW_ID > " + prefix;
+        }
+
+        log.info("表结构详情sql 构建完毕，{}", sql);
+
+        List<DatasetParamDto> datasetParams = new ArrayList<>();
+        Map<String, List<Map<String, Object>>> clickHouseValue = DBUtils.getClickHouseValue(sql, datasetParams, datasourceConfig);
+
+        Map<String, Object> valueMap = new HashMap<>();
+        clickHouseValue.forEach(valueMap::put);
+
+        valueMap.put("totalCount", totalCount);
+        valueMap.put("typeName", typeName);
+
+        List<Map<String, Object>> structurePreview = (List<Map<String, Object>>) valueMap.get("structurePreview");
 
 
-            Map<String, String> tableCommentMap = DBUtils.getTableFieldComment(tableName, datasourceConfig.getSourceType(), datasourceConfig);
+        Map<String, String> tableCommentMap = DBUtils.getTableFieldComment(tableName, datasourceConfig.getSourceType(), datasourceConfig);
+        structurePreview.forEach(r -> {
+            if (!CollectionUtils.isEmpty(tableCommentMap)) {
+                if (datasourceConfig.getSourceType().equals("Hive")) {
+                    String columnName = r.get("columnName").toString();
+                    if (tableCommentMap.get(columnName.substring(tableName.length() + 1)) != null) {
+                        r.put("fieldDesc", tableCommentMap.get(columnName.substring(tableName.length() + 1)));
+                    }
+                } else {
+                    if (tableCommentMap.get(String.valueOf(r.get("columnName"))) != null) {
+                        String desc = tableCommentMap.get(String.valueOf(r.get("columnName")));
+                        if ("null".equals(desc)) {
+                            desc = "";
+                        }
+                        r.put("fieldDesc", desc);
+                    }
+                }
+            }
+        });
+
+        if (!StringUtils.isEmpty(origin.getId())) {
+            JSONObject fieldDescObj = JSON.parseObject(fieldDesc);
             structurePreview.forEach(r -> {
-                if (!CollectionUtils.isEmpty(tableCommentMap)) {
-                    if (datasourceConfig.getSourceType().equals("Hive")) {
-                        String columnName = r.get("columnName").toString();
-                        if (tableCommentMap.get(columnName.substring(tableName.length() + 1)) != null) {
-                            r.put("fieldDesc", tableCommentMap.get(columnName.substring(tableName.length() + 1)));
-                        }
+                if (fieldDescObj != null) {
+                    if (fieldDescObj.has(String.valueOf(r.get("columnName"))) && !StringUtils.isEmpty(fieldDescObj.getString(String.valueOf(r.get("columnName"))))) {
+                        r.put("fieldDesc", fieldDescObj.getString(String.valueOf(r.get("columnName"))));
                     } else {
-                        if (tableCommentMap.get(String.valueOf(r.get("columnName"))) != null) {
-                            String desc = tableCommentMap.get(String.valueOf(r.get("columnName")));
-                            if ("null".equals(desc)) {
-                                desc = "";
-                            }
-                            r.put("fieldDesc", desc);
-                        }
+                        r.put("fieldDesc", String.valueOf(r.get("fieldDesc")));
                     }
                 }
             });
 
-            if (!StringUtils.isEmpty(origin.getId())) {
-                JSONObject fieldDescObj = JSON.parseObject(fieldDesc);
-                structurePreview.forEach(r -> {
-                    if (fieldDescObj != null) {
-                        if (fieldDescObj.has(String.valueOf(r.get("columnName"))) && !StringUtils.isEmpty(fieldDescObj.getString(String.valueOf(r.get("columnName"))))) {
-                            r.put("fieldDesc", fieldDescObj.getString(String.valueOf(r.get("columnName"))));
-                        } else {
-                            r.put("fieldDesc", String.valueOf(r.get("fieldDesc")));
-                        }
-                    }
-                });
-
-            }
-            return valueMap;
-        } else {
-            log.error("当前数据源不存在，数据源ID为：{}，原始表名称为：{}", origin.getSourceId(), origin.getTableName());
-            throw new GlobalException("当前数据源不存在");
         }
+        return valueMap;
     }
 
     @Override

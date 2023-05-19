@@ -52,7 +52,7 @@
 mybatis-plus:
   # mybatis plus xml配置文件扫描，多个通过分号隔开
   mapper-locations: classpath*:mapper/**/*.xml
-  # xml中别名文件扫描，多个通过分号隔开
+  # xml中别名文件扫描，多个通过逗号隔开
   type-handlers-package: com.gccloud
 spring:
   resources:
