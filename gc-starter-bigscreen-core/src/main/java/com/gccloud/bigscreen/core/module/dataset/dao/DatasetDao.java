@@ -35,25 +35,6 @@ public interface DatasetDao extends BigScreenBaseDao<DatasetEntity> {
             @Param("typeIds") Set<String> typeIds,
             @Param(("moduleCode")) String moduleCode);
 
-    /**
-     * oracles数据源获取数据集分页列表
-     *
-     * @param page
-     * @param name
-     * @param datasetType
-     * @param typeId
-     * @param typeIds
-     * @param moduleCode
-     * @return
-     */
-    Page<DatasetEntity> getOracleDataSetPage(
-            Page<DatasetEntity> page,
-            @Param("name") String name,
-            @Param("datasetType") String datasetType,
-            @Param("typeId") String typeId,
-            @Param("typeIds") Set<String> typeIds,
-            @Param(("moduleCode")) String moduleCode);
-
 
     /**
      * 获取数据集列表
@@ -72,20 +53,4 @@ public interface DatasetDao extends BigScreenBaseDao<DatasetEntity> {
             @Param("typeIds") Set<String> typeIds,
             @Param("moduleCode") String moduleCode);
 
-    /**
-     * oracles数据源获取数据集列表
-     *
-     * @param name
-     * @param datasetType
-     * @param typeId
-     * @param typeIds
-     * @param moduleCode
-     * @return
-     */
-    List<DatasetEntity> getOracleList(
-            @Param("name") String name,
-            @Param("datasetType") String datasetType,
-            @Param("typeId") String typeId,
-            @Param("typeIds") Set<String> typeIds,
-            @Param("moduleCode") String moduleCode);
 }

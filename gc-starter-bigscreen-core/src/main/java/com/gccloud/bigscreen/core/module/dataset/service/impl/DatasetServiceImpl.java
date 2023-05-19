@@ -1,11 +1,9 @@
 package com.gccloud.bigscreen.core.module.dataset.service.impl;
 
-import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.baomidou.mybatisplus.extension.toolkit.JdbcUtils;
-import com.gccloud.bigscreen.core.module.dataset.config.JdbcConfig;
+import com.gccloud.bigscreen.core.exception.GlobalException;
 import com.gccloud.bigscreen.core.module.dataset.constant.ReportConstant;
 import com.gccloud.bigscreen.core.module.dataset.dao.DatasetDao;
 import com.gccloud.bigscreen.core.module.dataset.dto.DataSetQueryDto;
@@ -17,10 +15,9 @@ import com.gccloud.bigscreen.core.module.dataset.service.CategoryTreeService;
 import com.gccloud.bigscreen.core.module.dataset.service.DatasetProcessService;
 import com.gccloud.bigscreen.core.module.dataset.service.DatasetService;
 import com.gccloud.bigscreen.core.module.dataset.service.OriginalTableService;
-import com.gccloud.bigscreen.core.exception.GlobalException;
+import com.gccloud.bigscreen.core.utils.GroovyUtils;
 import com.gccloud.bigscreen.core.utils.JSON;
 import com.gccloud.bigscreen.core.vo.PageVO;
-import com.gccloud.bigscreen.core.utils.GroovyUtils;
 import groovy.util.logging.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
@@ -63,25 +60,13 @@ public class DatasetServiceImpl extends ServiceImpl<DatasetDao, DatasetEntity> i
             Set<String> data = categoryTreeService.getAllChildren(idList, typeId);
             idList.addAll(data);
         }
-        Page<DatasetEntity> result;
-        String dbType = JdbcUtils.getDbType(JdbcConfig.currentUrl).getDb();
-        if (DbType.ORACLE.getDb().equals(dbType)) {
-            result = baseMapper.getOracleDataSetPage(
-                    page,
-                    dataSetQueryDto.getName(),
-                    dataSetQueryDto.getDatasetType(),
-                    dataSetQueryDto.getTypeId(),
-                    idList,
-                    dataSetQueryDto.getModuleCode());
-        } else {
-            result = baseMapper.getDataSetPage(
-                    page,
-                    dataSetQueryDto.getName(),
-                    dataSetQueryDto.getDatasetType(),
-                    dataSetQueryDto.getTypeId(),
-                    idList,
-                    dataSetQueryDto.getModuleCode());
-        }
+        Page<DatasetEntity> result = baseMapper.getDataSetPage(
+                page,
+                dataSetQueryDto.getName(),
+                dataSetQueryDto.getDatasetType(),
+                dataSetQueryDto.getTypeId(),
+                idList,
+                dataSetQueryDto.getModuleCode());
         return new PageVO<>(result);
     }
 
@@ -185,15 +170,6 @@ public class DatasetServiceImpl extends ServiceImpl<DatasetDao, DatasetEntity> i
             idList.add(typeId);
             Set<String> data = categoryTreeService.getAllChildren(idList, typeId);
             idList.addAll(data);
-        }
-        String dbType = JdbcUtils.getDbType(JdbcConfig.currentUrl).getDb();
-        if (DbType.ORACLE.getDb().equals(dbType)) {
-            return this.baseMapper.getOracleList(
-                    dataSetQueryDto.getName(),
-                    dataSetQueryDto.getDatasetType(),
-                    dataSetQueryDto.getTypeId(),
-                    idList,
-                    dataSetQueryDto.getModuleCode());
         }
         return this.baseMapper.getList(
                 dataSetQueryDto.getName(),

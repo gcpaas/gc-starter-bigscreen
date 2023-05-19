@@ -8,33 +8,10 @@
         WHERE
         rd.del_flag =0
         <if test="name != null and name != ''">
-            and rd.name like CONCAT('%',#{name},'%')
-        </if>
-        <if test="datasetType !=null and datasetType!= ''">
-            and rd.dataset_type =#{datasetType}
-        </if>
-        <if test="typeId != null and typeId != ''">
-            and rd.type_id in
-            <foreach item="item" collection="typeIds" index="index" open="(" separator="," close=")">
-                #{item}
-            </foreach>
-        </if>
-        <if test="moduleCode !=null and moduleCode!=''">
-            and rd.module_code =#{moduleCode}
-        </if>
-        order by rd.update_date desc
-    </select>
-
-    <select id="getOracleDataSetPage" resultType="com.gccloud.bigscreen.core.module.dataset.entity.DatasetEntity">
-        SELECT rd.id,rd.name,rd.dataset_type,rd.module_code,rd.editable,rd.type_id,rd.remark
-        FROM big_screen_dataset rd
-        WHERE
-        rd.del_flag =0
-        <if test="name != null and name != ''">
             and rd.name like CONCAT(CONCAT('%',#{name}),'%')
         </if>
         <if test="datasetType !=null and datasetType!= ''">
-            and rd.datasetType =#{datasetType}
+            and rd.dataset_type =#{datasetType}
         </if>
         <if test="typeId != null and typeId != ''">
             and rd.type_id in
@@ -55,7 +32,7 @@
         WHERE
         rd.del_flag =0
         <if test="name != null and name != ''">
-            and rd.name like CONCAT('%',#{name},'%')
+            and rd.name like CONCAT(CONCAT('%',#{name}),'%')
         </if>
         <if test="datasetType !=null and datasetType!= ''">
             and rd.dataset_type =#{datasetType}
@@ -71,26 +48,5 @@
         </if>
         order by rd.update_date desc
     </select>
-    <select id="getOracleList" resultType="com.gccloud.bigscreen.core.module.dataset.entity.DatasetEntity">
-        SELECT rd.id,rd.name,rd.dataset_type,rd.module_code,rd.editable
-        FROM big_screen_dataset rd
-        WHERE
-        rd.del_flag =0
-        <if test="name != null and name != ''">
-            and rd.name like CONCAT(CONCAT('%',#{name}),'%')
-        </if>
-        <if test="datasetType !=null and datasetType!= ''">
-            and rd.datasetType =#{datasetType}
-        </if>
-        <if test="typeId != null and typeId != ''">
-            and rd.type_id in
-            <foreach item="item" collection="typeIds" index="index" open="(" separator="," close=")">
-                #{item}
-            </foreach>
-        </if>
-        <if test="moduleCode !=null and moduleCode!=''">
-            and rd.module_code =#{moduleCode}
-        </if>
-        order by rd.update_date desc
-    </select>
+
 </mapper>
