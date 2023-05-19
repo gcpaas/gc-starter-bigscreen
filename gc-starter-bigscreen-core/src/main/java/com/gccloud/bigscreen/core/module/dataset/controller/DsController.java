@@ -40,7 +40,7 @@ public class DsController extends SuperController {
     @ApiOperation("数据集执行")
     @PostMapping("/getDataByDataSetId")
     public R<Object> getDataByDataSetId(@RequestBody ExecuteDto executeDto) {
-        return R.success(dsService.execute(executeDto.getDataSetId(), executeDto.getParams()));
+        return R.success(dsService.getData(executeDto.getDataSetId(), executeDto.getParams()));
     }
 
 }

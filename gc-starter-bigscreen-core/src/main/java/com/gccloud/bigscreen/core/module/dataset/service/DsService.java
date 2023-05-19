@@ -22,6 +22,15 @@ public interface DsService extends ISuperService<DataSetInfoVo> {
      */
     DataSetInfoVo getDataSetDetails(String id);
 
+
+    /**
+     * 通过 数据集ID 和 参数 查询数据
+     * @param dataSetId
+     * @param params
+     * @return
+     */
+    Object getData(String dataSetId, List<DatasetParamDto> params);
+
     /**
      * 通过数据集ID 和参数查询数据
      *

@@ -14,6 +14,7 @@ import com.gccloud.bigscreen.core.module.dataset.service.*;
 import com.gccloud.bigscreen.core.module.dataset.utils.DBUtils;
 import com.gccloud.bigscreen.core.module.dataset.utils.StoredProcedureUtils;
 import com.gccloud.bigscreen.core.module.dataset.vo.DataSetInfoVo;
+import com.gccloud.bigscreen.core.utils.GroovyUtils;
 import com.gccloud.bigscreen.core.utils.JSON;
 import com.gccloud.bigscreen.core.vo.PageVO;
 import lombok.extern.slf4j.Slf4j;
@@ -25,10 +26,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -189,13 +187,49 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
     }
 
     @Override
+    public Object getData(String dataSetId, List<DatasetParamDto> params) {
+        DatasetEntity datasetEntity = datasetService.getById(dataSetId);
+        if (null == datasetEntity) {
+            throw new GlobalException("数据集不存在");
+        }
+        String datasetType = datasetEntity.getDatasetType();
+        if (datasetType.equals(ReportConstant.DataSetType.JSON)) {
+            return this.executeJsonDataSet(dataSetId);
+        }
+        if (datasetType.equals(ReportConstant.DataSetType.SCRIPT)) {
+            String script = datasetEntity.getData();
+            return this.runScriptDataSet(script, params);
+        }
+        return this.execute(dataSetId, params);
+    }
+
+    /**
+     * 执行groovy脚本
+     * @param script
+     * @param params
+     * @return
+     */
+    public Object runScriptDataSet(String script, List<DatasetParamDto> params) {
+        Map<String, Object> paramMap = new HashMap<>(16);
+        if (!CollectionUtils.isEmpty(params)) {
+            params.forEach(r -> paramMap.put(r.getName(), r.getValue()));
+        }
+        Class clazz = GroovyUtils.buildClass(script);
+        if (clazz == null) {
+            throw new GlobalException("脚本编译异常");
+        }
+        return GroovyUtils.run(script, paramMap);
+    }
+
+    @Override
     public List<Map<String, Object>> execute(String dataSetId, List<DatasetParamDto> params) {
         DatasetEntity datasetEntity = datasetService.getById(dataSetId);
         if (null == datasetEntity) {
             throw new GlobalException("数据集不存在");
         }
         String sql;
-        if (datasetEntity.getDatasetType().equals(ReportConstant.DataSetType.CUSTOM) || datasetEntity.getDatasetType().equals(ReportConstant.DataSetType.STORED_PROCEDURE)) {
+        if (datasetEntity.getDatasetType().equals(ReportConstant.DataSetType.CUSTOM)
+                || datasetEntity.getDatasetType().equals(ReportConstant.DataSetType.STORED_PROCEDURE)) {
             DatasetProcessEntity datasetProcessEntity = datasetProcessService.getById(datasetEntity.getDatasetRelId());
             DatasourceConfig datasourceConfig = datasourceConfigService.getById(datasetProcessEntity.getSourceId());
 
@@ -314,6 +348,7 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
         }
     }
 
+    // TODO 入参优化
     @Override
     public Object executeJsonDataSet(String dataSetId) {
         DatasetEntity datasetEntity = datasetService.getById(dataSetId);
