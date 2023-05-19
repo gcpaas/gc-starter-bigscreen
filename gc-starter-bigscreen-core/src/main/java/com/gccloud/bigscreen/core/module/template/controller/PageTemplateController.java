@@ -29,7 +29,7 @@ import java.util.List;
  * @date 2023/3/20 16:38
  */
 @RestController
-@RequestMapping("//bigScreen/template")
+@RequestMapping("/bigScreen/template")
 @Api(tags = "页面模板")
 @ApiSort(value = 10)
 @Slf4j
