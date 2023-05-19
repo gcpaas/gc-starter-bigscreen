@@ -56,7 +56,7 @@ public interface IBasePageService extends ISuperService<PageEntity> {
     default boolean checkNameRepeat(PageEntity entity) {
         AssertUtils.isTrue(StringUtils.isNotBlank(entity.getName()), "名称不能为空");
         LambdaQueryWrapper<PageEntity> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(PageEntity::getAppCode, entity.getAppCode())
+        queryWrapper.eq(StringUtils.isNotBlank(entity.getAppCode()), PageEntity::getAppCode, entity.getAppCode())
                 .eq(PageEntity::getName, entity.getName())
                 .ne(StringUtils.isNotBlank(entity.getId()), PageEntity::getId, entity.getId());
         return getBaseDao().selectCount(queryWrapper) > 0;
@@ -72,7 +72,7 @@ public interface IBasePageService extends ISuperService<PageEntity> {
     default boolean checkNameRepeat(String appCode, String name, String id) {
         AssertUtils.isTrue(StringUtils.isNotBlank(name), "名称不能为空");
         LambdaQueryWrapper<PageEntity> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(PageEntity::getAppCode, appCode)
+        queryWrapper.eq(StringUtils.isNotBlank(appCode), PageEntity::getAppCode, appCode)
                 .eq(PageEntity::getName, name)
                 .ne(StringUtils.isNotBlank(id), PageEntity::getId, id);
         return getBaseDao().selectCount(queryWrapper) > 0;
@@ -87,7 +87,7 @@ public interface IBasePageService extends ISuperService<PageEntity> {
     default boolean checkCodeRepeat(PageEntity entity) {
         AssertUtils.isTrue(StringUtils.isNotBlank(entity.getCode()), "编码不能为空");
         LambdaQueryWrapper<PageEntity> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(PageEntity::getAppCode, entity.getAppCode())
+        queryWrapper.eq(StringUtils.isNotBlank(entity.getAppCode()), PageEntity::getAppCode, entity.getAppCode())
                 .eq(PageEntity::getCode, entity.getCode())
                 .ne(StringUtils.isNotBlank(entity.getId()), PageEntity::getId, entity.getId());
         return getBaseDao().selectCount(queryWrapper) > 0;
