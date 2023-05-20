@@ -72,7 +72,7 @@ public class BigScreenPageController {
     @ScreenPermission(permissions = {Permission.Screen.EDIT})
     @PostMapping("/add")
     @ApiOperation(value = "从空白新增大屏页", position = 20, produces = MediaType.APPLICATION_JSON_VALUE)
-    public R<String> add(@RequestBody BigScreenPageDTO bigScreenPageDTO) {
+    public R<String> add(BigScreenPageDTO bigScreenPageDTO) {
         ValidatorUtils.validateEntity(bigScreenPageDTO, Insert.class);
         bigScreenPageService.add(bigScreenPageDTO);
         if (StringUtils.isBlank(bigScreenPageDTO.getParentCode())) {
