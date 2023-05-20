@@ -38,7 +38,7 @@
 </dependency>
 ```
 
-点击<a href="https://mvnrepository.com/artifact/com.gccloud/gc-starter-bigscreen-core">查询最新版本号</a>
+点击<a href="https://central.sonatype.com/artifact/com.gccloud/gc-starter-bigscreen-core">查询最新版本号</a>
 
 ### 初始化SQL
 

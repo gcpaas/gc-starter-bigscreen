@@ -2,8 +2,10 @@ package com.gccloud.bigscreen.core.module.manage.controller;
 
 import com.gccloud.bigscreen.core.config.BigScreenConfig;
 import com.gccloud.bigscreen.core.constant.BigScreenConst;
+import com.gccloud.bigscreen.core.dto.SearchDTO;
 import com.gccloud.bigscreen.core.exception.GlobalException;
 import com.gccloud.bigscreen.core.module.manage.dto.BigScreenPageDTO;
+import com.gccloud.bigscreen.core.module.manage.dto.BigScreenSearchDTO;
 import com.gccloud.bigscreen.core.module.manage.vo.StaticFileVO;
 import com.gccloud.bigscreen.core.vo.MixinsResp;
 import com.gccloud.bigscreen.core.module.basic.entity.PageEntity;
@@ -13,6 +15,7 @@ import com.gccloud.bigscreen.core.utils.BeanConvertUtils;
 import com.gccloud.bigscreen.core.validator.ValidatorUtils;
 import com.gccloud.bigscreen.core.validator.group.Insert;
 import com.gccloud.bigscreen.core.validator.group.Update;
+import com.gccloud.bigscreen.core.vo.PageVO;
 import com.gccloud.bigscreen.core.vo.R;
 import com.gccloud.bigscreen.core.module.manage.service.IBigScreenPageService;
 import com.gccloud.bigscreen.core.utils.Webjars;
@@ -54,6 +57,17 @@ public class BigScreenPageController {
         resp.setCode(BigScreenConst.Response.Code.SUCCESS);
         return resp;
     }
+
+    @ScreenPermission(permissions = {Permission.Screen.VIEW})
+    @GetMapping("/page")
+    @ApiOperation(value = "大屏分页列表", position = 10, produces = MediaType.APPLICATION_JSON_VALUE)
+    public MixinsResp<PageVO<PageEntity>> page(@RequestBody BigScreenSearchDTO searchDTO) {
+        PageVO<PageEntity> page = bigScreenPageService.getByCategory(searchDTO);
+        MixinsResp<PageVO<PageEntity>> resp = new MixinsResp<PageVO<PageEntity>>().setData(page);
+        resp.setCode(BigScreenConst.Response.Code.SUCCESS);
+        return resp;
+    }
+
 
     @ScreenPermission(permissions = {Permission.Screen.EDIT})
     @PostMapping("/add")

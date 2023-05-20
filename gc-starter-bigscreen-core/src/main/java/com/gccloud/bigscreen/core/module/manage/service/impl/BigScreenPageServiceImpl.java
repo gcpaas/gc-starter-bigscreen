@@ -2,7 +2,9 @@ package com.gccloud.bigscreen.core.module.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gccloud.bigscreen.core.dto.SearchDTO;
 import com.gccloud.bigscreen.core.exception.GlobalException;
+import com.gccloud.bigscreen.core.module.manage.dto.BigScreenSearchDTO;
 import com.gccloud.bigscreen.core.utils.AssertUtils;
 import com.gccloud.bigscreen.core.utils.CodeGenerateUtils;
 import com.gccloud.bigscreen.core.module.manage.dto.BigScreenPageDTO;
@@ -15,6 +17,8 @@ import com.gccloud.bigscreen.core.module.template.entity.PageTemplateEntity;
 import com.gccloud.bigscreen.core.module.template.service.IPageTemplateService;
 import com.gccloud.bigscreen.core.utils.BeanConvertUtils;
 import com.gccloud.bigscreen.core.module.basic.dao.PageDao;
+import com.gccloud.bigscreen.core.utils.QueryWrapperUtils;
+import com.gccloud.bigscreen.core.vo.PageVO;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -101,6 +105,17 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
             chart.setDataSource(new DataSetDataSource());
         }
         return config;
+    }
+
+    @Override
+    public PageVO<PageEntity> getByCategory(BigScreenSearchDTO searchDTO) {
+        LambdaQueryWrapper<PageEntity> queryWrapper = QueryWrapperUtils.wrapperLike(new LambdaQueryWrapper<PageEntity>(), searchDTO.getSearchKey(), PageEntity::getName);
+        if (StringUtils.isNotBlank(searchDTO.getParentCode())) {
+            queryWrapper.eq(PageEntity::getParentCode, searchDTO.getParentCode());
+        }
+        queryWrapper.select(PageEntity::getId, PageEntity::getAppCode, PageEntity::getCode, PageEntity::getName, PageEntity::getParentCode);
+        PageVO<PageEntity> page = page(searchDTO, queryWrapper);
+        return page;
     }
 
 
