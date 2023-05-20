@@ -61,7 +61,7 @@ public class BigScreenPageController {
     @ScreenPermission(permissions = {Permission.Screen.VIEW})
     @GetMapping("/page")
     @ApiOperation(value = "大屏分页列表", position = 10, produces = MediaType.APPLICATION_JSON_VALUE)
-    public MixinsResp<PageVO<PageEntity>> page(@RequestBody BigScreenSearchDTO searchDTO) {
+    public MixinsResp<PageVO<PageEntity>> page(BigScreenSearchDTO searchDTO) {
         PageVO<PageEntity> page = bigScreenPageService.getByCategory(searchDTO);
         MixinsResp<PageVO<PageEntity>> resp = new MixinsResp<PageVO<PageEntity>>().setData(page);
         resp.setCode(BigScreenConst.Response.Code.SUCCESS);
@@ -72,7 +72,7 @@ public class BigScreenPageController {
     @ScreenPermission(permissions = {Permission.Screen.EDIT})
     @PostMapping("/add")
     @ApiOperation(value = "从空白新增大屏页", position = 20, produces = MediaType.APPLICATION_JSON_VALUE)
-    public R<String> add(BigScreenPageDTO bigScreenPageDTO) {
+    public R<String> add(@RequestBody BigScreenPageDTO bigScreenPageDTO) {
         ValidatorUtils.validateEntity(bigScreenPageDTO, Insert.class);
         bigScreenPageService.add(bigScreenPageDTO);
         if (StringUtils.isBlank(bigScreenPageDTO.getParentCode())) {
