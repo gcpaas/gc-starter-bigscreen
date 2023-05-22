@@ -88,6 +88,9 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
      */
     private String saveCoverPicture(String base64String, String fileName) {
         String fileUrl = "";
+        if (StringUtils.isBlank(base64String)) {
+            return fileUrl;
+        }
         try {
             // 解码base64字符串
             byte[] imageBytes = Base64.getDecoder().decode(base64String);
