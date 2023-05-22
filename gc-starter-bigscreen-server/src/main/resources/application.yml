@@ -32,3 +32,7 @@ mybatis-plus:
   mapper-locations: classpath*:mapper/**/*.xml
   # xml中别名文件扫描，多个通过分号隔开
   type-handlers-package: com.gccloud
+  global-config:
+    db-config:
+      #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"唯一ID";
+      id-type: 0

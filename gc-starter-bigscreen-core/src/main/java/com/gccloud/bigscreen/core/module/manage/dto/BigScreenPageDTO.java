@@ -39,6 +39,9 @@ public class BigScreenPageDTO extends BasePageDTO {
     @ApiModelProperty(notes = "大屏页图标")
     private String icon;
 
+    @ApiModelProperty(notes = "大屏首页封面")
+    private String coverPicture;
+
     @ApiModelProperty(notes = "大屏页颜色")
     private String iconColor;
 

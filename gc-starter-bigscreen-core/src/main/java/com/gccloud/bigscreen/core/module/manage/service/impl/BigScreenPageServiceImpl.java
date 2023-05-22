@@ -2,29 +2,35 @@ package com.gccloud.bigscreen.core.module.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.gccloud.bigscreen.core.dto.SearchDTO;
+import com.gccloud.bigscreen.core.config.BigScreenConfig;
+import com.gccloud.bigscreen.core.constant.PageDesignConstant;
 import com.gccloud.bigscreen.core.exception.GlobalException;
-import com.gccloud.bigscreen.core.module.manage.dto.BigScreenSearchDTO;
-import com.gccloud.bigscreen.core.utils.AssertUtils;
-import com.gccloud.bigscreen.core.utils.CodeGenerateUtils;
-import com.gccloud.bigscreen.core.module.manage.dto.BigScreenPageDTO;
-import com.gccloud.bigscreen.core.module.manage.service.IBigScreenPageService;
+import com.gccloud.bigscreen.core.module.basic.dao.PageDao;
+import com.gccloud.bigscreen.core.module.basic.entity.PageEntity;
 import com.gccloud.bigscreen.core.module.chart.bean.Chart;
 import com.gccloud.bigscreen.core.module.chart.components.datasource.DataSetDataSource;
-import com.gccloud.bigscreen.core.constant.PageDesignConstant;
-import com.gccloud.bigscreen.core.module.basic.entity.PageEntity;
+import com.gccloud.bigscreen.core.module.manage.dto.BigScreenPageDTO;
+import com.gccloud.bigscreen.core.module.manage.dto.BigScreenSearchDTO;
+import com.gccloud.bigscreen.core.module.manage.service.IBigScreenPageService;
 import com.gccloud.bigscreen.core.module.template.entity.PageTemplateEntity;
 import com.gccloud.bigscreen.core.module.template.service.IPageTemplateService;
+import com.gccloud.bigscreen.core.utils.AssertUtils;
 import com.gccloud.bigscreen.core.utils.BeanConvertUtils;
-import com.gccloud.bigscreen.core.module.basic.dao.PageDao;
+import com.gccloud.bigscreen.core.utils.CodeGenerateUtils;
 import com.gccloud.bigscreen.core.utils.QueryWrapperUtils;
 import com.gccloud.bigscreen.core.vo.PageVO;
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,11 +40,15 @@ import java.util.Objects;
  * @date 2023/3/13 11:05
  */
 @Service
+@Slf4j
 public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> implements IBigScreenPageService {
 
 
     @Resource
     private IPageTemplateService pageTemplateService;
+
+    @Resource
+    private BigScreenConfig bigScreenConfig;
 
     @Override
     public String add(BigScreenPageDTO bigScreenPageDTO) {
@@ -56,6 +66,11 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
             }
             chart.setCode(CodeGenerateUtils.generate(chart.getType() == null ? "chart" : chart.getType()));
         }
+        if (StringUtils.isBlank(bigScreenPageDTO.getCoverPicture())) {
+            String base64Str = bigScreenPageDTO.getCoverPicture();
+            String fileUrl = this.saveCoverPicture(base64Str, bigScreenPageDTO.getCode());
+            bigScreenPageDTO.setCoverPicture(fileUrl);
+        }
         PageEntity bigScreenEntity = BeanConvertUtils.convert(bigScreenPageDTO, PageEntity.class);
         bigScreenEntity.setConfig(bigScreenPageDTO);
         AssertUtils.isTrue(!checkNameRepeat(bigScreenEntity), "名称重复");
@@ -64,6 +79,35 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
         return bigScreenEntity.getCode();
     }
 
+
+    /**
+     * 将base64字符串转为图片文件存储
+     * @param base64String
+     * @param fileName
+     * @return
+     */
+    private String saveCoverPicture(String base64String, String fileName) {
+        String fileUrl = "";
+        try {
+            // 解码base64字符串
+            byte[] imageBytes = Base64.getDecoder().decode(base64String);
+            String basePath = bigScreenConfig.getFile().getBasePath();
+            // 不是/结尾，加上/
+            if (!basePath.endsWith("/") || !basePath.endsWith("\\")) {
+                basePath += File.separator;
+            }
+            // 保存为图片文件\
+            String filePath = basePath + "cover" + File.separator + fileName + ".png";
+            fileUrl = "cover" + File.separator + fileName + ".png";
+            FileOutputStream outputStream = new FileOutputStream(filePath);
+            outputStream.write(imageBytes);
+            outputStream.close();
+            log.info("大屏封面保存至：{}", filePath);
+        } catch (IOException e) {
+            log.error(ExceptionUtils.getStackTrace(e));
+        }
+        return fileUrl;
+    }
 
     @Override
     public String addByTemplate(BigScreenPageDTO bigScreenPageDTO) {
@@ -114,7 +158,22 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
             queryWrapper.eq(PageEntity::getParentCode, searchDTO.getParentCode());
         }
         queryWrapper.select(PageEntity::getId, PageEntity::getAppCode, PageEntity::getCode, PageEntity::getName, PageEntity::getParentCode);
+        queryWrapper.orderByDesc(PageEntity::getUpdateDate);
         PageVO<PageEntity> page = page(searchDTO, queryWrapper);
+        List<PageEntity> list = page.getList();
+        if (list == null || list.isEmpty()) {
+            return page;
+        }
+        String urlPrefix = bigScreenConfig.getFile().getUrlPrefix();
+        if (!urlPrefix.endsWith("/")) {
+            urlPrefix += "/";
+        }
+        for (PageEntity pageEntity : list) {
+            if (StringUtils.isBlank(pageEntity.getCoverPicture())) {
+                continue;
+            }
+            pageEntity.setCoverPicture(urlPrefix + pageEntity.getCoverPicture());
+        }
         return page;
     }
 
@@ -144,6 +203,7 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
         PageEntity screenEntity = this.getByCode(sourceCode);
         AssertUtils.isTrue(screenEntity != null, "源大屏页不存在，复制失败");
         BigScreenPageDTO config = (BigScreenPageDTO) screenEntity.getConfig();
+        screenEntity.setId(null);
         screenEntity.setCode(CodeGenerateUtils.generate("bigScreen"));
         screenEntity.setName(screenEntity.getName() + "_复制");
         config.setName(screenEntity.getName());
