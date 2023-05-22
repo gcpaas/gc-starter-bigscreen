@@ -99,6 +99,11 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
             if (!basePath.endsWith("/") || !basePath.endsWith("\\")) {
                 basePath += File.separator;
             }
+            // 检查目录是否存在，不存在则创建
+            File file = new File(basePath + "cover");
+            if (!file.exists()) {
+                file.mkdirs();
+            }
             // 保存为图片文件
             String filePath = basePath + "cover" + File.separator + fileName + ".png";
             fileUrl = "cover" + File.separator + fileName + ".png";
@@ -160,7 +165,7 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
         if (StringUtils.isNotBlank(searchDTO.getParentCode())) {
             queryWrapper.eq(PageEntity::getParentCode, searchDTO.getParentCode());
         }
-        queryWrapper.select(PageEntity::getId, PageEntity::getAppCode, PageEntity::getCode, PageEntity::getName, PageEntity::getParentCode);
+        queryWrapper.select(PageEntity::getId, PageEntity::getAppCode, PageEntity::getCode, PageEntity::getName, PageEntity::getParentCode, PageEntity::getCoverPicture);
         queryWrapper.orderByDesc(PageEntity::getUpdateDate);
         PageVO<PageEntity> page = page(searchDTO, queryWrapper);
         List<PageEntity> list = page.getList();
