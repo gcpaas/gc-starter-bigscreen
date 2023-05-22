@@ -26,6 +26,7 @@ CREATE TABLE `big_screen_page`
     `id`          bigint(64)   NOT NULL AUTO_INCREMENT,
     `name`        varchar(100) NOT NULL DEFAULT '' COMMENT '页面中文名称',
     `code`        varchar(255) NOT NULL DEFAULT '' COMMENT '页面编码，页面唯一标识符',
+    `cover_picture`        varchar(255) NOT NULL DEFAULT '' COMMENT '封面图片文件路径',
     `icon`        varchar(100) NOT NULL DEFAULT '' COMMENT '页面图标',
     `icon_color`  varchar(100) NOT NULL DEFAULT '' COMMENT '图标颜色',
     `type`        varchar(100) NOT NULL DEFAULT 'custom' COMMENT '页面类型',

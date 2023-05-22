@@ -1,5 +1,6 @@
 package com.gccloud.bigscreen.core.module.dataset.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.gccloud.bigscreen.core.entity.SuperEntity;
@@ -39,6 +40,7 @@ public class DatasourceConfig extends SuperEntity {
     private String username;
 
     @ApiModelProperty(value = "密码")
+    @TableField(updateStrategy = FieldStrategy.NOT_NULL)
     private String password;
 
     @ApiModelProperty(value = "编码")

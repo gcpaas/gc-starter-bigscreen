@@ -64,28 +64,34 @@ public class DatasourceConfigServiceImpl extends ServiceImpl<DatasourceConfigDao
         }
         queryWrapper.orderByDesc(DatasourceConfig::getCreateDate);
         PageVO<DatasourceConfig> page = this.page(dataSourceDto, queryWrapper);
-        PageVO pageVO = BeanConvertUtils.convert(page, PageVO.class);
-        pageVO.setList(page.getList());
-        return pageVO;
+        page.getList().forEach(datasourceConfig -> datasourceConfig.setPassword(null));
+        return page;
     }
 
     @Override
     public void addOrUpdateDataSource(DatasourceConfig datasourceConfig) {
+        // 新增
         if (StringUtils.isEmpty(datasourceConfig.getId())) {
             datasourceConfig.setPassword(DESUtils.getEncryptString(datasourceConfig.getPassword()));
             this.save(datasourceConfig);
-        } else {
-
-            try {
-                datasourceConfig.setDriverClassName(null);
-                //解密
-                DESUtils.getDecryptString(datasourceConfig.getPassword());
-            } catch (Exception e) {
-                log.error("解密异常，当前密码尚未进行加密 {}", e.getMessage());
-                datasourceConfig.setPassword(DESUtils.getEncryptString(datasourceConfig.getPassword()));
-            }
-            this.updateById(datasourceConfig);
+            return;
         }
+        // 修改
+        if (StringUtils.isBlank(datasourceConfig.getPassword())) {
+            // 密码为空，不修改密码
+            datasourceConfig.setPassword(null);
+            this.updateById(datasourceConfig);
+            return;
+        }
+        try {
+            datasourceConfig.setDriverClassName(null);
+            //解密
+            DESUtils.getDecryptString(datasourceConfig.getPassword());
+        } catch (Exception e) {
+            log.info("当前密码尚未进行加密，重新加密： {}", e.getMessage());
+            datasourceConfig.setPassword(DESUtils.getEncryptString(datasourceConfig.getPassword()));
+        }
+        this.updateById(datasourceConfig);
     }
 
     @Override
@@ -124,12 +130,16 @@ public class DatasourceConfigServiceImpl extends ServiceImpl<DatasourceConfigDao
         Connection connection = null;
         try {
             if (StringUtils.isEmpty(datasourceConfig.getId())) {
-                //新增时，密码尚未进行加密
+                // 新增时，密码尚未进行加密
                 datasourceConfig.setPassword(DESUtils.getEncryptString(datasourceConfig.getPassword()));
             } else {
                 DatasourceConfig config = this.getById(datasourceConfig.getId());
+                if (StringUtils.isBlank(datasourceConfig.getPassword())) {
+                    // 密码为空，则说明密码未修改，使用原密码
+                    datasourceConfig.setPassword(config.getPassword());
+                }
                 if (!config.getPassword().equals(datasourceConfig.getPassword())) {
-                    //密码被修改，需要进行加密
+                    // 密码被修改，需要进行加密
                     datasourceConfig.setPassword(DESUtils.getEncryptString(datasourceConfig.getPassword()));
                 }
             }
@@ -193,8 +203,7 @@ public class DatasourceConfigServiceImpl extends ServiceImpl<DatasourceConfigDao
                                   List<String> viewNameList,
                                   LambdaQueryWrapper<OriginalTable> queryWrapper,
                                   String sourceId,
-                                  List<Map<String, Object>> tableNameMapList
-    ) {
+                                  List<Map<String, Object>> tableNameMapList) {
         List<String> newViewNameList;
         if (size > 1000) {
             int insertTime = size / 500 + 1;
@@ -426,8 +435,7 @@ public class DatasourceConfigServiceImpl extends ServiceImpl<DatasourceConfigDao
             queryWrapper.eq(DatasourceConfig::getModuleCode, moduleCode);
         }
         List<DatasourceConfig> datasourceConfigs = this.list(queryWrapper);
-        List<DatasourceConfigVo> list = BeanConvertUtils.convert(datasourceConfigs, DatasourceConfigVo.class);
-        return list;
+        return BeanConvertUtils.convert(datasourceConfigs, DatasourceConfigVo.class);
     }
 
 }
