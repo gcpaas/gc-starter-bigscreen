@@ -93,13 +93,13 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
         }
         try {
             // 解码base64字符串
-            byte[] imageBytes = Base64.getDecoder().decode(base64String);
+            byte[] imageBytes = Base64.getDecoder().decode(base64String.replace("data:image/png;base64,", ""));
             String basePath = bigScreenConfig.getFile().getBasePath();
             // 不是/结尾，加上/
             if (!basePath.endsWith("/") || !basePath.endsWith("\\")) {
                 basePath += File.separator;
             }
-            // 保存为图片文件\
+            // 保存为图片文件
             String filePath = basePath + "cover" + File.separator + fileName + ".png";
             fileUrl = "cover" + File.separator + fileName + ".png";
             FileOutputStream outputStream = new FileOutputStream(filePath);
@@ -193,6 +193,10 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
                 }
                 chart.setCode(CodeGenerateUtils.generate(chart.getType() == null ? "chart" : chart.getType()));
             }
+        }
+        if (StringUtils.isNotBlank(bigScreenPageDTO.getCoverPicture())) {
+            String coverPicture = this.saveCoverPicture(bigScreenPageDTO.getCoverPicture(), bigScreenPageDTO.getCode());
+            bigScreenPageDTO.setCoverPicture(coverPicture);
         }
         PageEntity bigScreenEntity = BeanConvertUtils.convert(bigScreenPageDTO, PageEntity.class);
         bigScreenEntity.setConfig(bigScreenPageDTO);
