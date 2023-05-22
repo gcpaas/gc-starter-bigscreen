@@ -47,7 +47,7 @@ public class DBUtils extends DbCommon {
 
         List<DatasetParamDto> copyParamsList = new ArrayList<>(params);
         sql = updateParamsConfig(sql, copyParamsList);
-
+        log.info("执行sql:{}", sql);
         Map<String, List<Map<String, Object>>> map = new HashMap<>();
         List<Map<String, Object>> dataPreview = new ArrayList<>();
         List<Map<String, Object>> structurePreview = new ArrayList<>();
@@ -122,7 +122,7 @@ public class DBUtils extends DbCommon {
     public static Map<String, List<Map<String, Object>>> getOracleValue(String sql, List<DatasetParamDto> param, DatasourceConfig datasourceConfig) {
         List<DatasetParamDto> params = new ArrayList<>(param);
         sql = updateParamsConfig(sql, params);
-
+        log.info("执行sql:{}", sql);
         Map<String, List<Map<String, Object>>> map = new HashMap<>();
         List<Map<String, Object>> dataPreview = new ArrayList<>();
         List<Map<String, Object>> structurePreview = new ArrayList<>();

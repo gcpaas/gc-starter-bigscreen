@@ -173,6 +173,21 @@ public class BaseChartDataService {
                 param.setStatus(1);
                 params.add(param);
             });
+        } else {
+            // 组件配置的数据集参数为空，则使用数据集默认的参数
+            JSONArray setParams = dataSetInfoVo.getParams();
+            if (setParams == null) {
+                setParams = new JSONArray();
+            }
+            setParams.forEach(setParam -> {
+                JSONObject setParamMap = (JSONObject) setParam;
+                DatasetParamDto param = new DatasetParamDto();
+                param.setType(setParamMap.get("type").toString());
+                param.setName(setParamMap.get("name").toString());
+                param.setValue(setParamMap.get("defaultValue").toString());
+                param.setStatus(1);
+                params.add(param);
+            });
         }
         dataDTO.setColumnData(columnData);
         Object data;

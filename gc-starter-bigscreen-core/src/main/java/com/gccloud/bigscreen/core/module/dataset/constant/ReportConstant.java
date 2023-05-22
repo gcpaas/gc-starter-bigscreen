@@ -66,6 +66,38 @@ public interface ReportConstant {
     }
 
     /**
+     * SQL中的参数类型
+     */
+    interface SqlParamsType {
+
+        /**
+         * 字符串参数，在替换sql中参数值时，会固定在值两侧加上单引号
+         */
+        String STRING = "String";
+
+        /**
+         * 日期参数
+         */
+        String DATE = "Date";
+
+        /**
+         * 整型
+         */
+        String INTEGER = "Integer";
+
+        /**
+         * 长整型
+         */
+        String LONG = "Long";
+
+        /**
+         * 浮点型
+         */
+        String DOUBLE = "Double";
+
+    }
+
+    /**
      * 数据集加工类型
      */
     interface ProcessType {

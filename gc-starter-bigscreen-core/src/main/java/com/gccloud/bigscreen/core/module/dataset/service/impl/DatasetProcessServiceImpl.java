@@ -12,6 +12,7 @@ import com.gccloud.bigscreen.core.module.dataset.entity.DatasetProcessEntity;
 import com.gccloud.bigscreen.core.module.dataset.entity.DatasourceConfig;
 import com.gccloud.bigscreen.core.module.dataset.entity.OriginalTable;
 import com.gccloud.bigscreen.core.module.dataset.model.ViewSqlProcessModel;
+import com.gccloud.bigscreen.core.module.dataset.params.ParamsClient;
 import com.gccloud.bigscreen.core.module.dataset.service.DatasetProcessService;
 import com.gccloud.bigscreen.core.module.dataset.service.DatasetService;
 import com.gccloud.bigscreen.core.module.dataset.service.DatasourceConfigService;
@@ -53,6 +54,9 @@ public class DatasetProcessServiceImpl extends ServiceImpl<DatasetProcessDao, Da
 
     @Resource
     private DatasetService datasetService;
+
+    @Resource
+    private ParamsClient paramsClient;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -234,8 +238,8 @@ public class DatasetProcessServiceImpl extends ServiceImpl<DatasetProcessDao, Da
         List<DatasetParamDto> datasetParams = new ArrayList<>();
         if (!StringUtils.isEmpty(paramConfig)) {
             datasetParams = JSON.parseArray(paramConfig, DatasetParamDto.class);
+            datasetParams = paramsClient.handleParams(datasetParams);
         }
-
         if (StringUtils.isEmpty(sqlProcess)) {
             throw new GlobalException("测试sql脚本不能为空");
         }

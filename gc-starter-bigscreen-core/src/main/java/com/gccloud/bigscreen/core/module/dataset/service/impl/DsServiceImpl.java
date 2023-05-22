@@ -10,6 +10,7 @@ import com.gccloud.bigscreen.core.module.dataset.entity.DatasetEntity;
 import com.gccloud.bigscreen.core.module.dataset.entity.DatasetProcessEntity;
 import com.gccloud.bigscreen.core.module.dataset.entity.DatasourceConfig;
 import com.gccloud.bigscreen.core.module.dataset.entity.OriginalTable;
+import com.gccloud.bigscreen.core.module.dataset.params.ParamsClient;
 import com.gccloud.bigscreen.core.module.dataset.service.*;
 import com.gccloud.bigscreen.core.module.dataset.utils.DBUtils;
 import com.gccloud.bigscreen.core.module.dataset.utils.StoredProcedureUtils;
@@ -52,13 +53,16 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
     @Resource
     private DatasourceConfigService datasourceConfigService;
 
+    @Resource
+    private ParamsClient paramsClient;
+
 
     @Override
     public DataSetInfoVo getDataSetDetails(String id) {
         DataSetInfoVo dataSetInfoVo = new DataSetInfoVo();
         DatasetEntity datasetEntity = datasetService.getById(id);
         if (null == datasetEntity) {
-           return null;
+            return null;
         }
         dataSetInfoVo.setId(id);
         dataSetInfoVo.setName(datasetEntity.getName());
@@ -192,6 +196,7 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
         if (null == datasetEntity) {
             throw new GlobalException("数据集不存在");
         }
+        params = paramsClient.handleParams(params);
         String datasetType = datasetEntity.getDatasetType();
         if (datasetType.equals(ReportConstant.DataSetType.JSON)) {
             return this.executeJsonDataSet(dataSetId);
@@ -205,6 +210,7 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
 
     /**
      * 执行groovy脚本
+     *
      * @param script
      * @param params
      * @return
@@ -227,6 +233,7 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
         if (null == datasetEntity) {
             throw new GlobalException("数据集不存在");
         }
+        params = paramsClient.handleParams(params);
         String sql;
         if (datasetEntity.getDatasetType().equals(ReportConstant.DataSetType.CUSTOM)
                 || datasetEntity.getDatasetType().equals(ReportConstant.DataSetType.STORED_PROCEDURE)) {
@@ -236,28 +243,18 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
             if (datasetEntity.getDatasetType().equals(ReportConstant.DataSetType.CUSTOM)) {
                 sql = datasetProcessEntity.getSqlProcess();
                 return DBUtils.getClickHouseValue(sql, params, datasourceConfig).get("dataPreview");
-            } else {
-                Map<String, List<Map<String, Object>>> call = StoredProcedureUtils.call
-                        (
-                                null,
-                                null,
-                                datasetProcessEntity.getSqlProcess(),
-                                params, datasourceConfig,
-                                ReportConstant.MaxDataSize.QueryDetailMax.MAX_SIZE,
-                                false
-                        );
-                return call.get("dataPreview");
             }
-        } else {
-            OriginalTable originalTable = originalTableService.getById(datasetEntity.getDatasetRelId());
-            DatasourceConfig datasourceConfig = datasourceConfigService.getById(originalTable.getSourceId());
-            String fieldInfo = originalTable.getFieldInfo();
-            if (StringUtils.isEmpty(fieldInfo)) {
-                fieldInfo = "*";
-            }
-            sql = "select " + fieldInfo + " from " + originalTable.getTableName();
-            return DBUtils.getClickHouseValue(sql, params, datasourceConfig).get("dataPreview");
+            Map<String, List<Map<String, Object>>> call = StoredProcedureUtils.call(null, null, datasetProcessEntity.getSqlProcess(), params, datasourceConfig, ReportConstant.MaxDataSize.QueryDetailMax.MAX_SIZE, false);
+            return call.get("dataPreview");
         }
+        OriginalTable originalTable = originalTableService.getById(datasetEntity.getDatasetRelId());
+        DatasourceConfig datasourceConfig = datasourceConfigService.getById(originalTable.getSourceId());
+        String fieldInfo = originalTable.getFieldInfo();
+        if (StringUtils.isEmpty(fieldInfo)) {
+            fieldInfo = "*";
+        }
+        sql = "select " + fieldInfo + " from " + originalTable.getTableName();
+        return DBUtils.getClickHouseValue(sql, params, datasourceConfig).get("dataPreview");
     }
 
     @Override
@@ -269,6 +266,7 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
         if (CollectionUtils.isEmpty(params)) {
             params = new ArrayList<>();
         }
+        params = paramsClient.handleParams(params);
         String sql;
         int prefix = (current - 1) * size;
         if (datasetEntity.getDatasetType().equals(ReportConstant.DataSetType.CUSTOM) || datasetEntity.getDatasetType().equals(ReportConstant.DataSetType.STORED_PROCEDURE)) {

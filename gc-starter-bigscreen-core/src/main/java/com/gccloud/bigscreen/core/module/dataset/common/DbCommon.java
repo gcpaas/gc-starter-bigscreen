@@ -98,33 +98,34 @@ public class DbCommon {
      * @param params 参数配置
      */
     public static String updateParamsConfig(String sql, List<DatasetParamDto> params) {
-        if (!CollectionUtils.isEmpty(params)) {
-            for (DatasetParamDto param : params) {
-                if (null != param.getStatus()) {
-                    if (ReportConstant.SqlParamsStatus.VARIABLE.equals(param.getStatus())) {
-//                        checkParamsCode(sql, param.getName());
-                        if (sql.contains("<" + param.getName() + ">") && sql.contains("</" + param.getName() + ">")) {
-                            if (StringUtils.isEmpty(param.getValue())) {
-                                // 具备非空判断标签中的内容给去掉
-                                sql = ReportUtils.subRangeString(sql, "<" + param.getName() + ">", "</" + param.getName() + ">");
-                            } else {
-                                sql = sql
-                                        .replaceAll("<" + param.getName() + ">", "")
-                                        .replaceAll("</" + param.getName() + ">", "");
-                                sql = parameterReplace(param, sql);
-                            }
-                        } else {
-                            // 不具备非空判断标签
-                            sql = parameterReplace(param, sql);
-                        }
-                    }
-                }
-            }
-            params.removeIf(next -> next.getStatus() != null && next.getStatus().equals(ReportConstant.SqlParamsStatus.VARIABLE));
-            return sql;
-        } else {
+        if (CollectionUtils.isEmpty(params)) {
             return sql;
         }
+        for (DatasetParamDto param : params) {
+            if (null == param.getStatus()) {
+                continue;
+            }
+            if (!ReportConstant.SqlParamsStatus.VARIABLE.equals(param.getStatus())) {
+                continue;
+            }
+//            checkParamsCode(sql, param.getName());
+            if (sql.contains("<" + param.getName() + ">") && sql.contains("</" + param.getName() + ">")) {
+                if (StringUtils.isEmpty(param.getValue())) {
+                    // 具备非空判断标签中的内容给去掉
+                    sql = ReportUtils.subRangeString(sql, "<" + param.getName() + ">", "</" + param.getName() + ">");
+                } else {
+                    sql = sql
+                            .replaceAll("<" + param.getName() + ">", "")
+                            .replaceAll("</" + param.getName() + ">", "");
+                    sql = parameterReplace(param, sql);
+                }
+            } else {
+                // 不具备非空判断标签
+                sql = parameterReplace(param, sql);
+            }
+        }
+        params.removeIf(next -> next.getStatus() != null && next.getStatus().equals(ReportConstant.SqlParamsStatus.VARIABLE));
+        return sql;
     }
 
     /**

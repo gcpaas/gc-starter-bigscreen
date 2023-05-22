@@ -1,5 +1,6 @@
 package com.gccloud.bigscreen.core.module.dataset.dto;
-
+import com.gccloud.bigscreen.core.module.dataset.constant.ReportConstant;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -9,8 +10,22 @@ import lombok.Data;
  */
 @Data
 public class DatasetParamDto {
+
+    @ApiModelProperty(value = "参数名称")
     private String name;
+
+    /**
+     * 参考：{@link ReportConstant.SqlParamsType}
+     */
+    @ApiModelProperty(value = "参数类型")
     private String type;
+
+    @ApiModelProperty(value = "参数值")
     private String value;
+
+    /**
+     * 参考：{@link ReportConstant.SqlParamsStatus}
+     */
+    @ApiModelProperty(value = "参数状态")
     private Integer status;
 }

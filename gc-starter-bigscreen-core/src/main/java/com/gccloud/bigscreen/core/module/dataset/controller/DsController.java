@@ -1,17 +1,21 @@
 package com.gccloud.bigscreen.core.module.dataset.controller;
 
+import com.gccloud.bigscreen.core.module.dataset.dto.DatasetParamDto;
 import com.gccloud.bigscreen.core.module.dataset.dto.ExecuteDto;
 import com.gccloud.bigscreen.core.module.dataset.service.DsService;
 import com.gccloud.bigscreen.core.module.dataset.vo.DataSetInfoVo;
+import com.gccloud.bigscreen.core.utils.JSON;
 import com.gccloud.bigscreen.core.vo.R;
 import com.gccloud.bigscreen.core.controller.SuperController;
 import com.gccloud.bigscreen.core.permission.Permission;
 import com.gccloud.bigscreen.core.permission.ScreenPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.json.JSONArray;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 /**
@@ -40,6 +44,15 @@ public class DsController extends SuperController {
     @ApiOperation("数据集执行")
     @PostMapping("/getDataByDataSetId")
     public R<Object> getDataByDataSetId(@RequestBody ExecuteDto executeDto) {
+        if (executeDto.getParams() == null || executeDto.getParams().size() == 0) {
+            // 当未传入参数时，从数据集中获取默认参数配置
+            DataSetInfoVo dataSetDetails = dsService.getDataSetDetails(executeDto.getDataSetId());
+            JSONArray params = dataSetDetails.getParams();
+            if (params != null && params.length() > 0) {
+                List<DatasetParamDto> datasetParams = JSON.parseArray(JSON.toJSONString(params), DatasetParamDto.class);
+                executeDto.setParams(datasetParams);
+            }
+        }
         return R.success(dsService.getData(executeDto.getDataSetId(), executeDto.getParams()));
     }
 
