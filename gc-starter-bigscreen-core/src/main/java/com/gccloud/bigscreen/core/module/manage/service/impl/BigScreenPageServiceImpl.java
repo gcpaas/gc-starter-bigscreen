@@ -182,7 +182,7 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
             if (StringUtils.isBlank(pageEntity.getCoverPicture())) {
                 continue;
             }
-            pageEntity.setCoverPicture(urlPrefix + pageEntity.getCoverPicture());
+            pageEntity.setCoverPicture(urlPrefix + pageEntity.getCoverPicture().replace("\\", "/"));
         }
         return page;
     }
