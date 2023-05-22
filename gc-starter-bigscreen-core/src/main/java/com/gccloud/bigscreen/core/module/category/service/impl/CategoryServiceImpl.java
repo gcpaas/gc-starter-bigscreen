@@ -66,7 +66,7 @@ public class CategoryServiceImpl extends ServiceImpl<PageDao, PageEntity> implem
     public List<CategoryVO> getList(CategorySearchDTO searchDTO) {
         List<PageEntity> list = getByAppCode(searchDTO);
         List<CategoryVO> voList = Lists.newArrayList();
-        list.sort(Comparator.comparing(SuperEntity::getCreateDate));
+        list.sort(Comparator.comparing(PageEntity::getOrderNum));
         for (PageEntity categoryEntity : list) {
             CategoryVO vo = BeanConvertUtils.convert(categoryEntity, CategoryVO.class);
             voList.add(vo);
