@@ -82,6 +82,7 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
 
     /**
      * 将base64字符串转为图片文件存储
+     *
      * @param base64String
      * @param fileName
      * @return
@@ -165,6 +166,7 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
         if (StringUtils.isNotBlank(searchDTO.getParentCode())) {
             queryWrapper.eq(PageEntity::getParentCode, searchDTO.getParentCode());
         }
+        queryWrapper.eq(PageEntity::getType, PageDesignConstant.Type.BIG_SCREEN);
         queryWrapper.select(PageEntity::getId, PageEntity::getAppCode, PageEntity::getCode, PageEntity::getName, PageEntity::getParentCode, PageEntity::getCoverPicture);
         queryWrapper.orderByDesc(PageEntity::getUpdateDate);
         PageVO<PageEntity> page = page(searchDTO, queryWrapper);
