@@ -162,12 +162,12 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
 
     @Override
     public PageVO<PageEntity> getByCategory(BigScreenSearchDTO searchDTO) {
-        LambdaQueryWrapper<PageEntity> queryWrapper = QueryWrapperUtils.wrapperLike(new LambdaQueryWrapper<PageEntity>(), searchDTO.getSearchKey(), PageEntity::getName);
+        LambdaQueryWrapper<PageEntity> queryWrapper = QueryWrapperUtils.wrapperLike(new LambdaQueryWrapper<>(), searchDTO.getSearchKey(), PageEntity::getName);
         if (StringUtils.isNotBlank(searchDTO.getParentCode())) {
             queryWrapper.eq(PageEntity::getParentCode, searchDTO.getParentCode());
         }
         queryWrapper.eq(PageEntity::getType, PageDesignConstant.Type.BIG_SCREEN);
-        queryWrapper.select(PageEntity::getId, PageEntity::getAppCode, PageEntity::getCode, PageEntity::getName, PageEntity::getParentCode, PageEntity::getCoverPicture);
+        queryWrapper.select(PageEntity::getId, PageEntity::getAppCode, PageEntity::getCode, PageEntity::getName, PageEntity::getParentCode, PageEntity::getCoverPicture, PageEntity::getUpdateDate);
         queryWrapper.orderByDesc(PageEntity::getUpdateDate);
         PageVO<PageEntity> page = page(searchDTO, queryWrapper);
         List<PageEntity> list = page.getList();
