@@ -138,7 +138,7 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
         if (StringUtils.isBlank(name)) {
             int i = 0;
             String newName = pageTemplate.getName() + "副本";
-            while (checkNameRepeat(bigScreenPageDTO.getAppCode(), newName, null)) {
+            while (checkNameRepeat(bigScreenPageDTO.getAppCode(), newName, null, "bigScreen")) {
                 i++;
                 newName = pageTemplate.getName() + "副本" + i;
             }
