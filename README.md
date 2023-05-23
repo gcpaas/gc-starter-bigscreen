@@ -24,9 +24,9 @@
 
 ## 📦 如何使用
 
-下面介绍如何在SpringBoot项目中集成大屏
+下面介绍如何在SpringBoot项目中集成大屏，[📘前端大屏地址在这里](https://github.com/gcpaas/gc-starter-bigscreen-ui)
 
-### 引入依赖
+### 1. 引入依赖
 
 在项目的`pom.xml`文件`<dependencies>`标签中加入以下内容:
 
@@ -40,11 +40,11 @@
 
 点击<a href="https://central.sonatype.com/artifact/com.gccloud/gc-starter-bigscreen-core">查询最新版本号</a>
 
-### 初始化SQL
+### 2. 初始化SQL
 
 执行 doc/init.sql 文件
 
-### 修改配置文件
+### 3. 修改配置文件
 
 修改`application-${spring.profiles.active}.yml`配置信息，其中 `${spring.profiles.active}`配置在`application.yml`文件中定义
 
@@ -76,7 +76,7 @@ gc:
 
 以上配置根据项目实际情况进行合并
 
-### 启动类配置扫描包路径
+### 4. 启动类配置扫描包路径
 
 ```java
 @SpringBootApplication(scanBasePackages = {BigScreenConst.ScanPackage.COMPONENT})
@@ -87,13 +87,9 @@ gc:
 
 <a href="http://gcpaas.gccloud.com/bigScreen"> http://gcpaas.gccloud.com/bigScreen </a>
 
-
-
-## 源码启动
-xxx
-
 ## 联系我们
 <img alt="Email" src="https://img.shields.io/badge/Email-tech@ustcinfo.com-blue.svg">
+
 <img alt="QQ群" src="https://img.shields.io/badge/QQ群-322302395-blue.svg">
 
 ## License
