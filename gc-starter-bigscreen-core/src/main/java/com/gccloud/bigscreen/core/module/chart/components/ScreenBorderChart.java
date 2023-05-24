@@ -55,6 +55,17 @@ public class ScreenBorderChart extends Chart {
         @ApiModelProperty(notes = "透明度")
         private Integer opacity;
 
+        @ApiModelProperty(notes = "字体大小")
+        private Integer fontSize;
+
+        @ApiModelProperty(notes = "字体颜色")
+        private String fontColor;
+
+        @ApiModelProperty(notes = "字体粗细")
+        private Integer fontWeight;
+
+        @ApiModelProperty(notes = "中心文本")
+        private String text;
 
 
     }
