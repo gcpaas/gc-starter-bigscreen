@@ -29,13 +29,13 @@ public class ScreenDigitalFlopChart extends Chart {
         private String bgColor;
 
         @ApiModelProperty(notes = "字体大小")
-        private String fontSize;
+        private Integer fontSize;
 
         @ApiModelProperty(notes = "宽度")
-        private String width;
+        private Integer width;
 
         @ApiModelProperty(notes = "圆角")
-        private String borderRadius;
+        private Integer borderRadius;
 
         @ApiModelProperty(notes = "格式化")
         private Integer formatter;
