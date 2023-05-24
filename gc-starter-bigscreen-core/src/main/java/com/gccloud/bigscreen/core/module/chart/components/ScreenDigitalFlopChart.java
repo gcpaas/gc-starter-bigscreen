@@ -22,34 +22,33 @@ public class ScreenDigitalFlopChart extends Chart {
     @Data
     public static class Customize {
 
-        @ApiModelProperty(notes = "内容")
-        private String content;
+        @ApiModelProperty(notes = "字体颜色")
+        private String color;
 
-        @ApiModelProperty(notes = "保留小数位数")
-        private Integer toFixed;
+        @ApiModelProperty(notes = "背景颜色")
+        private String bgColor;
 
-        @ApiModelProperty(notes = "文本对齐方式")
-        private String textAlign;
+        @ApiModelProperty(notes = "字体大小")
+        private String fontSize;
 
-        @ApiModelProperty(notes = "行间距")
-        private Integer rowGap;
+        @ApiModelProperty(notes = "宽度")
+        private String width;
+
+        @ApiModelProperty(notes = "圆角")
+        private String borderRadius;
 
         @ApiModelProperty(notes = "格式化")
         private String formatter;
 
-        @ApiModelProperty(notes = "样式")
-        private Style style = new Style();
+        @ApiModelProperty(notes = "字体粗细")
+        private String fontWeight;
 
-    }
+        @ApiModelProperty(notes = "左侧插槽")
+        private String slotLeft;
 
-    @Data
-    public static class Style {
+        @ApiModelProperty(notes = "右侧插槽")
+        private String slotRight;
 
-        @ApiModelProperty(notes = "字体大小")
-        private Integer fontSize;
-
-        @ApiModelProperty(notes = "字体颜色")
-        private String fill;
     }
 
 }
