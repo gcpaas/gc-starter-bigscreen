@@ -38,7 +38,7 @@ public class ScreenDigitalFlopChart extends Chart {
         private String borderRadius;
 
         @ApiModelProperty(notes = "格式化")
-        private String formatter;
+        private Integer formatter;
 
         @ApiModelProperty(notes = "字体粗细")
         private String fontWeight;
