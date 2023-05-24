@@ -26,7 +26,7 @@ import java.util.Objects;
 @Component
 public class LoginRequiredAspect {
     @Resource
-    private TokenClient tokenClient;
+    private PermissionClient tokenClient;
 
     @Before("@annotation(loginRequired) || @within(loginRequired)")
     public void doBefore(JoinPoint joinPoint, ScreenPermission loginRequired) {
@@ -47,7 +47,7 @@ public class LoginRequiredAspect {
             // 获取权限
             String[] permissions = methodAnnotation != null ? methodAnnotation.permissions() : classAnnotation.permissions();
             // 校验token
-            boolean verify = tokenClient.verifyPermission(request, permissions);
+            boolean verify = tokenClient.verifyApiPermission(request, permissions);
             if (!verify) {
                 throw new GlobalException("请求权限不足");
             }
