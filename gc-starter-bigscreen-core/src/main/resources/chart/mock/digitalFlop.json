@@ -1,8 +1,18 @@
 {
     "success": false,
     "data": [
-      72812
+        {
+            "value": 72812
+        }
     ],
     "columnData": {
+        "num": {
+            "type": "bigint",
+            "tableName": "",
+            "originalColumn": "value",
+            "aggregate": "",
+            "alias": "value",
+            "remark": "总数"
+        }
     }
 }
