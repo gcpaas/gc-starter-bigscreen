@@ -82,6 +82,11 @@ public interface PageDesignConstant {
              * 图标
              */
             String SVGS = "svgs";
+
+            /**
+             * 数字翻牌器
+             */
+            String DIGITAL_FLOP = "digitalFlop";
         }
 
         interface Operator {
