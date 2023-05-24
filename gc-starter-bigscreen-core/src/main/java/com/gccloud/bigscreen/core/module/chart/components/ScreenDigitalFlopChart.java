@@ -1,5 +1,6 @@
 package com.gccloud.bigscreen.core.module.chart.components;
 
+import com.gccloud.bigscreen.core.module.chart.bean.Chart;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -9,7 +10,7 @@ import lombok.Data;
  * @date 2023/5/24 14:36
  */
 @Data
-public class ScreenDigitalFlopChart {
+public class ScreenDigitalFlopChart extends Chart {
 
     @ApiModelProperty(notes = "个性化")
     private Customize customize = new Customize();
