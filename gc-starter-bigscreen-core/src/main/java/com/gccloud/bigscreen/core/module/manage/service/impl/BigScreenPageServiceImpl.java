@@ -93,8 +93,10 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
             return fileUrl;
         }
         try {
+            // 去除base64字符串前缀，从初始位置，到逗号位置
+            base64String = base64String.substring(base64String.indexOf(",") + 1);
             // 解码base64字符串
-            byte[] imageBytes = Base64.getDecoder().decode(base64String.replace("data:image/png;base64,", ""));
+            byte[] imageBytes = Base64.getDecoder().decode(base64String);
             String basePath = bigScreenConfig.getFile().getBasePath();
             // 不是/结尾，加上/
             if (!basePath.endsWith("/") || !basePath.endsWith("\\")) {
