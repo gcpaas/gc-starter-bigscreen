@@ -87,6 +87,10 @@ public class BaseChartDataService {
             HashMap map = (HashMap) jsonContent;
             data.add(map);
         }
+        if (jsonContent instanceof JSONObject) {
+            JSONObject jsonObject = (JSONObject) jsonContent;
+            data.add(jsonObject.toMap());
+        }
         HashMap<String, ChartDataVO.ColumnData> columnData = Maps.newHashMap();
         JSONArray fields = dataSetInfo.getFields();
         fields.forEach(field -> {
