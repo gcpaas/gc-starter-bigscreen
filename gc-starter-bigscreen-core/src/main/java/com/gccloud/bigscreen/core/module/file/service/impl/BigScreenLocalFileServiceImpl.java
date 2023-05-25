@@ -117,6 +117,7 @@ public class BigScreenLocalFileServiceImpl implements IBigScreenOssService {
     @Override
     public void delete(String fileId) {
         BigScreenFileEntity fileEntity = sysFileService.getById(fileId);
+        sysFileService.removeById(fileId);
         if (fileEntity == null) {
             log.error("删除的文件不存在");
             return;
@@ -128,6 +129,5 @@ public class BigScreenLocalFileServiceImpl implements IBigScreenOssService {
             return;
         }
         file.delete();
-        sysFileService.removeById(fileId);
     }
 }
