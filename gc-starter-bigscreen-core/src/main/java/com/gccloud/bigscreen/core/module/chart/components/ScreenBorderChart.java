@@ -67,6 +67,11 @@ public class ScreenBorderChart extends Chart {
         @ApiModelProperty(notes = "中心文本")
         private String text;
 
+        @ApiModelProperty(notes = "长度")
+        private Integer height;
+
+        @ApiModelProperty(notes = "宽度")
+        private Integer width;
 
     }
 
