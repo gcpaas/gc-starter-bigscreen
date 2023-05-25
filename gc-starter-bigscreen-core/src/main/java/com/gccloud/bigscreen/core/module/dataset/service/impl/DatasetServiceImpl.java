@@ -18,8 +18,9 @@ import com.gccloud.bigscreen.core.module.dataset.service.OriginalTableService;
 import com.gccloud.bigscreen.core.utils.GroovyUtils;
 import com.gccloud.bigscreen.core.utils.JSON;
 import com.gccloud.bigscreen.core.vo.PageVO;
-import groovy.util.logging.Slf4j;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.StopWatch;
 import org.json.JSONObject;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -147,7 +148,13 @@ public class DatasetServiceImpl extends ServiceImpl<DatasetDao, DatasetEntity> i
         if (clazz == null) {
             throw new GlobalException("脚本编译异常");
         }
-        return GroovyUtils.run(script, paramMap);
+        // 计时
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        Object result = GroovyUtils.run(script, paramMap);
+        stopWatch.stop();
+        log.info("脚本执行耗时：{}ms", stopWatch.getTime());
+        return result;
     }
 
     @Override

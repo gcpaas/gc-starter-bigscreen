@@ -44,7 +44,7 @@ public class BigScreenLocalFileServiceImpl implements IBigScreenOssService {
         // 提取文件后缀名
         String extension = FilenameUtils.getExtension(originalFilename);
         FileConfig fileConfig = bigScreenConfig.getFile();
-        if (!fileConfig.getAllowedFileExtensionName().contains(extension)) {
+        if (!fileConfig.getAllowedFileExtensionName().contains("*") && !fileConfig.getAllowedFileExtensionName().contains(extension)) {
             log.error("不支持 {} 文件类型",extension);
             throw new GlobalException("不支持的文件类型");
         }
