@@ -29,7 +29,9 @@
 
 ## 文档
 
-[📘中文文档](https://www.yuque.com/chuinixiongkou/bigscreen/index)
+* [使用手册、二次开发、部署手册、常见问题](https://www.yuque.com/chuinixiongkou/bigscreen/index)
+* [前端代码仓库(GitHub)](https://github.com/gcpaas/gc-starter-bigscreen-ui)、[前端代码仓库(码云)](https://gitee.com/gcpaas/gc-starter-bigscreen-ui)
+* [后端代码仓库(GitHub)](https://github.com/gcpaas/gc-starter-bigscreen)、 [后端代码仓库(码云)](https://gitee.com/gcpaas/gc-starter-bigscreen)
 
 -------------------------------------------------------------------------------
 
@@ -98,10 +100,15 @@ gc:
 
 <a href="http://gcpaas.gccloud.com/bigScreen"> http://gcpaas.gccloud.com/bigScreen </a>
 
+
 ## 联系我们
 <img alt="Email" src="https://img.shields.io/badge/Email-tech@ustcinfo.com-blue.svg">
 
 <img alt="QQ群" src="https://img.shields.io/badge/QQ群-322302395-blue.svg">
+
+<p>
+    <img alt="logo" width="200" src="./doc/images/qq.jpeg">
+</p>
 
 ## License
 
