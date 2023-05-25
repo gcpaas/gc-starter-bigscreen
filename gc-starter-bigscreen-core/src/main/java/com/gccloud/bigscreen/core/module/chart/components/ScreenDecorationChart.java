@@ -48,6 +48,12 @@ public class ScreenDecorationChart extends Chart {
 
         @ApiModelProperty(notes = "字体颜色")
         private String color;
+
+        @ApiModelProperty(notes = "边框颜色")
+        private String borderColor;
+
+        @ApiModelProperty(notes = "边框宽度")
+        private Integer borderWidth;
     }
 
 }
