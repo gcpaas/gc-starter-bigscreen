@@ -44,7 +44,7 @@
 
     <build>
         <!-- 定义打包后的名称 -->
-        <finalName>bigScreen</finalName>
+        <finalName>gc-starter-bigscreen-server</finalName>
         <plugins>
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
