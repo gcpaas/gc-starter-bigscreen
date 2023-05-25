@@ -49,6 +49,17 @@ public class ScreenDigitalFlopChart extends Chart {
         @ApiModelProperty(notes = "右侧插槽")
         private String slotRight;
 
+        @ApiModelProperty(notes = "右侧margin")
+        private Integer marginRight;
+
+        @ApiModelProperty(notes = "数字位数")
+        private Integer numberDigits;
+
+        @ApiModelProperty(notes = "占位符")
+        private String placeHolder;
+
+
+
     }
 
 }
