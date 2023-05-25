@@ -37,6 +37,7 @@ public class FileConfig {
             "mp3",
             "rar",
             "zip",
-            "ppt"
+            "ppt",
+            "svg"
     );
 }
