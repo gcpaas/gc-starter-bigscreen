@@ -32,4 +32,11 @@ public interface IBigScreenOssService {
      * @param request
      */
     void download(String fileId, HttpServletResponse response, HttpServletRequest request);
+
+
+    /**
+     * 删除文件
+     * @param fileId
+     */
+    void delete(String fileId);
 }

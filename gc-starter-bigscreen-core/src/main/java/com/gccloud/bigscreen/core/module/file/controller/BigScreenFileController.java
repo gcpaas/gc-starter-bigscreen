@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 文件管理
@@ -62,9 +63,24 @@ public class BigScreenFileController extends SuperController {
         return R.success(entity);
     }
 
-    @PostMapping("/download")
+    @PostMapping("/download/{id}")
     @ApiOperation(value = "下载", notes = "下载资源", produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public void download(@RequestBody BigScreenFileEntity sysFileEntity, HttpServletResponse response, HttpServletRequest request) {
-        sysOssService.download(sysFileEntity.getId(), response, request);
+    public void download(@PathVariable("id") String id, HttpServletResponse response, HttpServletRequest request) {
+        sysOssService.download(id, response, request);
+    }
+
+    @GetMapping("/getAllFileSuffix")
+    @ApiOperation(value = "获取所有文件后缀名", notes = "获取所有文件后缀名", produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public R<List<String>> getAllFileSuffix() {
+    	List<String> extensions = fileService.getAllExtension();
+    	return R.success(extensions);
+    }
+
+
+    @PostMapping("/delete/{id}")
+    @ApiOperation(value = "删除", notes = "删除", produces = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public R<Boolean> delete(@PathVariable("id") String id) {
+        sysOssService.delete(id);
+        return R.success(true);
     }
 }

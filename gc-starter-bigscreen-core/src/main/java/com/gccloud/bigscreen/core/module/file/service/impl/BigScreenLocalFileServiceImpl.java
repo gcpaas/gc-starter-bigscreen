@@ -112,4 +112,22 @@ public class BigScreenLocalFileServiceImpl implements IBigScreenOssService {
             sysFileService.updateDownloadCount(1, fileId);
         }
     }
+
+
+    @Override
+    public void delete(String fileId) {
+        BigScreenFileEntity fileEntity = sysFileService.getById(fileId);
+        if (fileEntity == null) {
+            log.error("删除的文件不存在");
+            return;
+        }
+        String filePath = fileEntity.getPath() + File.separator + fileEntity.getNewName();
+        File file = new File(filePath);
+        if (!file.exists()) {
+            log.error("删除的文件不存在");
+            return;
+        }
+        file.delete();
+        sysFileService.removeById(fileId);
+    }
 }

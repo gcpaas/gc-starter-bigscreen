@@ -10,4 +10,8 @@
         where id = #{id};
     </update>
 
+    <select id="getAllExtension" resultType="java.lang.String">
+        select distinct extension from big_screen_file
+    </select>
+
 </mapper>

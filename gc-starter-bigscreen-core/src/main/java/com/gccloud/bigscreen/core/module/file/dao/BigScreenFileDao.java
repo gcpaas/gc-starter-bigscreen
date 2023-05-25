@@ -5,6 +5,8 @@ import com.gccloud.bigscreen.core.module.file.entity.BigScreenFileEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * 文件
  */
@@ -16,4 +18,12 @@ public interface BigScreenFileDao extends BigScreenBaseDao<BigScreenFileEntity> 
      * @param addCount
      */
     void updateDownloadCount(@Param("addCount") Integer addCount, @Param("id") String fileId);
+
+
+    /**
+     * 获取所有文件后缀(去重)
+     * @return
+     */
+    List<String> getAllExtension();
+
 }

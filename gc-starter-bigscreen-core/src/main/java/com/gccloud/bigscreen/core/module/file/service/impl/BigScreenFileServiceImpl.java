@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,5 +42,11 @@ public class BigScreenFileServiceImpl extends ServiceImpl<BigScreenFileDao, BigS
             throw new GlobalException("下载次数不允许为负数或0");
         }
         baseMapper.updateDownloadCount(addCount, fileId);
+    }
+
+    @Override
+    public List<String> getAllExtension() {
+        // 去重获取所有文件后缀名
+        return baseMapper.getAllExtension();
     }
 }

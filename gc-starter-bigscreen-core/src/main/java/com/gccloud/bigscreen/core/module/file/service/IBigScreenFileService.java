@@ -5,6 +5,8 @@ import com.gccloud.bigscreen.core.module.file.entity.BigScreenFileEntity;
 import com.gccloud.bigscreen.core.service.ISuperService;
 import com.gccloud.bigscreen.core.vo.PageVO;
 
+import java.util.List;
+
 
 /**
  * 文件管理
@@ -27,4 +29,13 @@ public interface IBigScreenFileService extends ISuperService<BigScreenFileEntity
      * @param fileId
      */
     void updateDownloadCount(Integer addCount, String fileId);
+
+
+    /**
+     * 获取所有文件后缀(去重)
+     *
+     * @return
+     */
+    List<String> getAllExtension();
+
 }
