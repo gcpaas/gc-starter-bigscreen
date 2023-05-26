@@ -19,6 +19,29 @@ public interface PageDesignConstant {
         String CATALOG = "catalog";
     }
 
+
+    interface CategoryType {
+        /**
+         * 大屏目录
+         */
+        String BIG_SCREEN = "bigScreenCatalog";
+
+        /**
+         * 大屏模板目录
+         */
+        String BIG_SCREEN_TEMPLATE = "bigScreenTemplateCatalog";
+
+        /**
+         * 资源库目录
+         */
+        String RESOURCE = "resourceCatalog";
+
+        /**
+         * 组件库目录
+         */
+        String COMPONENT = "componentCatalog";
+
+    }
     /**
      * 大屏
      */

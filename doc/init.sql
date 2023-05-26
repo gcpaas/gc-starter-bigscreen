@@ -63,6 +63,20 @@ CREATE TABLE `big_screen_page_template`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_bin COMMENT ='页面模板表';
 
+DROP TABLE IF EXISTS `big_screen_type`;
+CREATE TABLE `big_screen_type` (
+  `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(255) DEFAULT NULL COMMENT '名称',
+  `code` varchar(255) DEFAULT NULL COMMENT '名称',
+  `type` varchar(255) DEFAULT NULL COMMENT '名称',
+  `order_num`   bigint(64)   NOT NULL DEFAULT '0' COMMENT '排序',
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `del_flag` tinyint(2) NOT NULL DEFAULT '0' COMMENT '删除标识',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='大屏、资源库、组件库分类';
+
+
 DROP TABLE IF EXISTS `big_screen_category_tree`;
 CREATE TABLE `big_screen_category_tree` (
   `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '主键',
@@ -76,7 +90,7 @@ CREATE TABLE `big_screen_category_tree` (
   `table_name` varchar(255) NOT NULL,
   `module_code` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='自定义报表种类树';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数据集种类树';
 
 DROP TABLE IF EXISTS `big_screen_datasource_config`;
 CREATE TABLE `big_screen_datasource_config` (
