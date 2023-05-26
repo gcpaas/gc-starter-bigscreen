@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.gccloud</groupId>
         <artifactId>gc-starter-bigscreen</artifactId>
-        <version>0.0.1.2023052402.Alpha</version>
+        <version>0.0.1.2023052601.Alpha</version>
     </parent>
 
     <artifactId>gc-starter-bigscreen-server</artifactId>
