@@ -38,7 +38,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/bigScreen/design")
-@Api(tags = "大屏页设计")
+@Api(tags = "大屏页以及大屏组件设计")
 public class BigScreenPageController {
 
     @Resource
@@ -48,7 +48,7 @@ public class BigScreenPageController {
 
     @ScreenPermission(permissions = {Permission.Screen.VIEW})
     @GetMapping("/info/code/{code}")
-    @ApiOperation(value = "大屏页详情", position = 10, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "大屏页/组件详情", position = 10, produces = MediaType.APPLICATION_JSON_VALUE)
     public MixinsResp<BigScreenPageDTO> info(@PathVariable("code") String code) {
         PageEntity bigScreen = bigScreenPageService.getByCode(code);
         BigScreenPageDTO bigScreenPageDTO = (BigScreenPageDTO) bigScreen.getConfig();
@@ -60,7 +60,7 @@ public class BigScreenPageController {
 
     @ScreenPermission(permissions = {Permission.Screen.VIEW})
     @GetMapping("/page")
-    @ApiOperation(value = "大屏分页列表", position = 10, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "大屏/组件分页列表", position = 10, produces = MediaType.APPLICATION_JSON_VALUE)
     public MixinsResp<PageVO<PageEntity>> page(BigScreenSearchDTO searchDTO) {
         PageVO<PageEntity> page = bigScreenPageService.getByCategory(searchDTO);
         MixinsResp<PageVO<PageEntity>> resp = new MixinsResp<PageVO<PageEntity>>().setData(page);
@@ -71,7 +71,7 @@ public class BigScreenPageController {
 
     @ScreenPermission(permissions = {Permission.Screen.EDIT})
     @PostMapping("/add")
-    @ApiOperation(value = "从空白新增大屏页", position = 20, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "从空白新增大屏/组件", position = 20, produces = MediaType.APPLICATION_JSON_VALUE)
     public R<String> add(@RequestBody BigScreenPageDTO bigScreenPageDTO) {
         ValidatorUtils.validateEntity(bigScreenPageDTO, Insert.class);
         bigScreenPageService.add(bigScreenPageDTO);
@@ -79,6 +79,42 @@ public class BigScreenPageController {
             bigScreenPageDTO.setParentCode("0");
         }
         return R.success(bigScreenPageDTO.getCode());
+    }
+
+    @ScreenPermission(permissions = {Permission.Screen.EDIT})
+    @PostMapping("/update")
+    @ApiOperation(value = "修改大屏/组件", position = 30, produces = MediaType.APPLICATION_JSON_VALUE)
+    public R<String> update(@RequestBody BigScreenPageDTO bigScreenPageDTO) {
+        ValidatorUtils.validateEntity(bigScreenPageDTO, Update.class);
+        if (StringUtils.isBlank(bigScreenPageDTO.getParentCode())) {
+            bigScreenPageDTO.setParentCode("0");
+        }
+        bigScreenPageService.update(bigScreenPageDTO);
+        return R.success(bigScreenPageDTO.getCode());
+    }
+
+    @ScreenPermission(permissions = {Permission.Screen.DELETE})
+    @PostMapping("/delete/{code}")
+    @ApiOperation(value = "删除大屏/组件", position = 40, produces = MediaType.APPLICATION_JSON_VALUE)
+    public R<Void> delete(@PathVariable String code) {
+        PageEntity bigScreenPage = bigScreenPageService.getByCode(code);
+        if (bigScreenPage == null) {
+            return R.success();
+        }
+        bigScreenPageService.deleteByCode(code);
+        return R.success();
+    }
+
+    @ScreenPermission(permissions = {Permission.Screen.EDIT})
+    @PostMapping("/copy/{code}")
+    @ApiOperation(value = "复制大屏/组件", position = 50, produces = MediaType.APPLICATION_JSON_VALUE)
+    public R<String> copy(@PathVariable String code) {
+        PageEntity bigScreenPage = bigScreenPageService.getByCode(code);
+        if (bigScreenPage == null) {
+            throw new GlobalException("大屏页不存在");
+        }
+        String newCode = bigScreenPageService.copy(bigScreenPage);
+        return R.success(newCode);
     }
 
     @ScreenPermission(permissions = {Permission.Screen.EDIT})
@@ -102,41 +138,6 @@ public class BigScreenPageController {
         return resp;
     }
 
-    @ScreenPermission(permissions = {Permission.Screen.EDIT})
-    @PostMapping("/update")
-    @ApiOperation(value = "修改大屏页", position = 30, produces = MediaType.APPLICATION_JSON_VALUE)
-    public R<String> update(@RequestBody BigScreenPageDTO bigScreenPageDTO) {
-        ValidatorUtils.validateEntity(bigScreenPageDTO, Update.class);
-        if (StringUtils.isBlank(bigScreenPageDTO.getParentCode())) {
-            bigScreenPageDTO.setParentCode("0");
-        }
-        bigScreenPageService.update(bigScreenPageDTO);
-        return R.success(bigScreenPageDTO.getCode());
-    }
-
-    @ScreenPermission(permissions = {Permission.Screen.DELETE})
-    @PostMapping("/delete/{code}")
-    @ApiOperation(value = "删除大屏页", position = 40, produces = MediaType.APPLICATION_JSON_VALUE)
-    public R<Void> delete(@PathVariable String code) {
-        PageEntity bigScreenPage = bigScreenPageService.getByCode(code);
-        if (bigScreenPage == null) {
-            return R.success();
-        }
-        bigScreenPageService.deleteByCode(code);
-        return R.success();
-    }
-
-    @ScreenPermission(permissions = {Permission.Screen.EDIT})
-    @PostMapping("/copy/{code}")
-    @ApiOperation(value = "复制大屏页", position = 50, produces = MediaType.APPLICATION_JSON_VALUE)
-    public R<String> copy(@PathVariable String code) {
-        PageEntity bigScreenPage = bigScreenPageService.getByCode(code);
-        if (bigScreenPage == null) {
-            throw new GlobalException("大屏页不存在");
-        }
-        String newCode = bigScreenPageService.copy(code);
-        return R.success(newCode);
-    }
 
     @ScreenPermission
     @GetMapping("/bg/list")

@@ -25,9 +25,6 @@ public class BigScreenPageDTO extends BasePageDTO {
     @ApiModelProperty(notes = "主键id")
     private String id;
 
-    @ApiModelProperty(notes = "所属应用编码")
-    private String appCode;
-
     @NotBlank(message = "名称不能为空", groups = {Update.class, Insert.class})
     @ApiModelProperty(notes = "大屏名称")
     private String name;
@@ -55,32 +52,26 @@ public class BigScreenPageDTO extends BasePageDTO {
     private String style;
 
     @ApiModelProperty(notes = "父节点编码")
-    private String parentCode = "0";
+    private String parentCode;
 
     @ApiModelProperty(notes = "图表数据")
     private List<Chart> chartList;
 
-    @ApiModelProperty(notes = "出码目录")
-    private String codePath;
-
     @ApiModelProperty(notes = "页面模板id")
     private String pageTemplateId;
-
-    public String getCodePath() {
-        if (StringUtils.isBlank(codePath)) {
-            return code;
-        }
-        return codePath;
-    }
 
     /**
      * 参考：{@link PageDesignConstant.Type}
      */
-    @ApiModelProperty(notes = "类型，只能是bigScreen")
-    private String type = PageDesignConstant.Type.BIG_SCREEN;
+    @NotBlank(message = "类型不能为空", groups = {Update.class, Insert.class})
+    @ApiModelProperty(notes = "类型")
+    private String type;
 
     @ApiModelProperty(notes = "页面配置")
     private PageConfig pageConfig;
+
+    @ApiModelProperty(notes = "所属应用编码")
+    private String appCode;
 
     @Data
     public static class CacheDataSet {

@@ -32,7 +32,7 @@ public class PageEntity extends SuperEntity implements Serializable {
     @ApiModelProperty(notes = "页面编码，页面唯一标识符")
     private String code;
 
-    @ApiModelProperty(notes = "父节点编码")
+    @ApiModelProperty(notes = "父节点编码/所属分组编码")
     private String parentCode;
 
     /**
@@ -63,8 +63,6 @@ public class PageEntity extends SuperEntity implements Serializable {
     @ApiModelProperty(notes = "所属应用编码")
     private String appCode;
 
-    @ApiModelProperty(notes = "出码目录")
-    private String codePath;
 
 
 }

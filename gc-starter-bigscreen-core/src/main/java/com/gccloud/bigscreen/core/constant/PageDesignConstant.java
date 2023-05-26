@@ -13,10 +13,11 @@ public interface PageDesignConstant {
          * 大屏
          */
         String BIG_SCREEN = "bigScreen";
+
         /**
-         * 目录
+         * 大屏组件
          */
-        String CATALOG = "catalog";
+        String COMPONENT = "component";
     }
 
 

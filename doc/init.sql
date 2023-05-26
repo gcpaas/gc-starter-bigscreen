@@ -35,7 +35,6 @@ CREATE TABLE `big_screen_page`
     `parent_code` varchar(255) NOT NULL DEFAULT '' COMMENT '父级目录编码',
     `order_num`   bigint(64)   NOT NULL DEFAULT '0' COMMENT '排序',
     `remark`      varchar(100) NOT NULL DEFAULT '' COMMENT '备忘',
-    code_path     varchar(255)          default '' null,
     `model_code`  varchar(255) NOT NULL DEFAULT '' COMMENT '模型编码',
     `app_code`    varchar(255) NOT NULL DEFAULT '' COMMENT '所属应用编码',
     `update_date` timestamp                        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',

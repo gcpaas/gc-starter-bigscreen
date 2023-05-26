@@ -53,7 +53,7 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
     @Override
     public String add(BigScreenPageDTO bigScreenPageDTO) {
         if (StringUtils.isBlank(bigScreenPageDTO.getCode())) {
-            String code = CodeGenerateUtils.generate("bigScreen");
+            String code = CodeGenerateUtils.generate(bigScreenPageDTO.getType());
             bigScreenPageDTO.setCode(code);
         }
         List<Chart> chartList = bigScreenPageDTO.getChartList();
@@ -164,11 +164,14 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
 
     @Override
     public PageVO<PageEntity> getByCategory(BigScreenSearchDTO searchDTO) {
+        if (StringUtils.isBlank(searchDTO.getType())) {
+            throw new GlobalException("类型不能为空");
+        }
         LambdaQueryWrapper<PageEntity> queryWrapper = QueryWrapperUtils.wrapperLike(new LambdaQueryWrapper<>(), searchDTO.getSearchKey(), PageEntity::getName);
         if (StringUtils.isNotBlank(searchDTO.getParentCode())) {
             queryWrapper.eq(PageEntity::getParentCode, searchDTO.getParentCode());
         }
-        queryWrapper.eq(PageEntity::getType, PageDesignConstant.Type.BIG_SCREEN);
+        queryWrapper.eq(PageEntity::getType, searchDTO.getType());
         queryWrapper.select(PageEntity::getId, PageEntity::getAppCode, PageEntity::getCode, PageEntity::getName, PageEntity::getParentCode, PageEntity::getCoverPicture, PageEntity::getUpdateDate);
         queryWrapper.orderByDesc(PageEntity::getUpdateDate);
         PageVO<PageEntity> page = page(searchDTO, queryWrapper);
@@ -215,12 +218,10 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
     }
 
     @Override
-    public String copy(String sourceCode) {
-        PageEntity screenEntity = this.getByCode(sourceCode);
-        AssertUtils.isTrue(screenEntity != null, "源大屏页不存在，复制失败");
+    public String copy(PageEntity screenEntity) {
         BigScreenPageDTO config = (BigScreenPageDTO) screenEntity.getConfig();
         screenEntity.setId(null);
-        screenEntity.setCode(CodeGenerateUtils.generate("bigScreen"));
+        screenEntity.setCode(CodeGenerateUtils.generate(screenEntity.getType()));
         screenEntity.setName(screenEntity.getName() + "_复制");
         config.setName(screenEntity.getName());
         config.setCode(screenEntity.getCode());

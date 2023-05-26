@@ -56,11 +56,10 @@ public interface IBigScreenPageService extends IBasePageService {
 
     /**
      * 复制大屏页
-     *
-     * @param sourceCode
+     * @param screenEntity
      * @return
      */
-    String copy(String sourceCode);
+    String copy(PageEntity screenEntity);
 
     /**
      * 根据编码删除

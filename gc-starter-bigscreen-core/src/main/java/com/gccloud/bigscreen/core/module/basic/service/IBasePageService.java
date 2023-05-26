@@ -92,6 +92,7 @@ public interface IBasePageService extends ISuperService<PageEntity> {
         LambdaQueryWrapper<PageEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(entity.getAppCode()), PageEntity::getAppCode, entity.getAppCode())
                 .eq(PageEntity::getCode, entity.getCode())
+                .eq(PageEntity::getType, entity.getType())
                 .ne(StringUtils.isNotBlank(entity.getId()), PageEntity::getId, entity.getId());
         return getBaseDao().selectCount(queryWrapper) > 0;
     }
