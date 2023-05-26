@@ -27,4 +27,7 @@ public class TypeVO {
     @ApiModelProperty(notes = "分类类型")
     private String type;
 
+    @ApiModelProperty(notes = "排序")
+    private Integer orderNum;
+
 }

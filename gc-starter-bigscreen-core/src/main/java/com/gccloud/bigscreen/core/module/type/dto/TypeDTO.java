@@ -33,4 +33,7 @@ public class TypeDTO {
     @NotBlank(message = "类型不能为空", groups = {Update.class, Insert.class})
     private String type;
 
+    @ApiModelProperty(notes = "排序")
+    private Integer orderNum;
+
 }
