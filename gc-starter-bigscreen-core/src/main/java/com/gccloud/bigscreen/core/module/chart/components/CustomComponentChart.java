@@ -19,6 +19,9 @@ public class CustomComponentChart extends Chart {
     @ApiModelProperty(notes = "类型")
     private String type = PageDesignConstant.BigScreen.Type.CUSTOM_COMPONENT;
 
+    @ApiModelProperty(notes = "自定义处理配置脚本")
+    private String optionHandler;
+
     @ApiModelProperty(notes = "自定义处理数据源脚本")
     private String dataHandler;
 
