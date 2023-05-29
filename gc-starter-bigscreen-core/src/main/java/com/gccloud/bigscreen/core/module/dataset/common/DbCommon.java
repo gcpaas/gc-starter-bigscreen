@@ -384,7 +384,7 @@ public class DbCommon {
         PreparedStatement pStemt;
         try {
             String sql;
-            if (ReportDbType.TELEPG.getUpInfo().equals(dbType)) {
+            if (ReportDbType.POSTGRESQL.getUpInfo().equals(dbType)) {
                 sql = "DROP VIEW IF EXISTS " + "\"" + viewName + "\"";
             } else {
                 sql = "DROP VIEW IF EXISTS " + viewName;

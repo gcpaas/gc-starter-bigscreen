@@ -10,8 +10,7 @@ public enum ReportDbType {
      */
     MYSQL("Mysql", "mysql"),
     ORACLE("Oracle", "oracle"),
-    TELEPG("TelePG", "telepg"),
-    TELEDB("TeleDB", "teledb"),
+    POSTGRESQL("PostgreSQL", "postgresql"),
     HIVE("Hive", "hive"),
     CLICKHOUSE("ClickHouse", "clickhouse");
 

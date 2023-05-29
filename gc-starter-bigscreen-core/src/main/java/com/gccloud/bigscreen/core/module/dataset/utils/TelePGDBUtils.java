@@ -66,7 +66,7 @@ public class TelePGDBUtils extends DbCommon {
                     }
                     //判断参数类型是否是时间类型，进行转换
                     if (("Date").equalsIgnoreCase(copyParamsList.get(i).getType())) {
-                        if (ReportDbType.TELEPG.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
+                        if (ReportDbType.POSTGRESQL.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             Date date = sdf.parse(copyParamsList.get(i).getValue());
                             Timestamp timestamp = new Timestamp(date.getTime());
@@ -75,7 +75,7 @@ public class TelePGDBUtils extends DbCommon {
                             pStemt.setObject(i + 1, copyParamsList.get(i).getValue());
                         }
                     } else if (("Integer").equalsIgnoreCase(copyParamsList.get(i).getType())) {
-                        if (ReportDbType.TELEPG.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
+                        if (ReportDbType.POSTGRESQL.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
                             pStemt.setInt(i + 1, Integer.parseInt(copyParamsList.get(i).getValue()));
                         } else {
                             pStemt.setObject(i + 1, Integer.parseInt(copyParamsList.get(i).getValue()));
@@ -268,7 +268,7 @@ public class TelePGDBUtils extends DbCommon {
                         throw new GlobalException("参数值不能为空");
                     }
                     if (("Date").equalsIgnoreCase(params.get(i).getType())) {
-                        if (ReportDbType.TELEPG.getUpInfo().equalsIgnoreCase(datasetConfig.getSourceType())) {
+                        if (ReportDbType.POSTGRESQL.getUpInfo().equalsIgnoreCase(datasetConfig.getSourceType())) {
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             Date date = sdf.parse(params.get(i).getValue());
                             Timestamp timestamp = new Timestamp(date.getTime());
@@ -277,7 +277,7 @@ public class TelePGDBUtils extends DbCommon {
                             pStemt.setObject(i + 1, params.get(i).getValue());
                         }
                     } else if (("Integer").equalsIgnoreCase(params.get(i).getType())) {
-                        if (ReportDbType.TELEPG.getUpInfo().equalsIgnoreCase(datasetConfig.getSourceType())) {
+                        if (ReportDbType.POSTGRESQL.getUpInfo().equalsIgnoreCase(datasetConfig.getSourceType())) {
                             pStemt.setInt(i + 1, Integer.parseInt(params.get(i).getValue()));
                         } else {
                             pStemt.setObject(i + 1, Integer.parseInt(params.get(i).getValue()));
@@ -470,7 +470,7 @@ public class TelePGDBUtils extends DbCommon {
                         throw new GlobalException("参数值不能为空");
                     }
                     if (("Date").equalsIgnoreCase(params.get(i).getType())) {
-                        if (ReportDbType.TELEPG.getUpInfo().equalsIgnoreCase(tableConfig.getSourceType())) {
+                        if (ReportDbType.POSTGRESQL.getUpInfo().equalsIgnoreCase(tableConfig.getSourceType())) {
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             Date date = sdf.parse(params.get(i).getValue());
                             Timestamp timestamp = new Timestamp(date.getTime());
@@ -479,7 +479,7 @@ public class TelePGDBUtils extends DbCommon {
                             tableStemt.setObject(i + 1, params.get(i).getValue());
                         }
                     } else if (("Integer").equalsIgnoreCase(params.get(i).getType())) {
-                        if (ReportDbType.TELEPG.getUpInfo().equalsIgnoreCase(tableConfig.getSourceType())) {
+                        if (ReportDbType.POSTGRESQL.getUpInfo().equalsIgnoreCase(tableConfig.getSourceType())) {
                             tableStemt.setInt(i + 1, Integer.parseInt(params.get(i).getValue()));
                         } else {
                             tableStemt.setObject(i + 1, Integer.parseInt(params.get(i).getValue()));
@@ -617,7 +617,7 @@ public class TelePGDBUtils extends DbCommon {
      * @param datasourceConfig 数据源
      */
     public static void dropView(String viewName, DatasourceConfig datasourceConfig) {
-        dropView(viewName, datasourceConfig, ReportDbType.TELEPG.getUpInfo());
+        dropView(viewName, datasourceConfig, ReportDbType.POSTGRESQL.getUpInfo());
     }
 
     /**

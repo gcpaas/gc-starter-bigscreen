@@ -202,7 +202,9 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
             return this.executeJsonDataSet(dataSetId);
         }
         if (datasetType.equals(ReportConstant.DataSetType.SCRIPT)) {
-            String script = datasetEntity.getData();
+            String scriptJson = datasetEntity.getData();
+            JSONObject object = JSON.parseObject(scriptJson);
+            String script = object.getString("script");
             return this.runScriptDataSet(script, params);
         }
         return this.execute(dataSetId, params);
@@ -290,7 +292,7 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
                 varCount = "COUNT";
             }
             Integer totalCount = Integer.valueOf(String.valueOf(countList.get(0).get(varCount)));
-            if (datasourceConfig.getSourceType().equals(ReportDbType.TELEPG.getUpInfo())) {
+            if (datasourceConfig.getSourceType().equals(ReportDbType.POSTGRESQL.getUpInfo())) {
                 sql = "select * from (" + datasetProcessEntity.getSqlProcess() + ") as " + datasetProcessEntity.getCode() + " LIMIT " + size + " OFFSET " + prefix;
             } else if (datasourceConfig.getSourceType().equals(ReportDbType.ORACLE.getUpInfo())) {
                 sql = "SELECT * FROM ( SELECT TMP.*, ROWNUM ROW_ID FROM ( " + datasetProcessEntity.getSqlProcess() + " ) TMP WHERE ROWNUM <=" + (current * size > totalCount ? totalCount : (current * size)) + ") WHERE ROW_ID > " + prefix;
@@ -329,7 +331,7 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
             }
             if (ReportDbType.ORACLE.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
                 sql = "SELECT * FROM ( SELECT TMP.*, ROWNUM ROW_ID FROM (SELECT " + fieldInfo + " FROM " + originalTable.getTableName() + " ) TMP WHERE ROWNUM <=" + (current * size > totalCount ? totalCount : (current * size)) + ") WHERE ROW_ID > " + prefix;
-            } else if (datasourceConfig.getSourceType().equals(ReportDbType.TELEPG.getUpInfo())) {
+            } else if (datasourceConfig.getSourceType().equals(ReportDbType.POSTGRESQL.getUpInfo())) {
                 sql = "SELECT " + fieldInfo + " FROM " + originalTable.getTableName() + " LIMIT " + size + " OFFSET " + prefix;
             } else {
                 sql = "SELECT " + fieldInfo + " FROM " + originalTable.getTableName() + " LIMIT " + prefix + "," + size;

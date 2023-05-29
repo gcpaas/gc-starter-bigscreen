@@ -224,7 +224,7 @@ class ConditionSqlProcess {
             if (sourceType.equals(ReportDbType.CLICKHOUSE.getUpInfo())) {
                 return "formatDateTime(" + fieldFormat(sourceType, field, tableName) + ",'%Y-%m-%d')";
             }
-            if (sourceType.equals(ReportDbType.ORACLE.getUpInfo()) || sourceType.equals(ReportDbType.TELEPG.getUpInfo())) {
+            if (sourceType.equals(ReportDbType.ORACLE.getUpInfo()) || sourceType.equals(ReportDbType.POSTGRESQL.getUpInfo())) {
                 return "TO_CHAR(" + fieldFormat(sourceType, field, tableName) + ",'YYYY-MM-DD')";
             }
             return null;
@@ -240,7 +240,7 @@ class ConditionSqlProcess {
             if (sourceType.equals(ReportDbType.CLICKHOUSE.getUpInfo())) {
                 return "formatDateTime(" + fieldFormat(sourceType, field, tableName) + ",'%Y-%m')";
             }
-            if (sourceType.equals(ReportDbType.ORACLE.getUpInfo()) || sourceType.equals(ReportDbType.TELEPG.getUpInfo())) {
+            if (sourceType.equals(ReportDbType.ORACLE.getUpInfo()) || sourceType.equals(ReportDbType.POSTGRESQL.getUpInfo())) {
                 return "TO_CHAR(" + fieldFormat(sourceType, field, tableName) + ",'YYYY-MM')";
             }
             return null;

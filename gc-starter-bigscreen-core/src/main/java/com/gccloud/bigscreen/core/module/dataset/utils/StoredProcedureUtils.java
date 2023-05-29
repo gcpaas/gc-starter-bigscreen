@@ -90,13 +90,13 @@ public class StoredProcedureUtils {
             if (datasourceConfig.getSourceType().equals(ReportDbType.ORACLE.getUpInfo())) {
                 proc.registerOutParameter(1, OracleTypes.CURSOR);
             }
-            if (datasourceConfig.getSourceType().equals(ReportDbType.TELEPG.getUpInfo())) {
+            if (datasourceConfig.getSourceType().equals(ReportDbType.POSTGRESQL.getUpInfo())) {
                 proc.registerOutParameter(1, Types.OTHER);
             }
 
             proc.execute();
             ResultSet rs;
-            if (datasourceConfig.getSourceType().equals(ReportDbType.ORACLE.getUpInfo()) || datasourceConfig.getSourceType().equals(ReportDbType.TELEPG.getUpInfo())) {
+            if (datasourceConfig.getSourceType().equals(ReportDbType.ORACLE.getUpInfo()) || datasourceConfig.getSourceType().equals(ReportDbType.POSTGRESQL.getUpInfo())) {
                 rs = (ResultSet) proc.getObject(1);
             } else {
                 rs = proc.getResultSet();

@@ -188,7 +188,7 @@ public class OriginalTableServiceImpl extends ServiceImpl<OriginalTableDao, Orig
         if (ReportDbType.MYSQL.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType()) || ReportDbType.CLICKHOUSE.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
             sql += " LIMIT " + prefix + "," + pageSize;
         }
-        if (ReportDbType.TELEPG.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
+        if (ReportDbType.POSTGRESQL.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
             sql += " LIMIT " + pageSize + " offset " + prefix;
         }
         if (ReportDbType.ORACLE.getUpInfo().equalsIgnoreCase(datasourceConfig.getSourceType())) {
