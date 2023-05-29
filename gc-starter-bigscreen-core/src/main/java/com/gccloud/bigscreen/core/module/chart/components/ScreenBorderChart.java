@@ -73,6 +73,18 @@ public class ScreenBorderChart extends Chart {
         @ApiModelProperty(notes = "宽度")
         private Integer width;
 
+        @ApiModelProperty(notes = "左上圆角")
+        private Integer radiusLeftTop;
+
+        @ApiModelProperty(notes = "右上圆角")
+        private Integer radiusRightTop;
+
+        @ApiModelProperty(notes = "左下圆角")
+        private Integer radiusLeftBottom;
+
+        @ApiModelProperty(notes = "右下圆角")
+        private Integer radiusRightBottom;
+
     }
 
 }
