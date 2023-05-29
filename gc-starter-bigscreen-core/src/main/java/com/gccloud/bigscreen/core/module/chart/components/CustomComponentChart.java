@@ -61,6 +61,11 @@ public class CustomComponentChart extends Chart {
 
         @ApiModelProperty(notes = "多选时选项")
         private Object options;
+
+        @ApiModelProperty(notes = "步长")
+        private Integer step;
+
+
     }
 
 
