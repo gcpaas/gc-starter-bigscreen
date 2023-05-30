@@ -7,6 +7,7 @@ import com.gccloud.bigscreen.core.module.chart.components.datasource.BaseChartDa
 import com.gccloud.bigscreen.core.module.chart.components.datasource.DataSetDataSource;
 import com.gccloud.bigscreen.core.module.dataset.constant.ReportConstant;
 import com.gccloud.bigscreen.core.module.dataset.dto.DatasetParamDto;
+import com.gccloud.bigscreen.core.module.dataset.params.ParamsClient;
 import com.gccloud.bigscreen.core.module.dataset.service.DsService;
 import com.gccloud.bigscreen.core.module.dataset.vo.DataSetInfoVo;
 import com.gccloud.bigscreen.core.exception.GlobalException;
@@ -40,6 +41,9 @@ public class BaseChartDataService {
 
     @Resource
     private DsService dsService;
+
+    @Resource
+    private ParamsClient paramsClient;
 
     public ChartDataVO dataQuery(Chart chart, ChartDataSearchDTO searchDTO) {
         BaseChartDataSource dataSource = chart.getDataSource();
@@ -225,6 +229,7 @@ public class BaseChartDataService {
      * @return
      */
     public Object runScriptDataSet(String script, List<DatasetParamDto> params) {
+        params = paramsClient.handleParams(params);
         Map<String, Object> paramMap = new HashMap<>(16);
         if (!CollectionUtils.isEmpty(params)) {
             params.forEach(r -> paramMap.put(r.getName(), r.getValue()));

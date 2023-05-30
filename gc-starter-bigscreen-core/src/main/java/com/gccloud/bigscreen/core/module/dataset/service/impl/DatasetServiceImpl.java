@@ -11,6 +11,7 @@ import com.gccloud.bigscreen.core.module.dataset.dto.DatasetParamDto;
 import com.gccloud.bigscreen.core.module.dataset.dto.ExecuteDto;
 import com.gccloud.bigscreen.core.module.dataset.dto.NameCheckRepeatDto;
 import com.gccloud.bigscreen.core.module.dataset.entity.DatasetEntity;
+import com.gccloud.bigscreen.core.module.dataset.params.ParamsClient;
 import com.gccloud.bigscreen.core.module.dataset.service.CategoryTreeService;
 import com.gccloud.bigscreen.core.module.dataset.service.DatasetProcessService;
 import com.gccloud.bigscreen.core.module.dataset.service.DatasetService;
@@ -49,6 +50,9 @@ public class DatasetServiceImpl extends ServiceImpl<DatasetDao, DatasetEntity> i
 
     @Resource
     private CategoryTreeService categoryTreeService;
+
+    @Resource
+    private ParamsClient paramsClient;
 
 
     @Override
@@ -141,7 +145,8 @@ public class DatasetServiceImpl extends ServiceImpl<DatasetDao, DatasetEntity> i
         Map<String, Object> paramMap = new HashMap<>(16);
         if (!CollectionUtils.isEmpty(executeDto.getParams())) {
             List<DatasetParamDto> params = executeDto.getParams();
-            params.forEach(r -> paramMap.put(r.getName(), r.getValue()));
+            List<DatasetParamDto> paramList = paramsClient.handleParams(params);
+            paramList.forEach(r -> paramMap.put(r.getName(), r.getValue()));
         }
         String script = object.getString("script");
         Class clazz = GroovyUtils.buildClass(script);
