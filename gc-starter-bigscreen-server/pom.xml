@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.gccloud</groupId>
         <artifactId>gc-starter-bigscreen</artifactId>
-        <version>0.0.1.2023052901.Alpha</version>
+        <version>0.0.1.2023053001.Alpha</version>
     </parent>
 
     <artifactId>gc-starter-bigscreen-server</artifactId>
@@ -39,6 +39,11 @@
             <groupId>io.swagger</groupId>
             <artifactId>swagger-models</artifactId>
             <version>${swagger-models.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>2.3.12.RELEASE</version>
         </dependency>
     </dependencies>
 
