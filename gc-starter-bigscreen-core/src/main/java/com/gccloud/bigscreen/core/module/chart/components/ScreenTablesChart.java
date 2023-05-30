@@ -75,6 +75,12 @@ public class ScreenTablesChart extends Chart {
         @ApiModelProperty(notes = "是否开启斑马纹")
         private boolean stripe = false;
 
+        @ApiModelProperty(notes = "表格偶数行背景颜色")
+        private String evenRowBackgroundColor;
+
+        @ApiModelProperty(notes = "表格奇数行背景颜色")
+        private String oddRowBackgroundColor;
+
     }
 
 
