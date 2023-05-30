@@ -31,5 +31,8 @@ public class ScreenTextChart extends Chart {
         @ApiModelProperty(notes = "字体颜色")
         private String color;
 
+        @ApiModelProperty(notes = "标题")
+        private String title;
+
     }
 }
