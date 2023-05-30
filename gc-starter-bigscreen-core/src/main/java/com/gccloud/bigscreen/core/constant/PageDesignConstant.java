@@ -111,6 +111,11 @@ public interface PageDesignConstant {
              * 数字翻牌器
              */
             String DIGITAL_FLOP = "digitalFlop";
+
+            /**
+             * 视频
+             */
+            String VIDEO = "video";
         }
 
         interface Operator {
