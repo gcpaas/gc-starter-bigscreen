@@ -192,7 +192,7 @@ public class BaseChartDataService {
                 DatasetParamDto param = new DatasetParamDto();
                 param.setType(setParamMap.get("type").toString());
                 param.setName(setParamMap.get("name").toString());
-                param.setValue(setParamMap.get("defaultValue").toString());
+                param.setValue(setParamMap.get("value").toString());
                 param.setStatus(1);
                 params.add(param);
             });
