@@ -116,6 +116,16 @@ public interface PageDesignConstant {
              * 视频
              */
             String VIDEO = "video";
+
+            /**
+             * 输入框
+             */
+            String INPUT = "input";
+
+            /**
+             * 按钮
+             */
+            String BUTTON = "button";
         }
 
         interface Operator {
