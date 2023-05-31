@@ -22,8 +22,6 @@ public class ScreenInputChart extends Chart {
 
     @Data
     public static class Customize {
-        @ApiModelProperty(notes = "类型")
-        private String type;
 
         @ApiModelProperty(notes = "是否显示标题")
         private boolean showTitle;
@@ -31,17 +29,14 @@ public class ScreenInputChart extends Chart {
         @ApiModelProperty(notes = "标题")
         private String title;
 
-        @ApiModelProperty(notes = "标题位置")
-        private String titlePosition;
-
         @ApiModelProperty(notes = "标题样式")
         private TitleStyle titleStyle;
 
-        @ApiModelProperty(notes = "占位符")
-        private String placeholder;
+        @ApiModelProperty(notes = "输入框样式")
+        private InputStyle inputStyle;
 
-        @ApiModelProperty(notes = "占位符字体颜色")
-        private String placeholderColor;
+        @ApiModelProperty(notes = "占位符样式")
+        private PlaceholderStyle placeholderStyle;
 
         @ApiModelProperty(notes = "边框样式")
         private BorderStyle borderStyle;
@@ -49,6 +44,18 @@ public class ScreenInputChart extends Chart {
         @ApiModelProperty(notes = "背景样式")
         private BackgroundStyle backgroundStyle;
 
+    }
+
+    @Data
+    public static class InputStyle {
+        @ApiModelProperty(notes = "输入值字体大小")
+        private Integer fontSize;
+
+        @ApiModelProperty(notes = "输入值字体颜色")
+        private String color;
+
+        @ApiModelProperty(notes = "输入值左间距")
+        private Integer paddingLeft;
     }
 
     @Data
@@ -60,7 +67,7 @@ public class ScreenInputChart extends Chart {
         private String color;
 
         @ApiModelProperty(notes = "标题间距")
-        private Integer margin;
+        private Integer marginRight;
     }
 
     @Data
@@ -82,5 +89,17 @@ public class ScreenInputChart extends Chart {
     public static class BackgroundStyle {
         @ApiModelProperty(notes = "背景颜色")
         private String backgroundColor;
+    }
+
+
+    @Data
+    public static class PlaceholderStyle {
+
+        @ApiModelProperty(notes = "占位符")
+        private String placeholder;
+
+        @ApiModelProperty(notes = "占位符字体颜色")
+        private String placeholderColor;
+
     }
 }
