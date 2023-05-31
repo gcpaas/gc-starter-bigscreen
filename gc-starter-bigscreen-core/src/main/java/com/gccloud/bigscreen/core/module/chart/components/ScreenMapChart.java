@@ -69,10 +69,10 @@ public class ScreenMapChart extends Chart {
         private String dataMap;
 
         @ApiModelProperty(notes = "经度")
-        private String xAxis;
+        private String xaxis;
 
         @ApiModelProperty(notes = "纬度")
-        private String yAxis;
+        private String yaxis;
 
         @ApiModelProperty(notes = "名称")
         private String name;
