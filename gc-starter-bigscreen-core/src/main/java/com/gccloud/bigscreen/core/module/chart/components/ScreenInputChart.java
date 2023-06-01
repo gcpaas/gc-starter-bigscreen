@@ -44,6 +44,9 @@ public class ScreenInputChart extends Chart {
         @ApiModelProperty(notes = "背景样式")
         private BackgroundStyle backgroundStyle;
 
+        @ApiModelProperty(notes = "输入值")
+        private String value;
+
     }
 
     @Data

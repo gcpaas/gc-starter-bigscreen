@@ -5,6 +5,8 @@ import com.gccloud.bigscreen.core.module.chart.bean.Chart;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * 按钮组件
  * @author hongyang
@@ -40,6 +42,9 @@ public class ScreenButtonChart extends Chart {
 
         @ApiModelProperty(notes = "边框样式")
         private BorderStyle borderStyle;
+
+        @ApiModelProperty(notes = "")
+        private List<Object> bindComponents;
 
     }
 
