@@ -9,6 +9,7 @@ import com.gccloud.bigscreen.core.permission.Permission;
 import com.gccloud.bigscreen.core.permission.ScreenPermission;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -45,6 +46,9 @@ public class OriginalTableController extends SuperController {
     @ApiOperation("查询原始表详情")
     @PostMapping("/getOriginalTableDetail")
     public R<Map<String, Object>> getOriginalTableDetail(@RequestBody OriginalTableDto originalTableDto) {
+        if (StringUtils.isBlank(originalTableDto.getSourceId())) {
+            return R.error("请选择数据源");
+        }
         return R.success(originalTableService.getOriginalTableDetail(originalTableDto));
     }
 
