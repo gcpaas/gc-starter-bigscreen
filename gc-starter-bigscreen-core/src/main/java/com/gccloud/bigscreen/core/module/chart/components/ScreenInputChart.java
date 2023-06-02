@@ -47,6 +47,18 @@ public class ScreenInputChart extends Chart {
         @ApiModelProperty(notes = "输入值")
         private String value;
 
+        @ApiModelProperty(notes = "图标")
+        private Icon icon;
+
+    }
+
+    @Data
+    public static class Icon {
+        @ApiModelProperty(notes = "图标名称")
+        private String name;
+
+        @ApiModelProperty(notes = "位置")
+        private String position;
     }
 
     @Data
@@ -57,8 +69,6 @@ public class ScreenInputChart extends Chart {
         @ApiModelProperty(notes = "输入值字体颜色")
         private String color;
 
-        @ApiModelProperty(notes = "输入值左间距")
-        private Integer paddingLeft;
     }
 
     @Data

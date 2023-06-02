@@ -46,6 +46,18 @@ public class ScreenButtonChart extends Chart {
         @ApiModelProperty(notes = "")
         private List<Object> bindComponents;
 
+        @ApiModelProperty(notes = "图标")
+        private Icon icon;
+
+    }
+
+    @Data
+    public static class Icon {
+        @ApiModelProperty(notes = "图标名称")
+        private String name;
+
+        @ApiModelProperty(notes = "位置")
+        private String position;
     }
 
     @Data
