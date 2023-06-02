@@ -68,6 +68,8 @@ public class CustomComponentChart extends Chart {
         @ApiModelProperty(notes = "步长")
         private Integer step;
 
+        @ApiModelProperty(notes = "所属样式分组")
+        private String groupName;
 
     }
 
