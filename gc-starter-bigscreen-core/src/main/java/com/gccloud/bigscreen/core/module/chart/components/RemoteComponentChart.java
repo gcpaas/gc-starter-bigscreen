@@ -78,11 +78,15 @@ public class RemoteComponentChart extends Chart {
 
     @Data
     public static class Customize {
+
         @ApiModelProperty(notes = "用户从外部传入的自定义的vue文件")
         private String vueFile;
 
         @ApiModelProperty(notes = "用户上传的vue文件编码，根据此编码获取文件内通")
         private String vueFileCode;
+
+        @ApiModelProperty(notes = "用户上传的vue文件内容")
+        private String vueFileContent;
     }
 
 
