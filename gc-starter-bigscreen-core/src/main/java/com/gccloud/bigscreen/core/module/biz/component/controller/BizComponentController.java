@@ -44,8 +44,8 @@ public class BizComponentController {
     @PostMapping("/add")
     @ApiOperation(value = "新增", notes = "新增", produces = MediaType.APPLICATION_JSON_VALUE)
     public R<String> add(@ApiParam(name = "新增", value = "传入新增的业务条件", required = true) @RequestBody BizComponentEntity entity) {
-        bizComponentService.add(entity);
-        return R.success(entity.getId());
+        String code = bizComponentService.add(entity);
+        return R.success(code);
     }
 
 
