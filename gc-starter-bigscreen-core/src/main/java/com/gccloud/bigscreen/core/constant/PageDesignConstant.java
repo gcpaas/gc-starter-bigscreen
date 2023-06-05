@@ -126,6 +126,11 @@ public interface PageDesignConstant {
              * 按钮
              */
             String BUTTON = "button";
+
+            /**
+             * 超链接
+             */
+            String LINK = "link";
         }
 
         interface Operator {
