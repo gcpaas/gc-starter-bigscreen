@@ -1,4 +1,4 @@
-package com.gccloud.bigscreen.core.module.biz.component;
+package com.gccloud.bigscreen.core.module.biz.component.dto;
 
 import com.gccloud.bigscreen.core.dto.SearchDTO;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,7 +13,7 @@ import lombok.Data;
 public class BizComponentSearchDTO extends SearchDTO {
 
     @ApiModelProperty(value = "所属分组")
-    private String group;
+    private String type;
 
     @ApiModelProperty(value = "名称")
     private String name;

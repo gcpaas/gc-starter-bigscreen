@@ -1,6 +1,6 @@
 package com.gccloud.bigscreen.core.module.biz.component.service;
 
-import com.gccloud.bigscreen.core.module.biz.component.BizComponentSearchDTO;
+import com.gccloud.bigscreen.core.module.biz.component.dto.BizComponentSearchDTO;
 import com.gccloud.bigscreen.core.module.biz.component.entity.BizComponentEntity;
 import com.gccloud.bigscreen.core.service.ISuperService;
 import com.gccloud.bigscreen.core.vo.PageVO;

@@ -80,6 +80,7 @@ CREATE TABLE `big_screen_biz_component` (
     `id`             bigint(64)   NOT NULL AUTO_INCREMENT,
     `name`           varchar(100) NOT NULL DEFAULT '' COMMENT '业务组件中文名称',
     `code`           varchar(255) NOT NULL DEFAULT '' COMMENT '业务组件编码，唯一标识符',
+    `type`          varchar(255) NOT NULL DEFAULT '' COMMENT '分组',
     `cover_picture`  varchar(255) NOT NULL DEFAULT '' COMMENT '封面图片文件路径',
     `vue_content`     longtext COMMENT 'vue组件内容',
     `setting_content` longtext COMMENT '组件配置内容',

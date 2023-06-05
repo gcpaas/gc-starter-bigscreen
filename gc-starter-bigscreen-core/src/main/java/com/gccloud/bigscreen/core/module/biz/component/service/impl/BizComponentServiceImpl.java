@@ -3,7 +3,7 @@ package com.gccloud.bigscreen.core.module.biz.component.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gccloud.bigscreen.core.exception.GlobalException;
-import com.gccloud.bigscreen.core.module.biz.component.BizComponentSearchDTO;
+import com.gccloud.bigscreen.core.module.biz.component.dto.BizComponentSearchDTO;
 import com.gccloud.bigscreen.core.module.biz.component.dao.BizComponentDao;
 import com.gccloud.bigscreen.core.module.biz.component.entity.BizComponentEntity;
 import com.gccloud.bigscreen.core.module.biz.component.service.IBizComponentService;
@@ -26,7 +26,7 @@ public class BizComponentServiceImpl extends ServiceImpl<BizComponentDao, BizCom
     public PageVO<BizComponentEntity> getPage(BizComponentSearchDTO searchDTO) {
         LambdaQueryWrapper<BizComponentEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(searchDTO.getName()), BizComponentEntity::getName, searchDTO.getName());
-        queryWrapper.eq(StringUtils.isNotBlank(searchDTO.getGroup()), BizComponentEntity::getGroup, searchDTO.getGroup());
+        queryWrapper.eq(StringUtils.isNotBlank(searchDTO.getGroup()), BizComponentEntity::getType, searchDTO.getGroup());
         return this.page(searchDTO, queryWrapper);
         
     }
@@ -35,7 +35,7 @@ public class BizComponentServiceImpl extends ServiceImpl<BizComponentDao, BizCom
     public List<BizComponentEntity> getList(BizComponentSearchDTO searchDTO) {
         LambdaQueryWrapper<BizComponentEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(searchDTO.getName()), BizComponentEntity::getName, searchDTO.getName());
-        queryWrapper.eq(StringUtils.isNotBlank(searchDTO.getGroup()), BizComponentEntity::getGroup, searchDTO.getGroup());
+        queryWrapper.eq(StringUtils.isNotBlank(searchDTO.getGroup()), BizComponentEntity::getType, searchDTO.getGroup());
         return this.list(queryWrapper);
     }
 

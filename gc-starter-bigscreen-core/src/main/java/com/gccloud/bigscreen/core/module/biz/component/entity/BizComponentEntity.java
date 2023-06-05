@@ -3,10 +3,7 @@ package com.gccloud.bigscreen.core.module.biz.component.entity;
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.gccloud.bigscreen.core.constant.PageDesignConstant;
 import com.gccloud.bigscreen.core.entity.SuperEntity;
-import com.gccloud.bigscreen.core.module.basic.dto.BasePageDTO;
-import com.gccloud.bigscreen.core.module.basic.entity.type.BasePageDTOTypeHandler;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -35,7 +32,7 @@ public class BizComponentEntity extends SuperEntity implements Serializable {
     private String code;
 
     @ApiModelProperty(notes = "业务组件所属分组")
-    private String group;
+    private String type;
 
     @ApiModelProperty(notes = "组件封面")
     private String coverPicture;
