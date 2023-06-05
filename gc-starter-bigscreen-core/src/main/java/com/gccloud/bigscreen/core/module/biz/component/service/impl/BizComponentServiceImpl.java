@@ -26,7 +26,7 @@ public class BizComponentServiceImpl extends ServiceImpl<BizComponentDao, BizCom
     public PageVO<BizComponentEntity> getPage(BizComponentSearchDTO searchDTO) {
         LambdaQueryWrapper<BizComponentEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(searchDTO.getName()), BizComponentEntity::getName, searchDTO.getName());
-        queryWrapper.eq(StringUtils.isNotBlank(searchDTO.getGroup()), BizComponentEntity::getType, searchDTO.getGroup());
+        queryWrapper.eq(StringUtils.isNotBlank(searchDTO.getType()), BizComponentEntity::getType, searchDTO.getType());
         return this.page(searchDTO, queryWrapper);
         
     }
@@ -35,7 +35,7 @@ public class BizComponentServiceImpl extends ServiceImpl<BizComponentDao, BizCom
     public List<BizComponentEntity> getList(BizComponentSearchDTO searchDTO) {
         LambdaQueryWrapper<BizComponentEntity> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(searchDTO.getName()), BizComponentEntity::getName, searchDTO.getName());
-        queryWrapper.eq(StringUtils.isNotBlank(searchDTO.getGroup()), BizComponentEntity::getType, searchDTO.getGroup());
+        queryWrapper.eq(StringUtils.isNotBlank(searchDTO.getType()), BizComponentEntity::getType, searchDTO.getType());
         return this.list(queryWrapper);
     }
 
