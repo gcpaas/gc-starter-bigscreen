@@ -1,4 +1,5 @@
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import com.gccloud.bigscreen.core.utils.CodeGenerateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -28,7 +29,7 @@ public class GetResourceSqlTest {
     /**
      * 需要处理的文件夹
      */
-    public static final String FOLDER_PATH = "/usr/local/resource";
+    public static final String FOLDER_PATH = "F:\\LIUCHANGAN\\img";
 
     /**
      * 服务存储文件的位置，即配置文件中的gc.file.basePath
@@ -62,7 +63,21 @@ public class GetResourceSqlTest {
             return;
         }
         for (File subFile : subFiles) {
-            handleFile(subFile, "", sqlList);
+            String typeCode = FILE_GROUP_CODE;
+            if (subFile.isDirectory()) {
+                // 获取文件夹名称
+                String folderName = subFile.getName();
+                // 生成编码
+                typeCode = CodeGenerateUtils.generate(folderName);
+                // 创建时间
+                String currentDate = getCurrentDateTime();
+                String insertTypeSql = "INSERT INTO big_screen_type (name, code, type, order_num, update_date, create_date, del_flag) VALUES ('%s', '%s', '%s', %s, '%s', '%s', %s);";
+                String insertTypeSqlFormat = String.format(insertTypeSql, folderName, typeCode, "resourceCatalog", 0, currentDate, currentDate, 0);
+                sqlList.add("# 分组");
+                sqlList.add(insertTypeSqlFormat);
+                sqlList.add("# 资源");
+            }
+            handleFile(subFile, "", sqlList, typeCode);
         }
         // 将sql输出到文件
         String sql = String.join("\n", sqlList);
@@ -86,7 +101,7 @@ public class GetResourceSqlTest {
      * @param relativePath 相对路径（相对于FOLDER_PATH）
      * @param sqlList sql列表
      */
-    private static void handleFile(File file, String relativePath, List<String> sqlList) {
+    private static void handleFile(File file, String relativePath, List<String> sqlList, String typeCode) {
         if (file.isDirectory()) {
             File[] files = file.listFiles();
             if (files == null) {
@@ -94,7 +109,7 @@ public class GetResourceSqlTest {
             }
             for (File subFile : files) {
                 String subRelativePath = relativePath + "/" + file.getName();
-                handleFile(subFile, subRelativePath, sqlList);
+                handleFile(subFile, subRelativePath, sqlList, typeCode);
             }
             return;
         }
@@ -128,7 +143,7 @@ public class GetResourceSqlTest {
         String currentDate = getCurrentDateTime();
         // 生成sql
         String sql = String.format("INSERT INTO big_screen_file (module, original_name, new_name, extension, path, url, size, download_count, create_date, update_date, del_flag) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %d, %d, '%s', '%s', %d);",
-                FILE_GROUP_CODE, originalName, newFileName, extension, path, url, size, 0, currentDate, currentDate, 0);
+                typeCode, originalName, newFileName, extension, path, url, size, 0, currentDate, currentDate, 0);
         sqlList.add(sql);
     }
 
