@@ -35,5 +35,17 @@ public class ScreenLinkChart extends Chart {
         @ApiModelProperty(notes = "标题")
         private String title;
 
+        @ApiModelProperty(notes = "链接地址")
+        private String url;
+
+        @ApiModelProperty(notes = "打开方式")
+        private String openType;
+
+        @ApiModelProperty(notes = "弹窗宽度")
+        private Integer dialogW;
+
+        @ApiModelProperty(notes = "弹窗高度")
+        private Integer dialogH;
+
     }
 }

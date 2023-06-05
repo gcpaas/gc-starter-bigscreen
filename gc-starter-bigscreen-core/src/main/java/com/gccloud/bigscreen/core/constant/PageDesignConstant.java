@@ -130,7 +130,7 @@ public interface PageDesignConstant {
             /**
              * 超链接
              */
-            String LINK = "link";
+            String LINK = "linkChart";
         }
 
         interface Operator {
