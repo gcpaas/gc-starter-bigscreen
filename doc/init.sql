@@ -90,7 +90,7 @@ CREATE TABLE `big_screen_biz_component` (
     `module_code` varchar(255) NOT NULL DEFAULT '' COMMENT '模块编码',
     `del_flag` tinyint(2) NOT NULL DEFAULT '0' COMMENT '删除标识',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='大屏、资源库、组件库分类';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='业务组件表';
 
 
 DROP TABLE IF EXISTS `big_screen_category_tree`;

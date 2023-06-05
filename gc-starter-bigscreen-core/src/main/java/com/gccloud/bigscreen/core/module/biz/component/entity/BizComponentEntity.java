@@ -1,5 +1,6 @@
 package com.gccloud.bigscreen.core.module.biz.component.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.gccloud.bigscreen.core.constant.PageDesignConstant;
@@ -30,6 +31,7 @@ public class BizComponentEntity extends SuperEntity implements Serializable {
     private String name;
 
     @ApiModelProperty(notes = "业务组件编码，页面唯一标识符")
+    @TableField(updateStrategy = FieldStrategy.NEVER)
     private String code;
 
     @ApiModelProperty(notes = "业务组件所属分组")

@@ -7,6 +7,7 @@ import com.gccloud.bigscreen.core.module.biz.component.BizComponentSearchDTO;
 import com.gccloud.bigscreen.core.module.biz.component.dao.BizComponentDao;
 import com.gccloud.bigscreen.core.module.biz.component.entity.BizComponentEntity;
 import com.gccloud.bigscreen.core.module.biz.component.service.IBizComponentService;
+import com.gccloud.bigscreen.core.utils.CodeGenerateUtils;
 import com.gccloud.bigscreen.core.vo.PageVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -58,8 +59,10 @@ public class BizComponentServiceImpl extends ServiceImpl<BizComponentDao, BizCom
         if (repeat) {
             throw new GlobalException("组件名称重复");
         }
+        String code = CodeGenerateUtils.generate("bizComponent");
+        entity.setCode(code);
         this.save(entity);
-        return entity.getId();
+        return code;
     }
 
     @Override
