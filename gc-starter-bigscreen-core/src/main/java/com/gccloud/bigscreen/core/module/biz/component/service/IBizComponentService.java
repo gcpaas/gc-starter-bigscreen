@@ -50,6 +50,13 @@ public interface IBizComponentService extends ISuperService<BizComponentEntity> 
     void update(BizComponentEntity entity);
 
     /**
+     * 复制
+     * @param code
+     * @return
+     */
+    String copy(String code);
+
+    /**
      * 删除组件
      * @param id
      */

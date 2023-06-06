@@ -75,6 +75,22 @@ public class BizComponentServiceImpl extends ServiceImpl<BizComponentDao, BizCom
     }
 
     @Override
+    public String copy(String code) {
+        BizComponentEntity copyFrom = this.getInfoByCode(code);
+        if (copyFrom == null) {
+            throw new GlobalException("源业务组件不存在");
+        }
+        copyFrom.setId(null);
+        copyFrom.setName(copyFrom.getName() + "_复制");
+        while(this.checkName(null, copyFrom.getName())) {
+            copyFrom.setName(copyFrom.getName() + "_复制");
+        }
+        copyFrom.setCode(CodeGenerateUtils.generate("bizComponent"));
+        this.save(copyFrom);
+        return copyFrom.getCode();
+    }
+
+    @Override
     public void delete(String id) {
         if (StringUtils.isBlank(id)) {
             throw new GlobalException("组件id不能为空");

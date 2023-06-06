@@ -56,6 +56,13 @@ public class BizComponentController {
         return R.success();
     }
 
+    @PostMapping("/copy/{code}")
+    @ApiOperation(value = "复制", notes = "复制", produces = MediaType.APPLICATION_JSON_VALUE)
+    public R<String> copy( @PathVariable String code) {
+        String newCode = bizComponentService.copy(code);
+        return R.success(newCode);
+    }
+
     @PostMapping("/delete/{id}")
     @ApiOperation(value = "删除", notes = "删除", produces = MediaType.APPLICATION_JSON_VALUE)
     public R<Void> delete(@ApiParam(name = "删除", value = "传入删除的业务条件", required = true) @PathVariable String id) {
