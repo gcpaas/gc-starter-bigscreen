@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.gccloud</groupId>
         <artifactId>gc-starter-bigscreen</artifactId>
-        <version>0.0.1.2023060502.Alpha</version>
+        <version>0.0.1.2023060701.Alpha</version>
     </parent>
 
     <artifactId>gc-starter-bigscreen-server</artifactId>
@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.gccloud</groupId>
             <artifactId>gc-starter-bigscreen-core</artifactId>
-            <version>0.0.1.2023060502.Alpha</version>
+            <version>0.0.1.2023060701.Alpha</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -47,66 +47,54 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <!-- 定义打包后的名称 -->
-        <finalName>gc-starter-bigscreen-server</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <configuration>
-                    <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <configuration>
-                    <!--发布包的时候，该包不发布-->
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <!--下面的代码可以将依赖的第三方jar包通过maven插件打入工程的lib中-->
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!--修改为对应启动的main方法-->
-                    <mainClass>com.gccloud.BigScreenApplication</mainClass>
-                    <includeSystemScope>true</includeSystemScope>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <skipTests>true</skipTests>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
-
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <build>
+                <!-- 定义打包后的名称 -->
+                <finalName>gc-starter-bigscreen-server</finalName>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <!--下面的代码可以将依赖的第三方jar包通过maven插件打入工程的lib中-->
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>repackage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <!--修改为对应启动的main方法-->
+                            <mainClass>com.gccloud.BigScreenApplication</mainClass>
+                            <includeSystemScope>true</includeSystemScope>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

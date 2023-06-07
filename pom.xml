@@ -12,7 +12,7 @@
 
     <groupId>com.gccloud</groupId>
     <artifactId>gc-starter-bigscreen</artifactId>
-    <version>0.0.1.2023060502.Alpha</version>
+    <version>0.0.1.2023060701.Alpha</version>
 
     <packaging>pom</packaging>
     <description>基于G2Plot、Echarts的大屏设计服务端，具备设计、预览能力，支持MySQL、Oracle、PostgreSQL、Groovy等数据集接入
@@ -30,9 +30,6 @@
     <modules>
         <module>gc-starter-bigscreen-core</module>
         <module>gc-starter-bigscreen-server</module>
-        <!-- 由于nexus中央仓库的跳过策略，如果在最后一个打包的模块中使用了skipNexusStagingDeployMojo 标签来跳过发布模块，会导致整个工程的maven deploy动作都被忽略 -->
-        <!-- 而 gc-starter-bigscreen-server 模块中用到了该标签，所以新建 gc-starter-bigscreen-deploy 放到最后，用于使maven deploy能够正常执行-->
-        <module>gc-starter-bigscreen-deploy</module>
     </modules>
 
     <properties>
@@ -80,26 +77,12 @@
     <profiles>
         <profile>
             <!--注意,此id必须与setting.xml中指定的一致-->
-<!--            <id>ossrh</id>-->
             <id>release</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
             <build>
                 <plugins>
-                    <!--发布到中央SNAPSHOT仓库插件-->
-<!--                    <plugin>-->
-<!--                        <groupId>org.sonatype.plugins</groupId>-->
-<!--                        <artifactId>nexus-staging-maven-plugin</artifactId>-->
-<!--                        <version>1.6.7</version>-->
-<!--                        <extensions>true</extensions>-->
-<!--                        <configuration>-->
-<!--                            <serverId>ossrh</serverId>-->
-<!--                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>-->
-<!--                            <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
-<!--                        </configuration>-->
-<!--                    </plugin>-->
-
                     <!--发布到中央RELEASE仓库插件 -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -179,17 +162,102 @@
             </build>
 
             <distributionManagement>
-                <snapshotRepository>
-                    <id>ossrh</id>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-                </snapshotRepository>
                 <repository>
                     <id>release</id>
                     <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
             </distributionManagement>
         </profile>
+        <profile>
+            <!--注意,此id必须与setting.xml中指定的一致-->
+            <id>ossrh</id>
+            <build>
+                <plugins>
+                    <!--发布到中央SNAPSHOT仓库插件-->
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                    </plugin>
 
+                    <!--生成源码插件-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!--生成API文档插件-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <configuration>
+                            <!-- 忽略自定义标签的错误 -->
+                            <additionalJOptions>
+                                <additionalJOption>-Xdoclint:none</additionalJOption>
+                            </additionalJOptions>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!--gpg插件-->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.5</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- 跳过单元测试 -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${maven-surefire-plugin.version}</version>
+                        <configuration>
+                            <skipTests>true</skipTests>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>ossrh</id>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
     </profiles>
 
 </project>
