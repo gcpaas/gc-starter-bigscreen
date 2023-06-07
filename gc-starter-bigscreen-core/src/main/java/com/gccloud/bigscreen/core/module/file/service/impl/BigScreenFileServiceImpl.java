@@ -31,6 +31,7 @@ public class BigScreenFileServiceImpl extends ServiceImpl<BigScreenFileDao, BigS
         LambdaQueryWrapper<BigScreenFileEntity> queryWrapper = QueryWrapperUtils.wrapperLike(new LambdaQueryWrapper(), searchDTO.getSearchKey(), BigScreenFileEntity::getOriginalName);
         queryWrapper.eq(StringUtils.isNotBlank(searchDTO.getModule()), BigScreenFileEntity::getModule, searchDTO.getModule());
         queryWrapper.eq(StringUtils.isNotBlank(searchDTO.getExtension()), BigScreenFileEntity::getExtension, searchDTO.getExtension());
+        queryWrapper.orderByDesc(BigScreenFileEntity::getCreateDate);
         Map<String, String> aliasMap = Maps.newHashMap();
         aliasMap.put("space", "size");
         QueryWrapperUtils.wrapperSort(null, BigScreenFileEntity.class, queryWrapper, searchDTO, aliasMap, BigScreenFileEntity::getOriginalName, BigScreenFileEntity::getCreateDate, BigScreenFileEntity::getSize, BigScreenFileEntity::getDownloadCount);
