@@ -2,6 +2,7 @@ import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.gccloud.bigscreen.core.utils.CodeGenerateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +30,7 @@ public class GetResourceSqlTest {
     /**
      * 需要处理的文件夹
      */
-    public static final String FOLDER_PATH = "F:\\LIUCHANGAN\\img";
+    public static final String FOLDER_PATH = "/Users/liuchengbiao/Desktop/大屏资源";
 
     /**
      * 服务存储文件的位置，即配置文件中的gc.file.basePath
@@ -68,7 +69,7 @@ public class GetResourceSqlTest {
                 // 获取文件夹名称
                 String folderName = subFile.getName();
                 // 生成编码
-                typeCode = CodeGenerateUtils.generate(folderName);
+                typeCode = RandomStringUtils.randomAlphanumeric(10).toLowerCase();
                 // 创建时间
                 String currentDate = getCurrentDateTime();
                 String insertTypeSql = "INSERT INTO big_screen_type (name, code, type, order_num, update_date, create_date, del_flag) VALUES ('%s', '%s', '%s', %s, '%s', '%s', %s);";

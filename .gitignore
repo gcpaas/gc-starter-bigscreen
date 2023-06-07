@@ -35,3 +35,7 @@ build/
 # 忽略配置文件提交
 application-*.yml
 !application-demo.yml
+
+logs
+upload.sh
+
