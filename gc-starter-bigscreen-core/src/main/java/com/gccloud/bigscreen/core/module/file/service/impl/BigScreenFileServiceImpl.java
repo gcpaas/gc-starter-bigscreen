@@ -2,13 +2,13 @@ package com.gccloud.bigscreen.core.module.file.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.gccloud.bigscreen.core.exception.GlobalException;
 import com.gccloud.bigscreen.core.module.file.dao.BigScreenFileDao;
 import com.gccloud.bigscreen.core.module.file.dto.FileSearchDTO;
 import com.gccloud.bigscreen.core.module.file.entity.BigScreenFileEntity;
 import com.gccloud.bigscreen.core.module.file.service.IBigScreenFileService;
-import com.gccloud.bigscreen.core.vo.PageVO;
-import com.gccloud.bigscreen.core.utils.QueryWrapperUtils;
+import com.gccloud.common.exception.GlobalException;
+import com.gccloud.common.utils.QueryWrapperUtils;
+import com.gccloud.common.vo.PageVO;
 import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

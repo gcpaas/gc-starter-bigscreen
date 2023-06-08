@@ -14,8 +14,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @date 2023/3/13 10:55
  */
 @EnableSwagger2
-@SpringBootApplication(scanBasePackages = {BigScreenConst.ScanPackage.COMPONENT})
-@MapperScan(value = {BigScreenConst.ScanPackage.DAO})
+@SpringBootApplication(scanBasePackages = {BigScreenConst.ScanPackage.COMPONENT, "com.gccloud.dataset", "com.gccloud.common"})
+@MapperScan(value = {BigScreenConst.ScanPackage.DAO, "com.gccloud.dataset.**.dao"})
 public class BigScreenApplication {
 
     public static void main(String[] args) {

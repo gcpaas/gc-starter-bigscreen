@@ -1,13 +1,12 @@
 package com.gccloud.bigscreen.core.module.manage.dto;
 
-import com.gccloud.bigscreen.core.module.chart.bean.Chart;
 import com.gccloud.bigscreen.core.constant.PageDesignConstant;
-import com.gccloud.bigscreen.core.validator.group.Insert;
-import com.gccloud.bigscreen.core.validator.group.Update;
 import com.gccloud.bigscreen.core.module.basic.dto.BasePageDTO;
+import com.gccloud.bigscreen.core.module.chart.bean.Chart;
+import com.gccloud.common.validator.group.Insert;
+import com.gccloud.common.validator.group.Update;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.constraints.NotBlank;
 import java.util.List;

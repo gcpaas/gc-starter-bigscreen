@@ -1,14 +1,14 @@
 package com.gccloud.bigscreen.core.module.file.controller;
 
-import com.gccloud.bigscreen.core.controller.SuperController;
 import com.gccloud.bigscreen.core.module.file.dto.FileSearchDTO;
 import com.gccloud.bigscreen.core.module.file.entity.BigScreenFileEntity;
 import com.gccloud.bigscreen.core.module.file.service.IBigScreenFileService;
 import com.gccloud.bigscreen.core.module.file.service.IBigScreenOssService;
 import com.gccloud.bigscreen.core.module.file.vo.SysFileVO;
-import com.gccloud.bigscreen.core.utils.BeanConvertUtils;
-import com.gccloud.bigscreen.core.vo.PageVO;
-import com.gccloud.bigscreen.core.vo.R;
+import com.gccloud.common.controller.SuperController;
+import com.gccloud.common.utils.BeanConvertUtils;
+import com.gccloud.common.vo.PageVO;
+import com.gccloud.common.vo.R;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

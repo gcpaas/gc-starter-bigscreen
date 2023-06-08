@@ -1,15 +1,14 @@
 package com.gccloud.bigscreen.core.module.type.controller;
 
-import com.gccloud.bigscreen.core.module.manage.dto.BigScreenPageDTO;
 import com.gccloud.bigscreen.core.module.type.dto.TypeDTO;
 import com.gccloud.bigscreen.core.module.type.entity.TypeEntity;
 import com.gccloud.bigscreen.core.module.type.service.ITypeService;
 import com.gccloud.bigscreen.core.module.type.vo.TypeVO;
-import com.gccloud.bigscreen.core.utils.BeanConvertUtils;
-import com.gccloud.bigscreen.core.validator.ValidatorUtils;
-import com.gccloud.bigscreen.core.validator.group.Insert;
-import com.gccloud.bigscreen.core.validator.group.Update;
-import com.gccloud.bigscreen.core.vo.R;
+import com.gccloud.common.utils.BeanConvertUtils;
+import com.gccloud.common.validator.ValidatorUtils;
+import com.gccloud.common.validator.group.Insert;
+import com.gccloud.common.validator.group.Update;
+import com.gccloud.common.vo.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

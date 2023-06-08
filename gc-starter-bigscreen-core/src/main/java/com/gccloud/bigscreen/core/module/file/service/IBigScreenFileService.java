@@ -2,8 +2,8 @@ package com.gccloud.bigscreen.core.module.file.service;
 
 import com.gccloud.bigscreen.core.module.file.dto.FileSearchDTO;
 import com.gccloud.bigscreen.core.module.file.entity.BigScreenFileEntity;
-import com.gccloud.bigscreen.core.service.ISuperService;
-import com.gccloud.bigscreen.core.vo.PageVO;
+import com.gccloud.common.service.ISuperService;
+import com.gccloud.common.vo.PageVO;
 
 import java.util.List;
 

@@ -1,11 +1,10 @@
 package com.gccloud.bigscreen.core.module.manage.service;
 
-import com.gccloud.bigscreen.core.dto.SearchDTO;
 import com.gccloud.bigscreen.core.module.basic.entity.PageEntity;
-import com.gccloud.bigscreen.core.module.manage.dto.BigScreenPageDTO;
 import com.gccloud.bigscreen.core.module.basic.service.IBasePageService;
+import com.gccloud.bigscreen.core.module.manage.dto.BigScreenPageDTO;
 import com.gccloud.bigscreen.core.module.manage.dto.BigScreenSearchDTO;
-import com.gccloud.bigscreen.core.vo.PageVO;
+import com.gccloud.common.vo.PageVO;
 
 /**
  * @author hongyang

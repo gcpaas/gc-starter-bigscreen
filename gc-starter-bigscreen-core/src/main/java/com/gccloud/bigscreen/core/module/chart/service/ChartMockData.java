@@ -1,8 +1,8 @@
 package com.gccloud.bigscreen.core.module.chart.service;
 
-import com.gccloud.bigscreen.core.module.chart.vo.ChartDataVO;
 import com.gccloud.bigscreen.core.constant.PageDesignConstant;
-import com.gccloud.bigscreen.core.utils.JSON;
+import com.gccloud.bigscreen.core.module.chart.vo.ChartDataVO;
+import com.gccloud.common.utils.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.core.io.Resource;

@@ -1,7 +1,8 @@
 package com.gccloud.bigscreen.core.exception;
 
 import com.gccloud.bigscreen.core.constant.BigScreenConst;
-import com.gccloud.bigscreen.core.vo.R;
+import com.gccloud.common.exception.GlobalException;
+import com.gccloud.common.vo.R;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

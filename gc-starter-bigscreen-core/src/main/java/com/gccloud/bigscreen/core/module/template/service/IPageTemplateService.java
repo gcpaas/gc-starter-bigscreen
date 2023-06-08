@@ -2,8 +2,8 @@ package com.gccloud.bigscreen.core.module.template.service;
 
 import com.gccloud.bigscreen.core.module.template.dto.PageTemplateSearchDTO;
 import com.gccloud.bigscreen.core.module.template.entity.PageTemplateEntity;
-import com.gccloud.bigscreen.core.vo.PageVO;
-import com.gccloud.bigscreen.core.service.ISuperService;
+import com.gccloud.common.service.ISuperService;
+import com.gccloud.common.vo.PageVO;
 
 import java.util.List;
 

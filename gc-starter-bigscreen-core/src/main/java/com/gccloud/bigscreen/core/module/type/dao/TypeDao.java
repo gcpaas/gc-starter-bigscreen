@@ -1,6 +1,6 @@
 package com.gccloud.bigscreen.core.module.type.dao;
 
-import com.gccloud.bigscreen.core.dao.BigScreenBaseDao;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.gccloud.bigscreen.core.module.type.entity.TypeEntity;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,6 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @Version 1.0.0
  */
 @Mapper
-public interface TypeDao extends BigScreenBaseDao<TypeEntity> {
+public interface TypeDao extends BaseMapper<TypeEntity> {
 
 }

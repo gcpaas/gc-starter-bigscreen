@@ -2,7 +2,7 @@ package com.gccloud.bigscreen.core.module.type.service;
 
 import com.gccloud.bigscreen.core.module.type.dto.TypeDTO;
 import com.gccloud.bigscreen.core.module.type.entity.TypeEntity;
-import com.gccloud.bigscreen.core.service.ISuperService;
+import com.gccloud.common.service.ISuperService;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
 package com.gccloud.bigscreen.core.module.chart.components;
 
+import com.gccloud.bigscreen.core.constant.PageDesignConstant;
 import com.gccloud.bigscreen.core.module.chart.bean.Btn;
 import com.gccloud.bigscreen.core.module.chart.bean.Chart;
 import com.gccloud.bigscreen.core.module.chart.bean.Field;
 import com.gccloud.bigscreen.core.module.chart.components.datasource.BaseChartDataSource;
-import com.gccloud.bigscreen.core.constant.PageDesignConstant;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

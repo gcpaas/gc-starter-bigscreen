@@ -1,7 +1,7 @@
 package com.gccloud.bigscreen.core.module.chart.components;
 
-import com.gccloud.bigscreen.core.module.chart.bean.Chart;
 import com.gccloud.bigscreen.core.constant.PageDesignConstant;
+import com.gccloud.bigscreen.core.module.chart.bean.Chart;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 

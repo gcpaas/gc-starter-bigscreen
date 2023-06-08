@@ -1,6 +1,6 @@
 package com.gccloud.bigscreen.core.module.file.dto;
 
-import com.gccloud.bigscreen.core.dto.SearchDTO;
+import com.gccloud.common.dto.SearchDTO;
 import lombok.Data;
 
 @Data
