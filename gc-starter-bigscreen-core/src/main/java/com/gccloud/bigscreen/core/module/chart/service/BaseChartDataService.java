@@ -130,14 +130,14 @@ public class BaseChartDataService {
         List<Map<String, Object>> fieldJson = dataSetInfoVo.getFieldJson();
         fieldJson.forEach(field -> {
             ChartDataVO.ColumnData column = new ChartDataVO.ColumnData();
-            column.setOriginalColumn(field.get("name").toString());
-            column.setAlias(field.get("name").toString());
-            column.setRemark(field.get("comment").toString());
-            String sourceTable = field.get("sourceTable") == null ? "" : field.get("sourceTable").toString();
+            column.setOriginalColumn(field.get(DatasetInfoVO.FIELD_JSON_NAME).toString());
+            column.setAlias(field.get(DatasetInfoVO.FIELD_JSON_NAME).toString());
+            column.setRemark(field.get(DatasetInfoVO.FIELD_JSON_DESC).toString());
+            String sourceTable = field.get(DatasetInfoVO.FIELD_JSON_SOURCE) == null ? "" : field.get(DatasetInfoVO.FIELD_JSON_SOURCE).toString();
             column.setTableName(sourceTable);
-            String type = field.get("type") == null ? "" : field.get("type").toString();
+            String type = field.get(DatasetInfoVO.FIELD_JSON_TYPE) == null ? "" : field.get(DatasetInfoVO.FIELD_JSON_TYPE).toString();
             column.setType(type);
-            columnData.put(field.get("name").toString(), column);
+            columnData.put(field.get(DatasetInfoVO.FIELD_JSON_NAME).toString(), column);
         });
         if (chart.getType().equals(PageDesignConstant.BigScreen.Type.TABLES)) {
             // 表格的话，要按照dimensionFieldList对columnData进行排序
