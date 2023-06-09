@@ -77,7 +77,7 @@ public class BaseChartDataService {
     private ChartDataVO jsonDataQuery(DatasetEntity dataSet, DataSetDataSource dataSetDataSource, IBaseDataSetService dataSetService) {
         ChartDataVO dataDTO = new ChartDataVO();
         JsonDataSetConfig config = (JsonDataSetConfig) dataSet.getConfig();
-        Object jsonContent = dataSetService.getData(null, null, config.getJson(), null);
+        Object jsonContent = dataSetService.getData(null, null, dataSet.getId(), null);
         List<Map<String, Object>> data = Lists.newArrayList();
         if (jsonContent instanceof JSONArray) {
             jsonContent = ((JSONArray) jsonContent).toList();
@@ -127,18 +127,18 @@ public class BaseChartDataService {
         }
         DatasetInfoVO dataSetInfoVo = dataSetService.getInfoById(dataSource.getBusinessKey());
         HashMap<String, ChartDataVO.ColumnData> columnData = Maps.newHashMap();
-        List<Map<String, Object>> fieldJson = dataSetInfoVo.getFieldJson();
-        fieldJson.forEach(field -> {
+        List<Map<String, Object>> fieldJson = dataSetInfoVo.getFields();
+        for (Map<String, Object> field : fieldJson) {
             ChartDataVO.ColumnData column = new ChartDataVO.ColumnData();
-            column.setOriginalColumn(field.get(DatasetInfoVO.FIELD_JSON_NAME).toString());
-            column.setAlias(field.get(DatasetInfoVO.FIELD_JSON_NAME).toString());
-            column.setRemark(field.get(DatasetInfoVO.FIELD_JSON_DESC).toString());
-            String sourceTable = field.get(DatasetInfoVO.FIELD_JSON_SOURCE) == null ? "" : field.get(DatasetInfoVO.FIELD_JSON_SOURCE).toString();
+            column.setOriginalColumn(field.get(DatasetInfoVO.FIELD_NAME).toString());
+            column.setAlias(field.get(DatasetInfoVO.FIELD_NAME).toString());
+            column.setRemark(field.get(DatasetInfoVO.FIELD_DESC).toString());
+            String sourceTable = field.get(DatasetInfoVO.FIELD_SOURCE) == null ? "" : field.get(DatasetInfoVO.FIELD_SOURCE).toString();
             column.setTableName(sourceTable);
-            String type = field.get(DatasetInfoVO.FIELD_JSON_TYPE) == null ? "" : field.get(DatasetInfoVO.FIELD_JSON_TYPE).toString();
+            String type = field.get(DatasetInfoVO.FIELD_TYPE) == null ? "" : field.get(DatasetInfoVO.FIELD_TYPE).toString();
             column.setType(type);
-            columnData.put(field.get(DatasetInfoVO.FIELD_JSON_NAME).toString(), column);
-        });
+            columnData.put(field.get(DatasetInfoVO.FIELD_NAME).toString(), column);
+        }
         if (chart.getType().equals(PageDesignConstant.BigScreen.Type.TABLES)) {
             // 表格的话，要按照dimensionFieldList对columnData进行排序
             List<String> dimensionFieldList = dataSource.getDimensionFieldList();
@@ -187,7 +187,6 @@ public class BaseChartDataService {
         }
         dataDTO.setColumnData(columnData);
         Object data;
-        log.info("查询数据集数据，SQL：{}", dataDTO.getSql().replace("\n", " "));
         log.info("查询数据集数据，参数：{}", JSON.toJSONString(params));
         if (dataSource.getServerPagination() != null && dataSource.getServerPagination() && searchDTO.getSize() != null && searchDTO.getCurrent() != null) {
             PageVO<Object> pageResult = dataSetService.getPageData(null, null, dataSource.getBusinessKey(), params, searchDTO.getCurrent(), searchDTO.getSize());
@@ -197,33 +196,11 @@ public class BaseChartDataService {
         } else {
             data = dataSetService.getData(null, null, dataSource.getBusinessKey(), params);
         }
+        boolean backendExecutionNeeded = dataSetService.checkBackendExecutionNeeded(dataSource.getBusinessKey());
+        dataDTO.setExecutionByFrontend(!backendExecutionNeeded);
         dataDTO.setData(data);
         dataDTO.setSuccess(true);
         return dataDTO;
     }
 
-
-    /**
-     * 获取聚合函数汉化
-     * @param aggregate
-     * @return
-     */
-    public String getAggregateName(String aggregate) {
-        switch (aggregate) {
-            case PageDesignConstant.BigScreen.Aggregate.COUNT:
-                return "[统计]";
-            case PageDesignConstant.BigScreen.Aggregate.SUM:
-                return "[求和]";
-            case PageDesignConstant.BigScreen.Aggregate.AVG:
-                return "[平均值]";
-            case PageDesignConstant.BigScreen.Aggregate.MAX:
-                return "[最大值]";
-            case PageDesignConstant.BigScreen.Aggregate.MIN:
-                return "[最小值]";
-            case PageDesignConstant.BigScreen.Aggregate.COUNT_DISTINCT:
-                return "[去重统计]";
-            default:
-                return "[" + aggregate + "]";
-        }
-    }
 }
