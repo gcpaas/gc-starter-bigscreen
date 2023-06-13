@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestControllerAdvice
 @Slf4j
-@ConditionalOnProperty(prefix = "gc.starter.component", name = "GlobalExceptionHandler", havingValue = "BigScreenGlobalExceptionHandler", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "gc.starter.component", name = "BigScreenGlobalExceptionHandler", havingValue = "BigScreenGlobalExceptionHandler", matchIfMissing = true)
 public class BigScreenGlobalExceptionHandler {
 
     @PostConstruct
