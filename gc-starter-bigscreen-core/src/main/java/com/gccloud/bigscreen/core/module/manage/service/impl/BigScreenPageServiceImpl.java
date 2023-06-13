@@ -222,7 +222,12 @@ public class BigScreenPageServiceImpl extends ServiceImpl<PageDao, PageEntity> i
         BigScreenPageDTO config = (BigScreenPageDTO) screenEntity.getConfig();
         screenEntity.setId(null);
         screenEntity.setCode(CodeGenerateUtils.generate(screenEntity.getType()));
-        screenEntity.setName(screenEntity.getName() + "_复制");
+        int i = 1;
+        String oldName = screenEntity.getName();
+        screenEntity.setName(oldName + "_复制");
+        while (checkNameRepeat(screenEntity)) {
+            screenEntity.setName(oldName + "_复制" + i++);
+        }
         config.setName(screenEntity.getName());
         config.setCode(screenEntity.getCode());
         List<Chart> chartList = config.getChartList();
