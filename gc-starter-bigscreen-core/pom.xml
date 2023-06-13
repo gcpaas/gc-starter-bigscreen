@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.gccloud</groupId>
         <artifactId>gc-starter-bigscreen</artifactId>
-        <version>0.0.1.2023060701.Alpha</version>
+        <version>0.0.1.2023061201.Alpha</version>
     </parent>
 
     <artifactId>gc-starter-bigscreen-core</artifactId>
@@ -151,6 +151,11 @@
             <artifactId>groovy-all</artifactId>
             <type>pom</type>
             <version>${groovy.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kohsuke</groupId>
+            <artifactId>groovy-sandbox</artifactId>
+            <version>1.19</version>
         </dependency>
         <!--  caffeine缓存  -->
         <dependency>
