@@ -108,6 +108,20 @@ public class BigScreenPageDTO extends BasePageDTO {
 
         @ApiModelProperty(notes = "自适应类型")
         private String fitMode;
+
+        @ApiModelProperty(notes = "定时刷新配置")
+        private List<RefreshConfig> refreshConfig;
+
     }
 
+    @Data
+    public static class RefreshConfig {
+
+        @ApiModelProperty(notes = "组件编码")
+        private String code;
+
+        @ApiModelProperty(notes = "刷新时间，单位秒")
+        private Integer time;
+
+    }
 }
