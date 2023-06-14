@@ -18,9 +18,11 @@ import com.gccloud.bigscreen.core.module.dataset.vo.DataSetInfoVo;
 import com.gccloud.bigscreen.core.utils.GroovyUtils;
 import com.gccloud.bigscreen.core.utils.JSON;
 import com.gccloud.bigscreen.core.vo.PageVO;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -56,6 +58,9 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
     @Resource
     private ParamsClient paramsClient;
 
+    @Autowired(required = false)
+    private IOtherDatasetService otherDatasetService;
+
 
     @Override
     public DataSetInfoVo getDataSetDetails(String id) {
@@ -71,7 +76,10 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
 
         StringBuilder dataBuilder = new StringBuilder();
         String datasetType = datasetEntity.getDatasetType();
+
+        boolean handled = false;
         if (ReportConstant.DataSetType.ORIGINAL.equals(datasetType)) {
+            handled = true;
             OriginalTable originalTable = originalTableService.getById(datasetEntity.getDatasetRelId());
             dataSetInfoVo.setDataSourceKey(originalTable.getSourceId());
             dataBuilder.append("select ");
@@ -85,6 +93,7 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
 
         // 自助数据集
         if (ReportConstant.DataSetType.CUSTOM.equals(datasetType) || ReportConstant.DataSetType.STORED_PROCEDURE.equals(datasetType)) {
+            handled = true;
             DatasetProcessEntity datasetProcessEntity = datasetProcessService.getById(datasetEntity.getDatasetRelId());
             dataSetInfoVo.setDataSourceKey(datasetProcessEntity.getSourceId());
             dataBuilder.append(datasetProcessEntity.getSqlProcess());
@@ -98,6 +107,7 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
 
         // 原始数据集
         if (ReportConstant.DataSetType.ORIGINAL.equals(datasetType)) {
+            handled = true;
             OriginalTable originalTable = originalTableService.getById(datasetEntity.getDatasetRelId());
             dataSetInfoVo.setDataSourceKey(originalTable.getSourceId());
             dataSetInfoVo.setFields(fieldFormat(originalTable.getFieldJson()));
@@ -106,6 +116,7 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
 
         // JSON数据集
         if (ReportConstant.DataSetType.JSON.equals(datasetType)) {
+            handled = true;
             String data = datasetEntity.getData();
             JSONObject object = JSON.parseObject(data);
 
@@ -116,6 +127,7 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
 
         // 模型数据集
         if (ReportConstant.DataSetType.MODEL.equals(datasetType)) {
+            handled = true;
             String data = datasetEntity.getData();
             JSONObject object = JSON.parseObject(data);
             if (object.has("dataModel")) {
@@ -130,6 +142,7 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
 
         // 脚本数据集
         if (ReportConstant.DataSetType.SCRIPT.equals(datasetType)) {
+            handled = true;
             String data = datasetEntity.getData();
             JSONObject object = JSON.parseObject(data);
 
@@ -142,7 +155,9 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
                 dataSetInfoVo.setParams(object.getJSONArray("paramsList"));
             }
         }
-
+        if (!handled) {
+            return otherDatasetService.getDataSetDetails(id);
+        }
         return dataSetInfoVo;
     }
 
@@ -236,6 +251,15 @@ public class DsServiceImpl extends ServiceImpl<DsDao, DataSetInfoVo> implements 
             throw new GlobalException("数据集不存在");
         }
         params = paramsClient.handleParams(params);
+        List<String> datasetTypes = Lists.newArrayList(ReportConstant.DataSetType.CUSTOM,
+                ReportConstant.DataSetType.SCRIPT,
+                ReportConstant.DataSetType.JSON,
+                ReportConstant.DataSetType.MODEL,
+                ReportConstant.DataSetType.ORIGINAL,
+                ReportConstant.DataSetType.STORED_PROCEDURE);
+        if (!datasetTypes.contains(datasetEntity.getDatasetType())) {
+            return otherDatasetService.execute(dataSetId, params);
+        }
         String sql;
         if (datasetEntity.getDatasetType().equals(ReportConstant.DataSetType.CUSTOM)
                 || datasetEntity.getDatasetType().equals(ReportConstant.DataSetType.STORED_PROCEDURE)) {
