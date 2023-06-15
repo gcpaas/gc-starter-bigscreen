@@ -77,7 +77,7 @@ public class BaseChartDataService {
     private ChartDataVO jsonDataQuery(DatasetEntity dataSet, DataSetDataSource dataSetDataSource, IBaseDataSetService dataSetService) {
         ChartDataVO dataDTO = new ChartDataVO();
         JsonDataSetConfig config = (JsonDataSetConfig) dataSet.getConfig();
-        Object jsonContent = dataSetService.getData(null, null, dataSet.getId(), null);
+        Object jsonContent = dataSetService.execute(dataSet.getId(), null);
         List<Map<String, Object>> data = Lists.newArrayList();
         if (jsonContent instanceof JSONArray) {
             jsonContent = ((JSONArray) jsonContent).toList();
@@ -189,12 +189,12 @@ public class BaseChartDataService {
         Object data;
         log.info("查询数据集数据，参数：{}", JSON.toJSONString(params));
         if (dataSource.getServerPagination() != null && dataSource.getServerPagination() && searchDTO.getSize() != null && searchDTO.getCurrent() != null) {
-            PageVO<Object> pageResult = dataSetService.getPageData(null, null, dataSource.getBusinessKey(), params, searchDTO.getCurrent(), searchDTO.getSize());
+            PageVO<Object> pageResult = dataSetService.execute(dataSource.getBusinessKey(), params, searchDTO.getCurrent(), searchDTO.getSize());
             data = pageResult.getList();
             dataDTO.setTotalCount((int)pageResult.getTotalCount());
             dataDTO.setTotalPage((int)pageResult.getTotalPage());
         } else {
-            data = dataSetService.getData(null, null, dataSource.getBusinessKey(), params);
+            data = dataSetService.execute(dataSource.getBusinessKey(), params);
         }
         boolean backendExecutionNeeded = dataSetService.checkBackendExecutionNeeded(dataSource.getBusinessKey());
         dataDTO.setExecutionByFrontend(!backendExecutionNeeded);
